@@ -49,14 +49,17 @@
     <Filter Include="ヘッダー ファイル\App\Camera">
       <UniqueIdentifier>{0866e24e-ccc0-4986-acd6-7c83831917ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="リソース ファイル\PixelShader\K07">
-      <UniqueIdentifier>{082e19aa-87cc-4a1c-b622-81a2feacca81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\App\Base">
       <UniqueIdentifier>{3a0b43f9-3320-45a3-b1cf-90ef82f5e07e}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\App\Base">
       <UniqueIdentifier>{b0f6ad43-2c67-4a3c-811a-77f1275b2d73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\App\Objects">
+      <UniqueIdentifier>{4d1069ee-bc33-4c70-827e-d09f8703f36e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\App\Objects">
+      <UniqueIdentifier>{aab2db7a-ba80-4816-abc5-e7ee38193b9f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -99,9 +102,6 @@
     <ClCompile Include="CameraDCC.cpp">
       <Filter>ソース ファイル\App\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="CameraWipe.cpp">
-      <Filter>ソース ファイル\App\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="SceneK07.cpp">
       <Filter>ソース ファイル\App\Scene</Filter>
     </ClCompile>
@@ -120,8 +120,14 @@
     <ClCompile Include="SpotLight.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル\App\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionSystem.cpp">
+      <Filter>ソース ファイル\App\Base</Filter>
+    </ClCompile>
     <ClCompile Include="Object.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\App\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -167,9 +173,6 @@
     <ClInclude Include="CameraDCC.h">
       <Filter>ヘッダー ファイル\App\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="CameraWipe.hpp">
-      <Filter>ヘッダー ファイル\App\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="SceneK07.h">
       <Filter>ヘッダー ファイル\App\Scene</Filter>
     </ClInclude>
@@ -186,6 +189,15 @@
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
+      <Filter>ヘッダー ファイル\App\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ヘッダー ファイル\App\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="FollowCamera.h">
+      <Filter>ヘッダー ファイル\App\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionSystem.h">
       <Filter>ヘッダー ファイル\App\Base</Filter>
     </ClInclude>
   </ItemGroup>
@@ -214,20 +226,17 @@
     <FxCompile Include="VS_SpriteShadow.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
-    <FxCompile Include="PS_FrDepth.hlsl">
-      <Filter>リソース ファイル\PixelShader\K07</Filter>
-    </FxCompile>
     <FxCompile Include="VS_K07.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
-    </FxCompile>
-    <FxCompile Include="PS_K07Shadow.hlsl">
-      <Filter>リソース ファイル\PixelShader\K07</Filter>
     </FxCompile>
     <FxCompile Include="VS_Outline.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
     <FxCompile Include="VS_AlphaDither.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_TexColor.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

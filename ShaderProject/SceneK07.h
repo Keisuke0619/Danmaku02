@@ -19,9 +19,7 @@ public:
 	void Update(float tick);
 	void Draw();
 
-	void DrawContent(std::list<struct ModelData> models, class Shader* vs, class Shader* ps, DirectX::XMFLOAT4X4 *mat);
 private:
-	ModelData CreateData(class Model* model, DirectX::XMFLOAT3 pos = { 0,0,0 }, DirectX::XMFLOAT3 rot = { 0,0,0 }, DirectX::XMFLOAT3 scale = { 1,1,1 });
 	void InitSky();
 	void DrawSky();
 

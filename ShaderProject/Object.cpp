@@ -1,20 +1,19 @@
 #include "Object.h"
 
-void CObject::Init(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 degRot, DirectX::XMFLOAT3 scale, unsigned renderMask)
+CObject::CObject()
 {
-	m_pos = pos;
-	m_degRot = degRot;
-	m_scale = scale;
-	m_renderStageMask = renderMask;
+	m_collisionData.obj = this;
+	m_collisionData.isStack = false;
+	DirectX::XMStoreFloat4x4(&m_world, DirectX::XMMatrixIdentity());
 }
 
 void CObject::UpdateBase()
 {
 	Update();
 	auto T = DirectX::XMMatrixTranslation(m_pos.x, m_pos.y, m_pos.z);
-	auto R = DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(m_degRot.y));
-	R *= DirectX::XMMatrixRotationX(DirectX::XMConvertToRadians(m_degRot.x));
-	R *= DirectX::XMMatrixRotationZ(DirectX::XMConvertToRadians(m_degRot.z));
+	auto R = DirectX::XMMatrixRotationY(m_rot.y);
+	R *= DirectX::XMMatrixRotationX(m_rot.x);
+	R *= DirectX::XMMatrixRotationZ(m_rot.z);
 	auto S = DirectX::XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
 	auto mat = S * R * T;
 	mat = DirectX::XMMatrixTranspose(mat);
@@ -23,14 +22,4 @@ void CObject::UpdateBase()
 
 void CObject::Update()
 {
-}
-
-void CObject::DrawForBuffer()
-{
-	Draw();
-}
-
-void CObject::DrawForAlpha()
-{
-	Draw();
 }

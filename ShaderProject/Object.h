@@ -1,27 +1,35 @@
 #pragma once
 
-#include "Model.h"
-#include "DirectX.h"
+#include <DirectXMath.h>
+#include <string>
+#include "CollisionSystem.h"
 enum EDrawMask
 {
 	RENDER_BUFFER = 1 << 0,
 	RENDER_ALPHA = 1 << 1,
 
 };
-class CObject : public Model
+class CObject
 {
-private:
-	DirectX::XMFLOAT3 m_pos;
-	DirectX::XMFLOAT3 m_degRot;
-	DirectX::XMFLOAT3 m_scale;
+protected:
+	DirectX::XMFLOAT3 m_pos		= DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
+	DirectX::XMFLOAT3 m_rot		= DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
+	DirectX::XMFLOAT3 m_scale	= DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);
 	DirectX::XMFLOAT4X4 m_world;
-	unsigned m_renderStageMask;
+	std::string m_tag = "NO_TAG";
+	unsigned m_renderStageMask = 1;
+	// “–‚½‚è”»’è
+	TObjectMember m_collisionData = {};
+	float m_colliderScale = 1.0f;
+	bool m_isStack = false;
+	bool m_useCollider = false;
 public:
-	void Init(DirectX::XMFLOAT3 pos = DirectX::XMFLOAT3(0, 0, 0), DirectX::XMFLOAT3 degRot = DirectX::XMFLOAT3(0, 0, 0), DirectX::XMFLOAT3 scale = DirectX::XMFLOAT3(0, 0, 0), unsigned renderMask = 1);
-	virtual void UpdateBase() final;
-	void DrawForBuffer();
-	void DrawForAlpha();
+	CObject();
+	void SetColliderScale(float scale) { m_colliderScale = scale; }
 
+	virtual void UpdateBase() final;
+	virtual void Draw(int texSlot = 0) {}
+	virtual void OnCollision(CObject* _obj) {}
 protected:
 	virtual void Update();
 

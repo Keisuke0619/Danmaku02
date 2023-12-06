@@ -8,8 +8,8 @@
 #include "Shader.h"
 #include "MeshBuffer.h"
 #include "Texture.h"
-
-class Model
+#include "Object.h"
+class Model : public CObject
 {
 public:
 	struct Vertex

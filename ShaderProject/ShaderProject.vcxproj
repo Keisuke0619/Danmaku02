@@ -171,7 +171,7 @@
   <ItemGroup>
     <ClCompile Include="CameraDCC.cpp" />
     <ClCompile Include="CameraBase.cpp" />
-    <ClCompile Include="CameraWipe.cpp" />
+    <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LightBase.cpp" />
@@ -181,6 +181,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="MoveLight.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="SceneK07.cpp" />
@@ -194,9 +195,10 @@
   <ItemGroup>
     <ClInclude Include="CameraDCC.h" />
     <ClInclude Include="CameraBase.h" />
-    <ClInclude Include="CameraWipe.hpp" />
+    <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="DirectX.h" />
+    <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="LightBase.h" />
     <ClInclude Include="MeshBuffer.h" />
@@ -205,6 +207,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="MoveLight.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="SceneBase.hpp" />
     <ClInclude Include="SceneK07.h" />
@@ -215,17 +218,8 @@
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PS_FrDepth.hlsl">
+    <FxCompile Include="PS_TexColor.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="PS_K07Shadow.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="VS_AlphaDither.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
