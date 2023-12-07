@@ -2,8 +2,8 @@
 #define __CAMERA_BASE_H__
 
 #include <DirectXMath.h>
-
-class CameraBase
+#include <Object.h>
+class CameraBase : public CObject
 {
 public:
 	CameraBase();

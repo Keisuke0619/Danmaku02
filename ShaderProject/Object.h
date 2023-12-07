@@ -2,6 +2,7 @@
 
 #include <DirectXMath.h>
 #include <string>
+#include <list>
 #include "CollisionSystem.h"
 enum EDrawMask
 {
@@ -9,6 +10,8 @@ enum EDrawMask
 	RENDER_ALPHA = 1 << 1,
 
 };
+
+
 class CObject
 {
 protected:
@@ -26,6 +29,9 @@ protected:
 public:
 	CObject();
 	void SetColliderScale(float scale) { m_colliderScale = scale; }
+	void Destroy();
+
+
 
 	virtual void UpdateBase() final;
 	virtual void Draw(int texSlot = 0) {}
@@ -33,4 +39,23 @@ public:
 protected:
 	virtual void Update();
 
+};
+
+class CObjectManager
+{
+private:
+	static CObjectManager* m_ins;
+public:
+	static CObjectManager* GetIns() { if (m_ins) return m_ins; m_ins = new CObjectManager(); return m_ins; }
+
+private:
+	CObjectManager();
+	std::list<CObject*> m_objects;
+	std::list<CObject*> m_destroy;
+public:
+	void Update();
+	void Draw();
+	void RemoveUpdate();
+	void Add(CObject* obj);
+	void Destroy(CObject* obj);
 };

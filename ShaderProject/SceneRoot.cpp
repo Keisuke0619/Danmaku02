@@ -113,27 +113,6 @@ void SceneRoot::Update(float tick)
 		return;
 	}
 
-	// SHIFTキーが押されてれば、シーンの切り替え処理
-	int idx = m_index;
-	if (IsKeyTrigger(VK_LEFT)) --idx;
-	if (IsKeyTrigger(VK_RIGHT)) ++idx;
-	if (idx < 0) idx = SCENE_MAX - 1;
-	if (idx >= SCENE_MAX) idx = 0;
-
-	if (idx != m_index)
-	{
-		m_index = idx;
-		RemoveSubScene();
-		ChangeScene();
-	}
-
-	// カメラ初期化
-	if (IsKeyTrigger('R'))
-	{
-		pCamera->SetPos(DirectX::XMFLOAT3(0.0f, 1.0f, -5.0f));
-		pCamera->SetLook(DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f));
-		pCamera->SetUp(DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f));
-	}
 }
 void SceneRoot::Draw()
 {
