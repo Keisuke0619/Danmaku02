@@ -52,7 +52,8 @@ public:
 
 public:
 	bool Load(const char* file, float scale = 1.0f, bool flip = false, DirectX::XMFLOAT3 offset = {0,0,0});
-	void Draw(int texSlot = 0);
+	void Draw(Shader* vs, Shader* ps);
+	void TestDraw();
 	
 	void RemakeVertex(int vtxSize, std::function<void(RemakeInfo& data)> func);
 

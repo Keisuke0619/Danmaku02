@@ -6,6 +6,11 @@
 class CameraBase : public CObject
 {
 public:
+	static CameraBase* GetPrimary() { return m_primary; }
+	static void SetPrimary(CameraBase* primary) { m_primary = primary; }
+private:
+	static CameraBase* m_primary;
+public:
 	CameraBase();
 	virtual ~CameraBase();
 

@@ -200,6 +200,9 @@
     <ClInclude Include="CollisionSystem.h">
       <Filter>ヘッダー ファイル\App\Base</Filter>
     </ClInclude>
+    <ClInclude Include="WorldSprite.h">
+      <Filter>ヘッダー ファイル\App\Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VS_Object.hlsl">

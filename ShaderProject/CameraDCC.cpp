@@ -15,6 +15,7 @@ CameraDCC::CameraDCC()
 	: m_state(CAM_DCC_NONE)
 	, m_oldPos{ 0, 0 }
 {
+	CameraBase::SetPrimary(this);
 }
 CameraDCC::~CameraDCC()
 {

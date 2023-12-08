@@ -5,7 +5,8 @@
 #include "Input.h"
 #include "Sprite.h"
 #include "Defines.h"
-
+#include "Player.h"
+#include "Object.h"
 void SceneK07::Init()
 {
 	Shader* shader[] = {
@@ -24,6 +25,7 @@ void SceneK07::Init()
 	Sprite::SetPixelShader(nullptr);
 
 	InitSky();
+	CreateObj<CPlayer>("Player");
 }
 
 void SceneK07::Uninit()
@@ -32,7 +34,7 @@ void SceneK07::Uninit()
 
 void SceneK07::Update(float tick)
 {
-	
+	CObjectManager::GetIns()->Update();
 }
 
 
@@ -40,8 +42,15 @@ void SceneK07::Draw()
 {
 	// スカイキューブ描画
 	auto rtvDefault = GetObj<RenderTarget>("RTV");
+	auto dsvDefault = GetObj<DepthStencil>("DSV");
 	SetRenderTargets(1, &rtvDefault, nullptr);
 	DrawSky();
+	SetRenderTargets(1, &rtvDefault, dsvDefault);
+	auto vs = GetObj<Shader>("VS_Object");
+	auto ps = GetObj<Shader>("PS_TexColor");
+	
+	CObjectManager::GetIns()->Draw(vs, ps);
+
 }
 
 

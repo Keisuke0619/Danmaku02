@@ -71,9 +71,6 @@ void SceneRoot::Init()
 	pLight->SetHSV(setting.lightH, setting.lightSV);
 	pLight->UpdateParam();
 
-	// ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
-	Model* pModel = CreateObj<Model>("Model");
-	pModel->Load("Assets/Model/spot/spot.fbx", 1.0f, false);
 
 	// ƒV[ƒ“‚Ìì¬
 	m_index = setting.index;

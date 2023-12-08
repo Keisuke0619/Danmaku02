@@ -4,6 +4,7 @@
 #include <string>
 #include <list>
 #include "CollisionSystem.h"
+#include "Shader.h"
 enum EDrawMask
 {
 	RENDER_BUFFER = 1 << 0,
@@ -34,7 +35,7 @@ public:
 
 
 	virtual void UpdateBase() final;
-	virtual void Draw(int texSlot = 0) {}
+	virtual void Draw(Shader* vs, Shader* ps) {}
 	virtual void OnCollision(CObject* _obj) {}
 protected:
 	virtual void Update();
@@ -43,10 +44,6 @@ protected:
 
 class CObjectManager
 {
-private:
-	static CObjectManager* m_ins;
-public:
-	static CObjectManager* GetIns() { if (m_ins) return m_ins; m_ins = new CObjectManager(); return m_ins; }
 
 private:
 	CObjectManager();
@@ -54,8 +51,13 @@ private:
 	std::list<CObject*> m_destroy;
 public:
 	void Update();
-	void Draw();
+	void Draw(Shader* vs, Shader* ps);
 	void RemoveUpdate();
 	void Add(CObject* obj);
 	void Destroy(CObject* obj);
+
+private:
+	static CObjectManager* m_ins;
+public:
+	static CObjectManager* GetIns() { if (m_ins) return m_ins; m_ins = new CObjectManager(); return m_ins; }
 };

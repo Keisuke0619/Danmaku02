@@ -4,7 +4,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-
+#include "CameraBase.h"
 #if _MSC_VER >= 1920
 #ifdef _DEBUG
 #pragma comment(lib, "assimp/x64/Debug/assimp-vc142-mtd.lib")
@@ -197,15 +197,32 @@ bool Model::Load(const char* file, float scale, bool flip, DirectX::XMFLOAT3 off
 	return true;
 }
 
-void Model::Draw(int texSlot)
+void Model::Draw(Shader* vs, Shader* ps)
 {
+	DirectX::XMFLOAT4X4 mat[3];
+	mat[0] = m_world;
+	mat[1] = CameraBase::GetPrimary()->GetView();
+	mat[2] = CameraBase::GetPrimary()->GetProj();
+	vs->WriteBuffer(0, mat);
+	SetVertexShader(vs);
+	SetPixelShader(ps);
 	m_pVS->Bind();
 	m_pPS->Bind();
 	auto it = m_meshes.begin();
 	while (it != m_meshes.end())
 	{
-		if(texSlot >= 0)
-			m_pPS->SetTexture(texSlot, m_materials[it->materialID].texture.get());
+		m_pPS->SetTexture(0, m_materials[it->materialID].texture.get());
+		it->mesh->Draw();
+		++it;
+	}
+}
+
+void Model::TestDraw()
+{
+	auto it = m_meshes.begin();
+	while (it != m_meshes.end())
+	{
+		m_pPS->SetTexture(0, m_materials[it->materialID].texture.get());
 		it->mesh->Draw();
 		++it;
 	}

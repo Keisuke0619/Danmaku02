@@ -33,6 +33,10 @@ void CObject::Update()
 
 CObjectManager* CObjectManager::m_ins;
 
+CObjectManager::CObjectManager()
+{
+
+}
 void CObjectManager::Update()
 {
 	for (auto obj : m_objects)
@@ -41,11 +45,13 @@ void CObjectManager::Update()
 	}
 }
 
-void CObjectManager::Draw()
+void CObjectManager::Draw(Shader* vs, Shader* ps)
 {
 	for (auto obj : m_objects)
 	{
-		obj->Draw();
+		if (obj == nullptr)continue;
+		
+		obj->Draw(vs,ps);
 	}
 }
 

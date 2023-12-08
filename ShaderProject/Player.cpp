@@ -38,5 +38,5 @@ void CPlayer::Move()
 	{
 		m_rot.y = atan2f(addPos.x, addPos.z);
 	}
-
+	
 }
