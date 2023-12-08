@@ -5,6 +5,7 @@
 #include <list>
 #include "CollisionSystem.h"
 #include "Shader.h"
+#include "DirectXMathUtil.h"
 enum EDrawMask
 {
 	RENDER_BUFFER = 1 << 0,
@@ -29,11 +30,18 @@ protected:
 	bool m_useCollider = false;
 public:
 	CObject();
+	// ユーティリティ関数系
 	void SetColliderScale(float scale) { m_colliderScale = scale; }
 	void Destroy();
+	DirectX::XMFLOAT3 GetPos() { return m_pos; }
+	DirectX::XMFLOAT3 GetRotation() { return m_rot; }
+	DirectX::XMFLOAT3 GetScale() { return m_scale; }
+	std::string GetTagName() { return m_tag; }
+	unsigned GetRenderStageMask() { return m_renderStageMask; }
+	DirectX::XMFLOAT4X4 GetWorld() { return m_world; }
 
 
-
+	// 仮想関数系
 	virtual void UpdateBase() final;
 	virtual void Draw(Shader* vs, Shader* ps) {}
 	virtual void OnCollision(CObject* _obj) {}

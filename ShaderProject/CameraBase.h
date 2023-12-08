@@ -34,7 +34,7 @@ public:
 	void SetUp(DirectX::XMFLOAT3 up);
 
 protected:
-	DirectX::XMFLOAT3 m_pos, m_look, m_up;
+	DirectX::XMFLOAT3 m_look, m_up;
 	float m_fovy, m_aspect, m_near, m_far;
 };
 

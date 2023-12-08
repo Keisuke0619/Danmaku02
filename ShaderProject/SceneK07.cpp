@@ -7,6 +7,8 @@
 #include "Defines.h"
 #include "Player.h"
 #include "Object.h"
+#include "FollowCamera.h"
+#include "Input.h"
 void SceneK07::Init()
 {
 	Shader* shader[] = {
@@ -25,7 +27,11 @@ void SceneK07::Init()
 	Sprite::SetPixelShader(nullptr);
 
 	InitSky();
-	CreateObj<CPlayer>("Player");
+	auto pl = CreateObj<CPlayer>("Player");
+	auto cam = CreateObj<CFollowCamera>("MainCamera");
+	cam->SetTarget(pl);
+	cam->SetPosOffset(DirectX::XMFLOAT3(0, 10, -3));
+	cam->SetLookOffset(DirectX::XMFLOAT3(0, 0, 4));
 }
 
 void SceneK07::Uninit()
@@ -34,7 +40,22 @@ void SceneK07::Uninit()
 
 void SceneK07::Update(float tick)
 {
-	CObjectManager::GetIns()->Update();
+	// DCCカメラと現在のメインカメラを取得
+	CameraBase* cameraDCC = GetObj<CameraBase>("Camera");
+	auto primary = CameraBase::GetPrimary();
+	// DCCカメラがメインではないならアップデート。
+	if (primary != cameraDCC || IsKeyPress(VK_RETURN))
+	{
+		CObjectManager::GetIns()->Update();
+	}
+#ifdef _DEBUG
+	// CtrlでDCCカメラと普通のカメラをSwitch
+	if (IsKeyTrigger(VK_CONTROL))
+	{
+		auto defaultCamera = GetObj<CameraBase>("MainCamera");
+		CameraBase::SetPrimary(primary == cameraDCC ? defaultCamera : cameraDCC);
+	}
+#endif
 }
 
 
@@ -81,9 +102,8 @@ void SceneK07::InitSky()
 void SceneK07::DrawSky()
 {
 	DirectX::XMFLOAT4X4 mat[3] = {};
-	auto pCamera = GetObj<CameraBase>("Camera");
-	mat[1] = pCamera->GetView();
-	mat[2] = pCamera->GetProj();
+	mat[1] = CameraBase::GetPrimary()->GetView();
+	mat[2] = CameraBase::GetPrimary()->GetProj();
 
 	Sprite::SetView(mat[1]);
 	Sprite::SetProjection(mat[2]);
@@ -120,7 +140,7 @@ void SceneK07::DrawSky()
 	Sprite::SetOffset(0, 0);
 	for (int i = 0; i < 6; i++)
 	{
-		DirectX::XMStoreFloat4x4(&mat[0], DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationX(skyRot[i].y * 3.14f / 2) * DirectX::XMMatrixRotationY(skyRot[i].x * 3.14f / 2) * DirectX::XMMatrixTranslation(skyPos[i].x, skyPos[i].y, skyPos[i].z) * DirectX::XMMatrixTranslation(pCamera->GetPos().x, pCamera->GetPos().y, pCamera->GetPos().z)));
+		DirectX::XMStoreFloat4x4(&mat[0], DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationX(skyRot[i].y * 3.14f / 2) * DirectX::XMMatrixRotationY(skyRot[i].x * 3.14f / 2) * DirectX::XMMatrixTranslation(skyPos[i].x, skyPos[i].y, skyPos[i].z) * DirectX::XMMatrixTranslation(CameraBase::GetPrimary()->GetPos().x, CameraBase::GetPrimary()->GetPos().y, CameraBase::GetPrimary()->GetPos().z)));
 		Sprite::SetWorld(mat[0]);
 		Sprite::SetTexture(skies[i]);
 		Sprite::Draw();

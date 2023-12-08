@@ -113,14 +113,13 @@ void SceneRoot::Update(float tick)
 }
 void SceneRoot::Draw()
 {
-	CameraBase* pCamera = GetObj<CameraBase>("Camera");
 	LightBase* pLight = GetObj<LightBase>("Light");
 
 	DirectX::XMFLOAT4X4 fmat;
 	DirectX::XMStoreFloat4x4(&fmat, DirectX::XMMatrixIdentity());
 	Geometory::SetWorld(fmat);
-	Geometory::SetView(pCamera->GetView());
-	Geometory::SetProjection(pCamera->GetProj());
+	Geometory::SetView(CameraBase::GetPrimary()->GetView());
+	Geometory::SetProjection(CameraBase::GetPrimary()->GetProj());
 
 	// –ÔŠ|‚¯•`‰æ
 	const int GridSize = 10;
@@ -144,6 +143,5 @@ void SceneRoot::Draw()
 	Geometory::DrawLines();
 
 	// ƒIƒuƒWƒFƒNƒg•`‰æ
-	pCamera->Draw();
 	pLight->Draw();
 }

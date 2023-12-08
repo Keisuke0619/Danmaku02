@@ -129,6 +129,12 @@
     <ClCompile Include="Object.cpp">
       <Filter>ソース ファイル\App\Base</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXMathUtil.cpp">
+      <Filter>ソース ファイル\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="FollowCamera.cpp">
+      <Filter>ソース ファイル\App\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h">
@@ -202,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="WorldSprite.h">
       <Filter>ヘッダー ファイル\App\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXMathUtil.h">
+      <Filter>ヘッダー ファイル\DirectX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

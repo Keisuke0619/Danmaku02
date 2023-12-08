@@ -173,6 +173,8 @@
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="DirectX.cpp" />
+    <ClCompile Include="DirectXMathUtil.cpp" />
+    <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LightBase.cpp" />
     <ClCompile Include="MeshBuffer.cpp" />
@@ -198,6 +200,7 @@
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="DirectX.h" />
+    <ClInclude Include="DirectXMathUtil.h" />
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="LightBase.h" />
