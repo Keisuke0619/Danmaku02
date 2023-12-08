@@ -10,11 +10,25 @@ CObject::CObject()
 
 void CObject::Destroy()
 {
+	for (auto child : m_childObj)
+	{
+		child->Destroy();
+	}
 	CObjectManager::GetIns()->Destroy(this);
+}
+
+void CObject::UseCollision(bool isStack)
+{
+	m_useCollider = true;
+	m_collisionData.isStack = isStack;
 }
 
 void CObject::UpdateBase()
 {
+	if (m_useCollider)
+	{
+		m_collisionData.Remove();
+	}
 	Update();
 	auto T = DirectX::XMMatrixTranslation(m_pos.x, m_pos.y, m_pos.z);
 	auto R = DirectX::XMMatrixRotationY(m_rot.y);
@@ -24,6 +38,16 @@ void CObject::UpdateBase()
 	auto mat = S * R * T;
 	mat = DirectX::XMMatrixTranspose(mat);
 	DirectX::XMStoreFloat4x4(&m_world, mat);
+	if (m_useCollider)
+	{
+		CCollisionSystem::GetIns()->Regist(
+			&m_collisionData,
+			m_pos.x - m_colliderScale * 0.5f,
+			m_pos.z - m_colliderScale * 0.5f,
+			m_pos.x + m_colliderScale * 0.5f,
+			m_pos.z + m_colliderScale * 0.5f
+		);
+	}
 }
 
 void CObject::Update()

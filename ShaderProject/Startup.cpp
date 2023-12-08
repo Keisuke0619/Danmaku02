@@ -3,6 +3,7 @@
 #include "Main.h"
 #include <stdio.h>
 #include <crtdbg.h>
+#include "DebugWindow.hpp"
 
 
 // timeGetTime周りの使用
@@ -55,6 +56,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		NULL, hInstance, NULL
 	);
 
+	CDebugWindow::Create();
+
 	// ウィンドウの表示
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
@@ -104,6 +107,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 終了時
 	timeEndPeriod(1);
 	Uninit();
+	CDebugWindow::Close();
 	UnregisterClass(wcex.lpszClassName, hInstance);
 
 	return 0;

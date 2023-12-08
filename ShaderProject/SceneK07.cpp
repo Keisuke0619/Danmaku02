@@ -9,6 +9,8 @@
 #include "Object.h"
 #include "FollowCamera.h"
 #include "Input.h"
+#include "CollisionSystem.h"
+#include "Billborad.h"
 void SceneK07::Init()
 {
 	Shader* shader[] = {
@@ -32,6 +34,10 @@ void SceneK07::Init()
 	cam->SetTarget(pl);
 	cam->SetPosOffset(DirectX::XMFLOAT3(0, 10, -3));
 	cam->SetLookOffset(DirectX::XMFLOAT3(0, 0, 4));
+
+	CCollisionSystem::GetIns()->Create(6, -30, 30, 30, -30);
+	auto worldSprite = CreateObj<CBillBoard>("TestWorldSprite");
+	worldSprite->LoadTexture("Assets/Texture/Silhouette.png");
 }
 
 void SceneK07::Uninit()
@@ -56,6 +62,22 @@ void SceneK07::Update(float tick)
 		CameraBase::SetPrimary(primary == cameraDCC ? defaultCamera : cameraDCC);
 	}
 #endif
+	// “–‚½‚è”»’è
+	auto collisionList = CCollisionSystem::GetIns()->GetList();
+	for (auto itr = collisionList->begin(); itr != collisionList->end(); itr++)
+	{
+		auto firstPos = itr->first->GetPos();
+		auto secondPos = itr->second->GetPos();
+		auto firstScale = itr->first->GetColliderScale();
+		auto secondScale = itr->second->GetColliderScale();
+		float xzPowLength = powf(firstPos.x - secondPos.x, 2) + powf(firstPos.z - secondPos.z, 2);
+		float colliderPowLength = powf(firstScale + secondScale, 2);
+		if (xzPowLength < colliderPowLength)
+		{
+			itr->first->OnCollision(itr->second);
+			itr->second->OnCollision(itr->first);
+		}
+	}
 }
 
 

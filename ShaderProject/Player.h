@@ -7,4 +7,5 @@ public:
 	CPlayer();
 	void Update() override;
 	void Move();
+	void OnCollision(CObject* _obj) override;
 };

@@ -6,6 +6,7 @@
 #include "CollisionSystem.h"
 #include "Shader.h"
 #include "DirectXMathUtil.h"
+#include "DebugWindow.hpp"
 enum EDrawMask
 {
 	RENDER_BUFFER = 1 << 0,
@@ -33,14 +34,17 @@ public:
 	// ユーティリティ関数系
 	void SetColliderScale(float scale) { m_colliderScale = scale; }
 	void Destroy();
-	DirectX::XMFLOAT3 GetPos() { return m_pos; }
-	DirectX::XMFLOAT3 GetRotation() { return m_rot; }
-	DirectX::XMFLOAT3 GetScale() { return m_scale; }
-	std::string GetTagName() { return m_tag; }
-	unsigned GetRenderStageMask() { return m_renderStageMask; }
+	// ゲッター
+	DirectX::XMFLOAT3	GetPos() { return m_pos; }
+	DirectX::XMFLOAT3	GetRotation() { return m_rot; }
+	DirectX::XMFLOAT3	GetScale() { return m_scale; }
+	std::string			GetTagName() { return m_tag; }
+	unsigned			GetRenderStageMask() { return m_renderStageMask; }
+	float				GetColliderScale() { return m_colliderScale; }
 	DirectX::XMFLOAT4X4 GetWorld() { return m_world; }
-
-
+	// その他
+	void UseCollision(bool isStack = false);
+	void AddChild(CObject* childObj) { m_childObj.push_back(childObj); }
 	// 仮想関数系
 	virtual void UpdateBase() final;
 	virtual void Draw(Shader* vs, Shader* ps) {}
@@ -48,6 +52,8 @@ public:
 protected:
 	virtual void Update();
 
+private:
+	std::list<CObject*> m_childObj;
 };
 
 class CObjectManager

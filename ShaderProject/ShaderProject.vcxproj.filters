@@ -135,6 +135,15 @@
     <ClCompile Include="FollowCamera.cpp">
       <Filter>ソース ファイル\App\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="DebugWindow.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Billborad.cpp">
+      <Filter>ソース ファイル\App\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSprite.cpp">
+      <Filter>ソース ファイル\App\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h">
@@ -211,6 +220,12 @@
     </ClInclude>
     <ClInclude Include="DirectXMathUtil.h">
       <Filter>ヘッダー ファイル\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugWindow.hpp">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Billborad.h">
+      <Filter>ヘッダー ファイル\App\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,8 @@
 CPlayer::CPlayer()
 {
 	Load("Assets/Model/spot/spot.fbx");
+	m_colliderScale = 0.2f;
+	UseCollision(true);
 }
 
 void CPlayer::Update()
@@ -49,4 +51,9 @@ void CPlayer::Move()
 		m_rot.y = atan2f(-addPos.x, -addPos.z);
 	}
 	
+}
+
+void CPlayer::OnCollision(CObject* _obj)
+{
+	CDebugWindow::Print("‚ ‚½‚Á‚½", m_pos);
 }

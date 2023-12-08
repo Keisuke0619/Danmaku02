@@ -169,9 +169,11 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Billborad.cpp" />
     <ClCompile Include="CameraDCC.cpp" />
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
+    <ClCompile Include="DebugWindow.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="DirectXMathUtil.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
@@ -193,11 +195,14 @@
     <ClCompile Include="Startup.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="SceneRoot.cpp" />
+    <ClCompile Include="WorldSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Billborad.h" />
     <ClInclude Include="CameraDCC.h" />
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CollisionSystem.h" />
+    <ClInclude Include="DebugWindow.hpp" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="DirectXMathUtil.h" />

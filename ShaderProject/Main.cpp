@@ -5,7 +5,6 @@
 #include "Sprite.h"
 #include "Input.h"
 #include "SceneRoot.h"
-
 //--- ƒOƒ[ƒoƒ‹•Ï”
 std::shared_ptr<SceneRoot> g_pScene;
 
@@ -29,7 +28,6 @@ HRESULT Init(HWND hWnd, UINT width, UINT height)
 	hr = dsv->Create(width, height, false);
 
 	SetRenderTargets(1, &rtv, dsv);
-
 	return hr;
 }
 
