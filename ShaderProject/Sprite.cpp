@@ -51,7 +51,9 @@ struct PS_IN {
 Texture2D tex : register(t0);
 SamplerState samp : register(s0);
 float4 main(PS_IN pin) : SV_TARGET {
-	return tex.Sample(samp, pin.uv) * pin.color;
+	float4 col = tex.Sample(samp, pin.uv);
+	if(col.a < 0.1f) discard;
+	return col * pin.color;
 })EOT";
 
 	struct Vertex
@@ -120,8 +122,8 @@ void Sprite::SetUVPos(DirectX::XMFLOAT2 pos)
 }
 void Sprite::SetUVScale(DirectX::XMFLOAT2 scale)
 {
-	m_data.param[1].x = scale.x;
-	m_data.param[1].y = scale.y;
+	m_data.param[1].z = scale.x;
+	m_data.param[1].w = scale.y;
 }
 void Sprite::SetColor(DirectX::XMFLOAT4 color)
 {

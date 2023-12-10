@@ -9,7 +9,7 @@
 #include "DebugWindow.hpp"
 enum EDrawMask
 {
-	RENDER_BUFFER = 1 << 0,
+	RENDER_MODEL = 1 << 0,
 	RENDER_ALPHA = 1 << 1,
 
 };
@@ -26,14 +26,16 @@ protected:
 	unsigned m_renderStageMask = 1;
 	// 当たり判定
 	TObjectMember m_collisionData = {};
-	float m_colliderScale = 1.0f;
+	float m_colliderScale = 0.2f;
 	bool m_isStack = false;
 	bool m_useCollider = false;
+	int m_frame;
 public:
 	CObject();
+	virtual ~CObject();
 	// ユーティリティ関数系
 	void SetColliderScale(float scale) { m_colliderScale = scale; }
-	void Destroy();
+	void Destroy(bool isRoot = true);
 	// ゲッター
 	DirectX::XMFLOAT3	GetPos() { return m_pos; }
 	DirectX::XMFLOAT3	GetRotation() { return m_rot; }
@@ -42,9 +44,13 @@ public:
 	unsigned			GetRenderStageMask() { return m_renderStageMask; }
 	float				GetColliderScale() { return m_colliderScale; }
 	DirectX::XMFLOAT4X4 GetWorld() { return m_world; }
+	// セッター
+	void SetPos(DirectX::XMFLOAT3 pos) { m_pos = pos; }
+	void SetRot(DirectX::XMFLOAT3 rot) { m_rot = rot; }
+	void SetScale(DirectX::XMFLOAT3 scale) { m_scale = scale; }
 	// その他
 	void UseCollision(bool isStack = false);
-	void AddChild(CObject* childObj) { m_childObj.push_back(childObj); }
+	void AddChild(CObject* childObj) { m_childObj.push_back(childObj); childObj->m_parent = this; }
 	// 仮想関数系
 	virtual void UpdateBase() final;
 	virtual void Draw(Shader* vs, Shader* ps) {}
@@ -54,6 +60,8 @@ protected:
 
 private:
 	std::list<CObject*> m_childObj;
+	bool m_registedDestroy = false;
+	CObject* m_parent = nullptr;
 };
 
 class CObjectManager
@@ -65,7 +73,7 @@ private:
 	std::list<CObject*> m_destroy;
 public:
 	void Update();
-	void Draw(Shader* vs, Shader* ps);
+	void Draw(Shader* vs, Shader* ps, unsigned drawMask);
 	void RemoveUpdate();
 	void Add(CObject* obj);
 	void Destroy(CObject* obj);

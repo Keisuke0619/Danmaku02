@@ -176,6 +176,8 @@
     <ClCompile Include="DebugWindow.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="DirectXMathUtil.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Enemy.h" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LightBase.cpp" />
@@ -190,6 +192,7 @@
     <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="SceneK07.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShotObj.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Startup.cpp" />
@@ -221,6 +224,7 @@
     <ClInclude Include="SceneK07.h" />
     <ClInclude Include="SceneRoot.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShotObj.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Texture.h" />
@@ -229,6 +233,7 @@
   <ItemGroup>
     <FxCompile Include="PS_TexColor.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="VS_AlphaDither.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>

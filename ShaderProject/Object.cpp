@@ -1,20 +1,34 @@
 #include "Object.h"
-
+#include "DebugWindow.hpp"
 CObject::CObject()
 {
 	m_collisionData.obj = this;
 	m_collisionData.isStack = false;
 	DirectX::XMStoreFloat4x4(&m_world, DirectX::XMMatrixIdentity());
 	CObjectManager::GetIns()->Add(this);
+	m_frame = 0;
 }
 
-void CObject::Destroy()
+CObject::~CObject()
+{
+	m_collisionData.Remove();
+}
+
+void CObject::Destroy(bool isRoot)
 {
 	for (auto child : m_childObj)
 	{
-		child->Destroy();
+		child->Destroy(isRoot = false);
 	}
-	CObjectManager::GetIns()->Destroy(this);
+	if (m_registedDestroy == false)
+	{
+		CObjectManager::GetIns()->Destroy(this);
+		if (m_parent && isRoot)
+		{
+			m_parent->m_childObj.remove(this);
+		}
+		m_registedDestroy = true;
+	}
 }
 
 void CObject::UseCollision(bool isStack)
@@ -40,7 +54,7 @@ void CObject::UpdateBase()
 	DirectX::XMStoreFloat4x4(&m_world, mat);
 	if (m_useCollider)
 	{
-		CCollisionSystem::GetIns()->Regist(
+		auto data = CCollisionSystem::GetIns()->Regist(
 			&m_collisionData,
 			m_pos.x - m_colliderScale * 0.5f,
 			m_pos.z - m_colliderScale * 0.5f,
@@ -48,6 +62,7 @@ void CObject::UpdateBase()
 			m_pos.z + m_colliderScale * 0.5f
 		);
 	}
+	m_frame++;
 }
 
 void CObject::Update()
@@ -69,12 +84,12 @@ void CObjectManager::Update()
 	}
 }
 
-void CObjectManager::Draw(Shader* vs, Shader* ps)
+void CObjectManager::Draw(Shader* vs, Shader* ps, unsigned drawMask)
 {
 	for (auto obj : m_objects)
 	{
 		if (obj == nullptr)continue;
-		
+		if ((obj->GetRenderStageMask() & drawMask) == 0) continue;
 		obj->Draw(vs,ps);
 	}
 }
@@ -83,7 +98,10 @@ void CObjectManager::RemoveUpdate()
 {
 	for (auto destroy : m_destroy)
 	{
+		if (destroy == nullptr) continue;
 		m_objects.remove(destroy);
+		delete destroy;
+		destroy = nullptr;
 	}
 	m_destroy.clear();
 }
@@ -95,5 +113,6 @@ void CObjectManager::Add(CObject* obj)
 
 void CObjectManager::Destroy(CObject* obj)
 {
+
 	m_destroy.push_back(obj);
 }

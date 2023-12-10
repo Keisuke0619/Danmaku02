@@ -3,6 +3,12 @@
 #include "CameraBase.h"
 std::map<std::string, Texture*> CWorldSprite::m_texMap;
 
+CWorldSprite::CWorldSprite()
+{
+	m_renderStageMask = RENDER_ALPHA;
+	m_texture = nullptr;
+}
+
 void CWorldSprite::LoadTexture(std::string src)
 {
 	if (m_texMap.count(src) != 0)
@@ -23,10 +29,9 @@ void CWorldSprite::Draw(Shader* vs, Shader* ps)
 {
 	Sprite::SetTexture(m_texture);
 	SetWorldMatrix();
-	Sprite::SetView(CameraBase::GetPrimary()->GetView());
-	Sprite::SetProjection(CameraBase::GetPrimary()->GetProj());
+	Sprite::SetUVScale(m_uvScale.x, m_uvScale.y);
 	Sprite::Draw();
-	Sprite::Reset();
+	Sprite::SetUVScale(1, 1);
 }
 
 void CWorldSprite::SetWorldMatrix()

@@ -26,6 +26,7 @@ CCollisionSystem::CCollisionSystem()
 	{
 		m_point[i] = m_point[i - 1] * 4;
 	}
+	m_point[0] = 0;
 }
 
 void CCollisionSystem::Create(int level, float left, float top, float right, float bottom)
@@ -46,7 +47,7 @@ void CCollisionSystem::Create(int level, float left, float top, float right, flo
 	m_lowestLevel = level;
 }
 
-void CCollisionSystem::Regist(TObjectMember* obj, float left, float top, float right, float bottom)
+unsigned CCollisionSystem::Regist(TObjectMember* obj, float left, float top, float right, float bottom)
 {
 	auto elem = GetMortonNum(left, top, right, bottom);
 	if (elem < m_spaceNum)
@@ -57,6 +58,7 @@ void CCollisionSystem::Regist(TObjectMember* obj, float left, float top, float r
 		}
 		m_space[elem]->Push(obj);
 	}
+	return elem;
 }
 
 std::list<CCollisionSystem::Pair>* CCollisionSystem::GetList()

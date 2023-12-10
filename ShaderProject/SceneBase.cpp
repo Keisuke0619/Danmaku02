@@ -27,6 +27,7 @@ SceneBase::~SceneBase()
 }
 void SceneBase::_update(float tick)
 {
+	m_frame++;
 	if (m_pSubScene)
 		m_pSubScene->_update(tick);
 	Update(tick);

@@ -55,6 +55,7 @@ protected:
 	SceneBase* m_pParent;
 	SceneBase* m_pSubScene;
 	Items m_items;
+	int m_frame = 0;
 };
 
 /// <summary>

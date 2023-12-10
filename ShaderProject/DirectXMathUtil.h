@@ -14,11 +14,14 @@ namespace DirectXUtil
 
 	DirectX::XMFLOAT2 Add(DirectX::XMFLOAT2 left, DirectX::XMFLOAT2 right);
 	DirectX::XMFLOAT2 Sub(DirectX::XMFLOAT2 left, DirectX::XMFLOAT2 right);
+	DirectX::XMFLOAT2 Mul(DirectX::XMFLOAT2 src, float num);
 
 	DirectX::XMFLOAT3 Add(DirectX::XMFLOAT3 left, DirectX::XMFLOAT3 right);
 	DirectX::XMFLOAT3 Sub(DirectX::XMFLOAT3 left, DirectX::XMFLOAT3 right);
+	DirectX::XMFLOAT3 Mul(DirectX::XMFLOAT3 src, float num);
 
 	DirectX::XMFLOAT4 Add(DirectX::XMFLOAT4 left, DirectX::XMFLOAT4 right);
 	DirectX::XMFLOAT4 Sub(DirectX::XMFLOAT4 left, DirectX::XMFLOAT4 right);
+	DirectX::XMFLOAT4 Mul(DirectX::XMFLOAT4 src, float num);
 
 }

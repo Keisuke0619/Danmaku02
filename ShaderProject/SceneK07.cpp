@@ -10,7 +10,9 @@
 #include "FollowCamera.h"
 #include "Input.h"
 #include "CollisionSystem.h"
-#include "Billborad.h"
+#include "ShotObj.h"
+#include "WorldSprite.h"
+#include "Enemy.h"
 void SceneK07::Init()
 {
 	Shader* shader[] = {
@@ -29,15 +31,24 @@ void SceneK07::Init()
 	Sprite::SetPixelShader(nullptr);
 
 	InitSky();
+	CCollisionSystem::GetIns()->Create(6, -50, 100, 50, -100);
+
 	auto pl = CreateObj<CPlayer>("Player");
+
 	auto cam = CreateObj<CFollowCamera>("MainCamera");
 	cam->SetTarget(pl);
-	cam->SetPosOffset(DirectX::XMFLOAT3(0, 10, -3));
+	cam->SetPosOffset(DirectX::XMFLOAT3(0, 5, -5));
 	cam->SetLookOffset(DirectX::XMFLOAT3(0, 0, 4));
 
-	CCollisionSystem::GetIns()->Create(6, -30, 30, 30, -30);
-	auto worldSprite = CreateObj<CBillBoard>("TestWorldSprite");
-	worldSprite->LoadTexture("Assets/Texture/Silhouette.png");
+	auto field = new CWorldSprite();
+	field->LoadTexture("Assets/Texture/BayerMatrix.png");
+	field->SetPos(DirectX::XMFLOAT3(0, 0, 0));
+	field->SetRot(DirectX::XMFLOAT3(3.141592f / 2, 0, 0));
+	field->SetScale(DirectX::XMFLOAT3(1000, 1000, 1));
+	field->SetUVScale(DirectX::XMFLOAT2(25, 25));
+
+	auto enemy = new CEnemy();
+	enemy->SetPos(DirectX::XMFLOAT3(0, 1, 20));
 }
 
 void SceneK07::Uninit()
@@ -53,6 +64,50 @@ void SceneK07::Update(float tick)
 	if (primary != cameraDCC || IsKeyPress(VK_RETURN))
 	{
 		CObjectManager::GetIns()->Update();
+		CObjectManager::GetIns()->RemoveUpdate();
+		if (IsKeyTrigger('R'))
+		{
+			auto enemy = new CEnemy();
+			enemy->SetPos(DirectX::XMFLOAT3((rand() % 11) - 5, 1, 20 + (rand() % 20)));
+		}
+	}
+	UpdateCamera();
+	UpdateCollision();
+	
+}
+
+
+void SceneK07::Draw()
+{
+	auto rtvDefault = GetObj<RenderTarget>("RTV");
+	auto dsvDefault = GetObj<DepthStencil>("DSV");
+
+	// スカイキューブ描画
+	SetRenderTargets(1, &rtvDefault, nullptr);
+	DrawSky();
+
+	SetRenderTargets(1, &rtvDefault, dsvDefault);
+	auto vs = GetObj<Shader>("VS_Object");
+	auto ps = GetObj<Shader>("PS_TexColor");
+
+
+	Sprite::SetView(CameraBase::GetPrimary()->GetView());
+	Sprite::SetProjection(CameraBase::GetPrimary()->GetProj());
+	CObjectManager::GetIns()->Draw(vs, ps, RENDER_MODEL);
+	CObjectManager::GetIns()->Draw(vs, ps, RENDER_ALPHA);
+
+}
+
+void SceneK07::UpdateCamera()
+{
+	// DCCカメラと現在のメインカメラを取得
+	CameraBase* cameraDCC = GetObj<CameraBase>("Camera");
+	auto primary = CameraBase::GetPrimary();
+	// DCCカメラがメインではないならアップデート。
+	if (primary != cameraDCC || IsKeyPress(VK_RETURN))
+	{
+		CObjectManager::GetIns()->Update();
+		CObjectManager::GetIns()->RemoveUpdate();
 	}
 #ifdef _DEBUG
 	// CtrlでDCCカメラと普通のカメラをSwitch
@@ -62,6 +117,11 @@ void SceneK07::Update(float tick)
 		CameraBase::SetPrimary(primary == cameraDCC ? defaultCamera : cameraDCC);
 	}
 #endif
+
+}
+
+void SceneK07::UpdateCollision()
+{
 	// 当たり判定
 	auto collisionList = CCollisionSystem::GetIns()->GetList();
 	for (auto itr = collisionList->begin(); itr != collisionList->end(); itr++)
@@ -78,21 +138,6 @@ void SceneK07::Update(float tick)
 			itr->second->OnCollision(itr->first);
 		}
 	}
-}
-
-
-void SceneK07::Draw()
-{
-	// スカイキューブ描画
-	auto rtvDefault = GetObj<RenderTarget>("RTV");
-	auto dsvDefault = GetObj<DepthStencil>("DSV");
-	SetRenderTargets(1, &rtvDefault, nullptr);
-	DrawSky();
-	SetRenderTargets(1, &rtvDefault, dsvDefault);
-	auto vs = GetObj<Shader>("VS_Object");
-	auto ps = GetObj<Shader>("PS_TexColor");
-	
-	CObjectManager::GetIns()->Draw(vs, ps);
 
 }
 
@@ -140,7 +185,7 @@ void SceneK07::DrawSky()
 		GetObj<Texture>("Sky05"),
 		GetObj<Texture>("Sky06"),
 	};
-	DirectX::XMFLOAT3 skyPos[] =
+	const DirectX::XMFLOAT3 skyPos[] =
 	{
 		{0, -0.5f, 0},
 		{0, 0.5f, 0},
@@ -149,7 +194,7 @@ void SceneK07::DrawSky()
 		{0, 0, -0.5f},
 		{-0.5f, 0, 0},
 	};
-	DirectX::XMFLOAT2 skyRot[] =
+	const DirectX::XMFLOAT2 skyRot[] =
 	{
 		{3,1},
 		{3,3},

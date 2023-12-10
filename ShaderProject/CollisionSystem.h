@@ -39,7 +39,7 @@ private:
 	CCollisionSystem();
 public:
 	void Create(int level, float left, float top, float right, float bottom);
-	void Regist(TObjectMember* obj, float left, float top, float right, float bottom);
+	unsigned Regist(TObjectMember* obj, float left, float top, float right, float bottom);
 	std::list<Pair>* GetList();
 private:
 	void CreateSpace(unsigned elem);

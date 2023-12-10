@@ -54,6 +54,11 @@ DirectX::XMFLOAT2 DirectXUtil::Sub(DirectX::XMFLOAT2 left, DirectX::XMFLOAT2 rig
     return DirectX::XMFLOAT2(left.x - right.x, left.y - right.y);
 }
 
+DirectX::XMFLOAT2 DirectXUtil::Mul(DirectX::XMFLOAT2 src, float num)
+{
+    return DirectX::XMFLOAT2(src.x * num, src.y * num);
+}
+
 DirectX::XMFLOAT3 DirectXUtil::Add(DirectX::XMFLOAT3 left, DirectX::XMFLOAT3 right)
 {
     return DirectX::XMFLOAT3(left.x + right.x, left.y + right.y, left.z + right.z);
@@ -64,6 +69,11 @@ DirectX::XMFLOAT3 DirectXUtil::Sub(DirectX::XMFLOAT3 left, DirectX::XMFLOAT3 rig
     return DirectX::XMFLOAT3(left.x - right.x, left.y - right.y, left.z - right.z);
 }
 
+DirectX::XMFLOAT3 DirectXUtil::Mul(DirectX::XMFLOAT3 src, float num)
+{
+    return DirectX::XMFLOAT3(src.x * num, src.y * num, src.z * num);
+}
+
 DirectX::XMFLOAT4 DirectXUtil::Add(DirectX::XMFLOAT4 left, DirectX::XMFLOAT4 right)
 {
     return DirectX::XMFLOAT4(left.x + right.x, left.y + right.y, left.z + right.z, left.w + right.w);
@@ -72,4 +82,9 @@ DirectX::XMFLOAT4 DirectXUtil::Add(DirectX::XMFLOAT4 left, DirectX::XMFLOAT4 rig
 DirectX::XMFLOAT4 DirectXUtil::Sub(DirectX::XMFLOAT4 left, DirectX::XMFLOAT4 right)
 {
     return DirectX::XMFLOAT4(left.x - right.x, left.y - right.y, left.z - right.z, left.w - right.w);
+}
+
+DirectX::XMFLOAT4 DirectXUtil::Mul(DirectX::XMFLOAT4 src, float num)
+{
+    return DirectX::XMFLOAT4(src.x * num, src.y * num, src.z * num, src.w * num);
 }

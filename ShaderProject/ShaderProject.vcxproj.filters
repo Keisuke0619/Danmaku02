@@ -144,6 +144,15 @@
     <ClCompile Include="WorldSprite.cpp">
       <Filter>ソース ファイル\App\Base</Filter>
     </ClCompile>
+    <ClCompile Include="ShotObj.cpp">
+      <Filter>ソース ファイル\App\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.h">
+      <Filter>ヘッダー ファイル\App\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>ソース ファイル\App\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h">
@@ -226,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="Billborad.h">
       <Filter>ヘッダー ファイル\App\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotObj.h">
+      <Filter>ヘッダー ファイル\App\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

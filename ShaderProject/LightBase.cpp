@@ -1,6 +1,7 @@
 #include "LightBase.h"
 #include "Geometory.h"
-
+#include "CameraBase.h"
+#include "Player.h"
 LightBase::LightBase()
 	: m_pos(0.0f, 0.0f, 0.0f)
 	, m_direction(0.0f, -1.0f, 0.0f)
@@ -15,19 +16,24 @@ LightBase::~LightBase()
 #ifdef _DEBUG
 void LightBase::Draw()
 {
+	auto player = CPlayer::GetPrimary();
+	if (player == nullptr)return;
+	auto drawPos = player->GetPos();
+	Geometory::SetView(CameraBase::GetPrimary()->GetView());
+	Geometory::SetProjection(CameraBase::GetPrimary()->GetProj());
 	DirectX::XMFLOAT3 end(
-		m_pos.x + m_direction.x,
-		m_pos.y + m_direction.y,
-		m_pos.z + m_direction.z
+		drawPos.x - m_direction.x,
+		drawPos.y - m_direction.y,
+		drawPos.z - m_direction.z
 	);
 	Geometory::SetColor(m_diffuse);
-	Geometory::AddLine(m_pos, end);
+	Geometory::AddLine(drawPos, end);
 	Geometory::DrawLines();
 
 	DirectX::XMFLOAT4X4 mat;
 	DirectX::XMStoreFloat4x4(&mat, DirectX::XMMatrixTranspose(
 		DirectX::XMMatrixScaling(0.1f, 0.1f, 0.1f) *
-		DirectX::XMMatrixTranslation(m_pos.x, m_pos.y, m_pos.z)
+		DirectX::XMMatrixTranslation(end.x, end.y, end.z)
 	));
 	Geometory::SetWorld(mat);
 	Geometory::DrawBox();
