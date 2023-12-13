@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "ShotObj.h"
+
 CEnemy::CEnemy()
 {
 	Load("Assets/Model/spot/spot.fbx");

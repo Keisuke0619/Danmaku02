@@ -30,13 +30,19 @@ protected:
 	bool m_isStack = false;
 	bool m_useCollider = false;
 	int m_frame;
+	bool m_isStaticPosition = false;	// 登録削除を毎フレーム行わない当たり判定
 public:
 	CObject();
 	virtual ~CObject();
+
 	// ユーティリティ関数系
+
+
 	void SetColliderScale(float scale) { m_colliderScale = scale; }
 	void Destroy(bool isRoot = true);
-	// ゲッター
+
+
+
 	DirectX::XMFLOAT3	GetPos() { return m_pos; }
 	DirectX::XMFLOAT3	GetRotation() { return m_rot; }
 	DirectX::XMFLOAT3	GetScale() { return m_scale; }
@@ -44,11 +50,31 @@ public:
 	unsigned			GetRenderStageMask() { return m_renderStageMask; }
 	float				GetColliderScale() { return m_colliderScale; }
 	DirectX::XMFLOAT4X4 GetWorld() { return m_world; }
-	// セッター
+
+	//					セッター
+
+	/// <summary>
+	/// 座標を設定
+	/// </summary>
+	/// <param name="pos">新しい座標</param>
 	void SetPos(DirectX::XMFLOAT3 pos) { m_pos = pos; }
+	/// <summary>
+	/// 回転を設定
+	/// </summary>
+	/// <param name="rot">各軸における回転量（弧度法）</param>
 	void SetRot(DirectX::XMFLOAT3 rot) { m_rot = rot; }
+	/// <summary>
+	/// 拡大率を設定
+	/// </summary>
+	/// <param name="scale">各軸における拡大率</param>
 	void SetScale(DirectX::XMFLOAT3 scale) { m_scale = scale; }
-	// その他
+
+	//					その他
+
+	/// <summary>
+	/// 当たり判定を使用する場合はこの関数を呼び出す。
+	/// </summary>
+	/// <param name="isStack">与当たり判定側になるか。</param>
 	void UseCollision(bool isStack = false);
 	void AddChild(CObject* childObj) { m_childObj.push_back(childObj); childObj->m_parent = this; }
 	// 仮想関数系

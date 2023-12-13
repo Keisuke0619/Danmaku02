@@ -106,6 +106,7 @@ void CCollisionSystem::GetChild(std::list<CObject*>& stackObj, unsigned elem)
 		for (auto passive = objList.begin(); passive != objList.end(); passive++)
 		{
 			if (*base == *passive) { continue; }
+			if ((*base)->GetTagName() == (*passive)->GetTagName()) { continue; }
 			Pair pair = std::make_pair(*base, *passive);
 			m_collisionPair.push_back(pair);
 		}

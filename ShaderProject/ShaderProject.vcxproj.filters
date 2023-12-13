@@ -147,9 +147,6 @@
     <ClCompile Include="ShotObj.cpp">
       <Filter>ソース ファイル\App\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.h">
-      <Filter>ヘッダー ファイル\App\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>ソース ファイル\App\Objects</Filter>
     </ClCompile>
@@ -238,6 +235,15 @@
     </ClInclude>
     <ClInclude Include="ShotObj.h">
       <Filter>ヘッダー ファイル\App\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>ヘッダー ファイル\App\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>ヘッダー ファイル\App\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadStageData.h">
+      <Filter>ヘッダー ファイル\App\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

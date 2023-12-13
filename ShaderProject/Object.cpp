@@ -39,11 +39,20 @@ void CObject::UseCollision(bool isStack)
 
 void CObject::UpdateBase()
 {
-	if (m_useCollider)
+	// 当たり判定をリストより削除
+	if (m_useCollider && m_isStaticPosition == false)
 	{
 		m_collisionData.Remove();
 	}
+
+	// 派生クラスのアップデートを回し、Frameを加算
 	Update();
+	m_frame++;
+
+	// 静的オブジェクトならWorld計算、当たり判定の付け替えはいらないのでスキップ。
+	if (m_isStaticPosition) { return; }	
+
+	// ワールド行列計算
 	auto T = DirectX::XMMatrixTranslation(m_pos.x, m_pos.y, m_pos.z);
 	auto R = DirectX::XMMatrixRotationY(m_rot.y);
 	R *= DirectX::XMMatrixRotationX(m_rot.x);
@@ -52,9 +61,11 @@ void CObject::UpdateBase()
 	auto mat = S * R * T;
 	mat = DirectX::XMMatrixTranspose(mat);
 	DirectX::XMStoreFloat4x4(&m_world, mat);
+
+	// 当たり判定再登録
 	if (m_useCollider)
 	{
-		auto data = CCollisionSystem::GetIns()->Regist(
+		CCollisionSystem::GetIns()->Regist(
 			&m_collisionData,
 			m_pos.x - m_colliderScale * 0.5f,
 			m_pos.z - m_colliderScale * 0.5f,
@@ -62,7 +73,6 @@ void CObject::UpdateBase()
 			m_pos.z + m_colliderScale * 0.5f
 		);
 	}
-	m_frame++;
 }
 
 void CObject::Update()
@@ -76,14 +86,18 @@ CObjectManager::CObjectManager()
 {
 
 }
+
+// 全オブジェクトのアップデート（ベース）を回す
 void CObjectManager::Update()
 {
 	for (auto obj : m_objects)
 	{
+		if (obj == nullptr) continue;
 		obj->UpdateBase();
 	}
 }
 
+// 全オブジェクトのドローを回す。描画マスクにより、スキップすることもある。
 void CObjectManager::Draw(Shader* vs, Shader* ps, unsigned drawMask)
 {
 	for (auto obj : m_objects)
@@ -93,7 +107,7 @@ void CObjectManager::Draw(Shader* vs, Shader* ps, unsigned drawMask)
 		obj->Draw(vs,ps);
 	}
 }
-
+// 削除リストのオブジェクトをメインのリストから消して開放する。
 void CObjectManager::RemoveUpdate()
 {
 	for (auto destroy : m_destroy)

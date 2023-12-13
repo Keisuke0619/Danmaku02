@@ -9,6 +9,7 @@
 #include "MeshBuffer.h"
 #include "Texture.h"
 #include "Object.h"
+#include <map>
 class Model : public CObject
 {
 public:
@@ -68,7 +69,20 @@ private:
 	Materials m_materials;
 	VertexShader* m_pVS;
 	PixelShader* m_pPS;
+
 };
 
+class MeshPool
+{
+private:
+	static MeshPool* m_Ins;
+public:
+	static MeshPool* Ins() { if (m_Ins) return m_Ins; m_Ins = new MeshPool(); return m_Ins; }
+private:
+	std::map<std::string, Model::Meshes> m_meshes;
+	std::map<std::string, Model::Materials> m_materials;
+public:
+	bool Load(const char* file, Model::Meshes* mesh, Model::Materials* material, float scale = 1.0f, bool flip = false, DirectX::XMFLOAT3 offset = {0,0,0});
+};
 
 #endif // __MODEL_H__

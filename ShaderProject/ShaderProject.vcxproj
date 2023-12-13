@@ -177,7 +177,6 @@
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="DirectXMathUtil.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="Enemy.h" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LightBase.cpp" />
@@ -209,9 +208,11 @@
     <ClInclude Include="Defines.h" />
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="DirectXMathUtil.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="LightBase.h" />
+    <ClInclude Include="LoadStageData.h" />
     <ClInclude Include="MeshBuffer.h" />
     <ClInclude Include="Geometory.h" />
     <ClInclude Include="Main.h" />
@@ -228,6 +229,7 @@
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Wall.h" />
     <ClInclude Include="WorldSprite.h" />
   </ItemGroup>
   <ItemGroup>
