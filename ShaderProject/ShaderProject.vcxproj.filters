@@ -153,6 +153,9 @@
     <ClCompile Include="LoadStageData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>ソース ファイル\App\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h">

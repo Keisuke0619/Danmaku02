@@ -10,6 +10,8 @@
 #include "ShotObj.h"
 #include "WorldSprite.h"
 #include "Enemy.h"
+#include "LoadStageData.h"
+#include "Wall.h"
 void SceneK07::Init()
 {
 	Shader* shader[] = {
@@ -46,6 +48,12 @@ void SceneK07::Init()
 
 	auto enemy = new CEnemy();
 	enemy->SetPos(DirectX::XMFLOAT3(0, 1, 20));
+
+	auto stageDatas = LoadStageData("Assets/CSV/MapTest.csv");
+	for (auto data : *stageDatas)
+	{
+		auto tile = new CWall(data.x, data.y, data.id, 14,4);
+	}
 }
 
 void SceneK07::Uninit()

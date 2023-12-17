@@ -198,6 +198,7 @@
     <ClCompile Include="Startup.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="SceneRoot.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="WorldSprite.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,11 @@
 #pragma once
 #include <iostream>
+#include <list>
 
-void LoadStageData(std::string stagePath);
+struct TMapTile
+{
+	int x;
+	int y;
+	unsigned id;
+};
+std::list<TMapTile>* LoadStageData(std::string stagePath);

@@ -6,6 +6,8 @@
 #include <vector>
 using namespace std;
 
+static list<TMapTile> MapTile;
+
 vector<string> split(string& input, char delimiter)
 {
     istringstream stream(input);
@@ -17,19 +19,26 @@ vector<string> split(string& input, char delimiter)
     return result;
 }
 
-void LoadStageData(std::string stagePath)
+list<TMapTile>* LoadStageData(std::string stagePath)
 {
-    ifstream ifs("data.csv");
-
+    ifstream ifs(stagePath);
+    MapTile.clear();
     string line;
+    int y = 0;
     while (getline(ifs, line)) {
 
         vector<string> strvec = split(line, ',');
 
-        for (int i = 0; i < strvec.size(); i++) {
-            printf("%5d\n", stoi(strvec.at(i)));
+        for (int x = 0; x < strvec.size(); x++) {
+            int id = stoi(strvec.at(x));
+            if (id == 0) continue;
+            TMapTile tile;
+            tile.x = x;
+            tile.y = y;
+            tile.id = id;
+            MapTile.push_back(tile);
         }
-
+        y++;
     }
-    
+    return &MapTile;
 }
