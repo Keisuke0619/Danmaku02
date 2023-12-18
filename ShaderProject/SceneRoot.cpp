@@ -101,6 +101,12 @@ void SceneRoot::Uninit()
 
 void SceneRoot::Update(float tick)
 {
+#ifdef _DEBUG
+	if (IsKeyTrigger(VK_ESCAPE))
+	{
+		system("cls");
+	}
+#endif
 	CameraBase* pCamera = GetObj<CameraBase>("Camera");
 	LightBase* pLight = GetObj<LightBase>("Light");
 	if (!IsKeyPress(VK_SHIFT))
@@ -109,7 +115,6 @@ void SceneRoot::Update(float tick)
 		pLight->Update();
 		return;
 	}
-
 }
 void SceneRoot::Draw()
 {

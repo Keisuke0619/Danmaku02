@@ -6,6 +6,7 @@
 #include <string>
 #include <list>
 #include <Windows.h>
+#include "Object.h"
 
 // @brief シーン追加用オブジェクト
 class SceneObjectBase
@@ -49,6 +50,7 @@ public:
 	virtual void Update(float tick) = 0;
 	virtual void Draw() = 0;
 
+	void UpdateCollision();
 private:
 	static Objects m_objects;
 protected:
@@ -56,6 +58,11 @@ protected:
 	SceneBase* m_pSubScene;
 	Items m_items;
 	int m_frame = 0;
+
+
+private:
+	bool CollisionCircleCircle(CObject* circle1, CObject* circle2);
+	bool CollisionCircleBox(CObject* circle, CObject* box);
 };
 
 /// <summary>

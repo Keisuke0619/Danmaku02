@@ -9,7 +9,7 @@ CPlayer* CPlayer::Player;
 CPlayer::CPlayer()
 {
 	Load("Assets/Model/spot/spot.fbx");
-	m_colliderScale = 0.2f;
+	m_colliderScale = 0.4f;
 	UseCollision(true);
 	m_pos.y = 1.0f;
 	m_tag = "Player";
@@ -90,7 +90,7 @@ void CPlayer::Shot()
 
 void CPlayer::OnCollision(CObject* _obj)
 {
-	if (_obj->GetTagName() == "ShotFromEnemy")
+	if (_obj->GetTagName() == "Wall")
 	{
 		CDebugWindow::Print("‚ ‚½‚Á‚½", m_pos);
 	}

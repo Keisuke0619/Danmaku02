@@ -16,6 +16,7 @@ CameraDCC::CameraDCC()
 	, m_oldPos{ 0, 0 }
 {
 	CameraBase::SetPrimary(this);
+	m_tag = "Camera";
 }
 CameraDCC::~CameraDCC()
 {

@@ -1,5 +1,6 @@
 #include "SceneBase.hpp"
 #include "Sprite.h"
+#include "CollisionSystem.h"
 SceneBase::Objects SceneBase::m_objects;
 
 SceneBase::SceneBase()
@@ -59,4 +60,70 @@ void SceneBase::DestroyObj(const char* name)
 {
 	m_objects.erase(name);
 	m_items.remove(name);
+}
+
+void SceneBase::UpdateCollision()
+{
+	// “–‚½‚è”»’è
+	auto collisionList = CCollisionSystem::GetIns()->GetList();
+	for (auto itr = collisionList->begin(); itr != collisionList->end(); itr++)
+	{
+		bool isCollision = false;
+#ifdef  _DEBUG
+		if (itr->first->GetIsBoxCollision() && itr->second->GetIsBoxCollision())
+		{
+			CDebugWindow::Print("ŽlŠp‚ÆŽlŠp‚Ì“–‚½‚è”»’èII\n");
+			continue;
+		}
+#endif //  _DEBUG
+
+		//if (itr->first->GetIsBoxCollision())
+		//{
+		//	CollisionCircleBox(itr->second, itr->first);
+		//}
+		//else if (itr->second->GetIsBoxCollision())
+		//{
+		//	CollisionCircleBox(itr->first, itr->second);
+
+		//}
+		//else
+		{
+			isCollision = CollisionCircleCircle(itr->first, itr->second);
+		}
+		if (isCollision)
+		{
+			itr->first->OnCollision(itr->second);
+			itr->second->OnCollision(itr->first);
+		}
+	}
+
+}
+
+bool SceneBase::CollisionCircleCircle(CObject* circle1, CObject* circle2)
+{
+	auto firstPos = circle1->GetPos();
+	auto secondPos = circle2->GetPos();
+	auto firstScale = circle1->GetColliderScale();
+	auto secondScale = circle2->GetColliderScale();
+	float xzPowLength = powf(firstPos.x - secondPos.x, 2) + powf(firstPos.z - secondPos.z, 2);
+	float colliderPowLength = powf(firstScale * 0.5f + secondScale * 0.5f, 2);
+	
+	return xzPowLength < colliderPowLength;
+}
+
+bool SceneBase::CollisionCircleBox(CObject* circle, CObject* box)
+{
+	DirectX::XMFLOAT2* vtxVector = box->GetBoxVtxVector();
+	DirectX::XMFLOAT2 boxVtx[4];
+	DirectX::XMVECTOR vVtx[4];
+	DirectX::XMFLOAT2 boxCenter = DirectX::XMFLOAT2(box->GetPos().x, box->GetPos().z);
+	for (int i = 0; i < 4; i++)
+	{
+		boxVtx[i] =  DirectXUtil::Mul(vtxVector[i], box->GetColliderScale() * 0.5f + circle->GetColliderScale() * 0.5f);
+		vVtx[i] = DirectX::XMLoadFloat2(&(boxVtx[i]));
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		//DirectX::XMVector2Cross
+	}
 }

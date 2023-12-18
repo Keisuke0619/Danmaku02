@@ -8,12 +8,13 @@ CEnemy::CEnemy()
 	UseCollision(true);
 	m_tag = "Enemy";
 	m_life = 100;
+	m_colliderScale = 2;
 }
 void CEnemy::Update()
 {
 	if (m_frame % 30 == 0)
 	{
-		CShot::Create(this, m_pos, 5, DirectX::XMConvertToDegrees(GetAngleToPlayer()), RED, SIZE03);
+		auto shot = CShot::Create(this, m_pos, 5, DirectX::XMConvertToDegrees(GetAngleToPlayer()), RED, SIZE03);
 	}
 	if (m_life <= 0) { Destroy(); }
 }

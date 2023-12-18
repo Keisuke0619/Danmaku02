@@ -52,6 +52,35 @@ void CObject::UpdateBase()
 	// 静的オブジェクトならWorld計算、当たり判定の付け替えはいらないのでスキップ。
 	if (m_isStaticPosition) { return; }	
 
+	ReloadWorldMatrix();
+	if (m_isBoxCollision)
+	{
+		ReloadVtxVector();
+	}
+	// 当たり判定再登録
+	if (m_useCollider)
+	{
+		RegistCollision();
+	}
+}
+
+void CObject::Update()
+{
+}
+
+void CObject::RegistCollision()
+{
+	CCollisionSystem::GetIns()->Regist(
+		&m_collisionData,
+		m_pos.x - m_colliderScale * 0.5f,
+		m_pos.z - m_colliderScale * 0.5f,
+		m_pos.x + m_colliderScale * 0.5f,
+		m_pos.z + m_colliderScale * 0.5f
+	);
+}
+
+void CObject::ReloadWorldMatrix()
+{
 	// ワールド行列計算
 	auto T = DirectX::XMMatrixTranslation(m_pos.x, m_pos.y, m_pos.z);
 	auto R = DirectX::XMMatrixRotationY(m_rot.y);
@@ -62,21 +91,14 @@ void CObject::UpdateBase()
 	mat = DirectX::XMMatrixTranspose(mat);
 	DirectX::XMStoreFloat4x4(&m_world, mat);
 
-	// 当たり判定再登録
-	if (m_useCollider)
-	{
-		CCollisionSystem::GetIns()->Regist(
-			&m_collisionData,
-			m_pos.x - m_colliderScale * 0.5f,
-			m_pos.z - m_colliderScale * 0.5f,
-			m_pos.x + m_colliderScale * 0.5f,
-			m_pos.z + m_colliderScale * 0.5f
-		);
-	}
 }
 
-void CObject::Update()
+void CObject::ReloadVtxVector()
 {
+	for (int i = 0; i < 4; i++)
+	{
+		m_boxVtxVector[i] = DirectX::XMFLOAT2(cosf(m_rot.y + 6.28f * 0.125f + 6.28f * 0.25f * i), sinf(m_rot.y + 6.28f * 0.125f * 6.28f * 0.25f * i));
+	}
 }
 
 

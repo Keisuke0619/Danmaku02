@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <crtdbg.h>
 #include "DebugWindow.hpp"
-
+#include "Object.h"
 
 // timeGetTimeé¸ÇËÇÃégóp
 #pragma comment(lib, "winmm.lib")
@@ -106,6 +106,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// èIóπéû
 	timeEndPeriod(1);
+
 	Uninit();
 	CDebugWindow::Close();
 	UnregisterClass(wcex.lpszClassName, hInstance);
