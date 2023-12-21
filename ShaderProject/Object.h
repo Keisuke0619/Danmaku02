@@ -18,9 +18,9 @@ enum EDrawMask
 class CObject
 {
 protected:
-	DirectX::XMFLOAT3 m_pos		= DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
-	DirectX::XMFLOAT3 m_rot		= DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
-	DirectX::XMFLOAT3 m_scale	= DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);
+	DirectX::XMFLOAT3 m_pos = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
+	DirectX::XMFLOAT3 m_rot = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
+	DirectX::XMFLOAT3 m_scale = DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);
 	DirectX::XMFLOAT4X4 m_world;
 	std::string m_tag = "NO_TAG";
 	unsigned m_renderStageMask = 1;
@@ -31,6 +31,8 @@ protected:
 	bool m_useCollider = false;
 	int m_frame;
 	bool m_isStaticPosition = false;	// 登録削除を毎フレーム行わない当たり判定
+	bool m_isBoxCollision = false;
+	DirectX::XMFLOAT2 m_boxVtxVector[4] = {};
 public:
 	CObject();
 	virtual ~CObject();
@@ -50,6 +52,8 @@ public:
 	unsigned			GetRenderStageMask() { return m_renderStageMask; }
 	float				GetColliderScale() { return m_colliderScale; }
 	DirectX::XMFLOAT4X4 GetWorld() { return m_world; }
+	bool				GetIsBoxCollision() { return m_isBoxCollision; }
+	DirectX::XMFLOAT2*	GetBoxVtxVector() { return m_boxVtxVector; }
 
 	//					セッター
 
@@ -83,7 +87,9 @@ public:
 	virtual void OnCollision(CObject* _obj) {}
 protected:
 	virtual void Update();
-
+	void RegistCollision();
+	void ReloadWorldMatrix();
+	void ReloadVtxVector();
 private:
 	std::list<CObject*> m_childObj;
 	bool m_registedDestroy = false;
@@ -103,7 +109,6 @@ public:
 	void RemoveUpdate();
 	void Add(CObject* obj);
 	void Destroy(CObject* obj);
-
 private:
 	static CObjectManager* m_ins;
 public:

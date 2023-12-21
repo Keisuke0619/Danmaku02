@@ -20,7 +20,6 @@ public:
 	void Draw();
 
 	void UpdateCamera();
-	void UpdateCollision();
 private:
 	void InitSky();
 	void DrawSky();

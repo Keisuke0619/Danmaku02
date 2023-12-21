@@ -9,7 +9,7 @@ CPlayer* CPlayer::Player;
 CPlayer::CPlayer()
 {
 	Load("Assets/Model/spot/spot.fbx");
-	m_colliderScale = 0.2f;
+	m_colliderScale = 0.4f;
 	UseCollision(true);
 	m_pos.y = 1.0f;
 	m_tag = "Player";
@@ -78,9 +78,9 @@ void CPlayer::Shot()
 	}
 	if (m_frame % 12 == 0)
 	{
-		for (int i = -3; i <= 3; i++)
+		for (int i = -10; i <= 10; i++)
 		{
-			auto shot = CShot::Create(this, DirectX::XMFLOAT2(m_pos.x, m_pos.z), 12, 270 - DirectX::XMConvertToDegrees(m_rot.y) + 10 * i, WHITE, SIZE07);
+			auto shot = CShot::Create(this, DirectX::XMFLOAT2(m_pos.x, m_pos.z), 12, 270 - DirectX::XMConvertToDegrees(m_rot.y) + 3 * i, WHITE, SIZE07);
 			shot->FromPlayer();
 			shot->SetColliderScale(PLAYER_SHOT_COLLIDER_SCALE);
 		}
@@ -90,7 +90,7 @@ void CPlayer::Shot()
 
 void CPlayer::OnCollision(CObject* _obj)
 {
-	if (_obj->GetTagName() == "ShotFromEnemy")
+	if (_obj->GetTagName() == "Wall")
 	{
 		CDebugWindow::Print("‚ ‚½‚Á‚½", m_pos);
 	}

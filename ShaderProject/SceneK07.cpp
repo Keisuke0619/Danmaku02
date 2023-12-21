@@ -33,26 +33,24 @@ void SceneK07::Init()
 	CCollisionSystem::GetIns()->Create(6, -50, 100, 50, -100);
 
 	auto pl = CreateObj<CPlayer>("Player");
-
 	auto cam = CreateObj<CFollowCamera>("MainCamera");
 	cam->SetTarget(pl);
 	cam->SetPosOffset(DirectX::XMFLOAT3(0, 5, -5));
 	cam->SetLookOffset(DirectX::XMFLOAT3(0, 0, 4));
-
 	auto field = new CWorldSprite();
 	field->LoadTexture("Assets/Texture/BayerMatrix.png");
 	field->SetPos(DirectX::XMFLOAT3(0, 0, 0));
 	field->SetRot(DirectX::XMFLOAT3(3.141592f / 2, 0, 0));
 	field->SetScale(DirectX::XMFLOAT3(1000, 1000, 1));
 	field->SetUVScale(DirectX::XMFLOAT2(25, 25));
-
-	auto enemy = new CEnemy();
-	enemy->SetPos(DirectX::XMFLOAT3(0, 1, 20));
-
+	//auto enemy = new CEnemy();
+	//enemy->SetPos(DirectX::XMFLOAT3(0, 1, 20));
 	auto stageDatas = LoadStageData("Assets/CSV/MapTest.csv");
+	//auto stageDatas = LoadStageData("Assets/CSV/Map2.csv");
 	for (auto data : *stageDatas)
 	{
-		auto tile = new CWall(data.x, data.y, data.id, 14,4);
+		auto tile = new CWall(data.x, data.y, data.id, 14, 4);
+		//auto tile = new CWall(data.x, data.y, data.id, 0,-2);
 	}
 }
 
@@ -114,34 +112,11 @@ void SceneK07::UpdateCamera()
 		CObjectManager::GetIns()->Update();
 		CObjectManager::GetIns()->RemoveUpdate();
 	}
-#ifdef _DEBUG
 	// Ctrl‚ÅDCCƒJƒƒ‰‚Æ•’Ê‚ÌƒJƒƒ‰‚ğSwitch
 	if (IsKeyTrigger(VK_CONTROL))
 	{
 		auto defaultCamera = GetObj<CameraBase>("MainCamera");
 		CameraBase::SetPrimary(primary == cameraDCC ? defaultCamera : cameraDCC);
-	}
-#endif
-
-}
-
-void SceneK07::UpdateCollision()
-{
-	// “–‚½‚è”»’è
-	auto collisionList = CCollisionSystem::GetIns()->GetList();
-	for (auto itr = collisionList->begin(); itr != collisionList->end(); itr++)
-	{
-		auto firstPos = itr->first->GetPos();
-		auto secondPos = itr->second->GetPos();
-		auto firstScale = itr->first->GetColliderScale();
-		auto secondScale = itr->second->GetColliderScale();
-		float xzPowLength = powf(firstPos.x - secondPos.x, 2) + powf(firstPos.z - secondPos.z, 2);
-		float colliderPowLength = powf(firstScale + secondScale, 2);
-		if (xzPowLength < colliderPowLength)
-		{
-			itr->first->OnCollision(itr->second);
-			itr->second->OnCollision(itr->first);
-		}
 	}
 
 }
