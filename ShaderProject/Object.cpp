@@ -97,7 +97,7 @@ void CObject::ReloadVtxVector()
 {
 	for (int i = 0; i < 4; i++)
 	{
-		m_boxVtxVector[i] = DirectX::XMFLOAT2(cosf(m_rot.y + 6.28f * 0.125f + 6.28f * 0.25f * i), sinf(m_rot.y + 6.28f * 0.125f * 6.28f * 0.25f * i));
+		m_boxVtxVector[i] = DirectX::XMFLOAT2(cosf(m_rot.y + 6.28f * 0.125f + 6.28f * 0.25f * i), sinf(m_rot.y + 6.28f * 0.125f + 6.28f * 0.25f * i));
 	}
 }
 

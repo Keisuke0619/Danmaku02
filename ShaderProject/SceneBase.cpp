@@ -77,16 +77,16 @@ void SceneBase::UpdateCollision()
 		}
 #endif //  _DEBUG
 
-		//if (itr->first->GetIsBoxCollision())
-		//{
-		//	CollisionCircleBox(itr->second, itr->first);
-		//}
-		//else if (itr->second->GetIsBoxCollision())
-		//{
-		//	CollisionCircleBox(itr->first, itr->second);
+		if (itr->first->GetIsBoxCollision())
+		{
+			isCollision = CollisionCircleBox(itr->second, itr->first);
+		}
+		else if (itr->second->GetIsBoxCollision())
+		{
+			isCollision = CollisionCircleBox(itr->first, itr->second);
 
-		//}
-		//else
+		}
+		else
 		{
 			isCollision = CollisionCircleCircle(itr->first, itr->second);
 		}
@@ -115,15 +115,54 @@ bool SceneBase::CollisionCircleBox(CObject* circle, CObject* box)
 {
 	DirectX::XMFLOAT2* vtxVector = box->GetBoxVtxVector();
 	DirectX::XMFLOAT2 boxVtx[4];
-	DirectX::XMVECTOR vVtx[4];
 	DirectX::XMFLOAT2 boxCenter = DirectX::XMFLOAT2(box->GetPos().x, box->GetPos().z);
+	DirectX::XMFLOAT2 circleCenter = DirectX::XMFLOAT2(circle->GetPos().x, circle->GetPos().z);
 	for (int i = 0; i < 4; i++)
 	{
-		boxVtx[i] =  DirectXUtil::Mul(vtxVector[i], box->GetColliderScale() * 0.5f + circle->GetColliderScale() * 0.5f);
-		vVtx[i] = DirectX::XMLoadFloat2(&(boxVtx[i]));
+		boxVtx[i] =  DirectXUtil::Mul(vtxVector[i], box->GetColliderScale() * 0.7f + circle->GetColliderScale() * 0.50f);
+		DirectXUtil::Increment(&(boxVtx[i]), boxCenter);
 	}
-	for (int i = 0; i < 4; i++)
+	DirectX::XMFLOAT2 tmp[3] =
 	{
-		//DirectX::XMVector2Cross
+		boxVtx[0],
+		boxVtx[1],
+		boxVtx[2]
+	};
+	if (CheckCross(circleCenter, tmp))
+	{
+		return true;
 	}
+	tmp[0] = boxVtx[2];
+	tmp[1] = boxVtx[0];
+	tmp[2] = boxVtx[3];
+	return CheckCross(circleCenter, tmp);
+}
+
+bool SceneBase::CheckCross(DirectX::XMFLOAT2 point, DirectX::XMFLOAT2 vtx[3])
+{
+	DirectX::XMVECTOR vCross[3];
+	DirectX::XMVECTOR vPoint = DirectX::XMLoadFloat2(&point);
+	DirectX::XMVECTOR vTriStart = DirectX::XMLoadFloat2(vtx);
+
+	for (int i = 0; i < 3; i++)
+	{
+		auto vTriEnd = DirectX::XMLoadFloat2(&(vtx[(i + 1) % 3]));
+		auto vTriEdge = DirectX::XMVectorSubtract(vTriEnd, vTriStart);
+		auto vToPoint = DirectX::XMVectorSubtract(vPoint, vTriStart);
+		vCross[i] = DirectX::XMVector2Cross(vTriEdge, vToPoint);
+		vCross[i] = DirectX::XMVector2Normalize(vCross[i]);
+		vTriStart = vTriEnd;
+	}
+	DirectX::XMVECTOR vDot[3] =
+	{
+		DirectX::XMVector2Dot(vCross[0], vCross[1]),
+		DirectX::XMVector2Dot(vCross[1], vCross[2]),
+		DirectX::XMVector2Dot(vCross[2], vCross[0])
+	};
+	float match[3];
+	for (int i = 0; i < 3; i++)
+	{
+		DirectX::XMStoreFloat(&match[i], vDot[i]);
+	}
+	return match[0] >= 0.999f && match[1] >= 0.999f && match[2] >= 0.999f;
 }

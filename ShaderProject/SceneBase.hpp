@@ -63,6 +63,7 @@ protected:
 private:
 	bool CollisionCircleCircle(CObject* circle1, CObject* circle2);
 	bool CollisionCircleBox(CObject* circle, CObject* box);
+	bool CheckCross(DirectX::XMFLOAT2 point, DirectX::XMFLOAT2 vtx[3]);
 };
 
 /// <summary>

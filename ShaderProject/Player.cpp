@@ -78,9 +78,9 @@ void CPlayer::Shot()
 	}
 	if (m_frame % 12 == 0)
 	{
-		for (int i = -3; i <= 3; i++)
+		for (int i = -10; i <= 10; i++)
 		{
-			auto shot = CShot::Create(this, DirectX::XMFLOAT2(m_pos.x, m_pos.z), 12, 270 - DirectX::XMConvertToDegrees(m_rot.y) + 10 * i, WHITE, SIZE07);
+			auto shot = CShot::Create(this, DirectX::XMFLOAT2(m_pos.x, m_pos.z), 12, 270 - DirectX::XMConvertToDegrees(m_rot.y) + 3 * i, WHITE, SIZE07);
 			shot->FromPlayer();
 			shot->SetColliderScale(PLAYER_SHOT_COLLIDER_SCALE);
 		}
