@@ -173,6 +173,7 @@
     <ClCompile Include="CameraDCC.cpp" />
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
+    <ClCompile Include="CsvLoader.cpp" />
     <ClCompile Include="DebugWindow.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="DirectXMathUtil.cpp" />
@@ -206,11 +207,13 @@
     <ClInclude Include="CameraDCC.h" />
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CollisionSystem.h" />
+    <ClInclude Include="CsvLoader.h" />
     <ClInclude Include="DebugWindow.hpp" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="DirectXMathUtil.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="LightBase.h" />

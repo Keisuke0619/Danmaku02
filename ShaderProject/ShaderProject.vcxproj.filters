@@ -150,11 +150,14 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>ソース ファイル\App\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="LoadStageData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>ソース ファイル\App\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadStageData.cpp">
+      <Filter>ソース ファイル\App\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CsvLoader.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -249,6 +252,12 @@
       <Filter>ヘッダー ファイル\App\Objects</Filter>
     </ClInclude>
     <ClInclude Include="LoadStageData.h">
+      <Filter>ヘッダー ファイル\App\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawner.h">
+      <Filter>ヘッダー ファイル\App\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CsvLoader.h">
       <Filter>ヘッダー ファイル\App\Base</Filter>
     </ClInclude>
   </ItemGroup>

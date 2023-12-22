@@ -110,7 +110,7 @@ void CShot::FromPlayer(bool fromPlayer)
 
 
 
-CShot* CShot::Create(CObject* parent, DirectX::XMFLOAT2 pos, float speed, float degAngle, EShotColor shotColor, EShotSize shotSize, float addSpeed, float addAngle)
+CShot* CShot::Create(CObject* parent, DirectX::XMFLOAT2 pos, float speed, float degAngle, std::string color, float addSpeed, float addAngle)
 {
     auto shot = new CShot();
     shot->m_pos.x = pos.x;
@@ -121,8 +121,8 @@ CShot* CShot::Create(CObject* parent, DirectX::XMFLOAT2 pos, float speed, float 
     shot->m_speed = DirectX::XMFLOAT3(cosf(shot->m_shotData.angle) * shot->m_shotData.speed, 0, sinf(shot->m_shotData.angle) * shot->m_shotData.speed);
     shot->m_shotData.addSpeed = addSpeed * SHOT_SPEED_COEF;
     shot->m_shotData.addAngle = DirectX::XMConvertToRadians(addAngle);
-    shot->LoadTexture("Assets/Texture/Bullet/" + ColorName[shotColor] + SizeName[shotSize]);
-    if(parent)
+    shot->LoadTexture("Assets/Texture/Bullet/" + color);
+    if (parent)
         parent->AddChild(shot);
     return shot;
 }

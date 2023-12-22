@@ -43,8 +43,8 @@ void SceneK07::Init()
 	field->SetRot(DirectX::XMFLOAT3(3.141592f / 2, 0, 0));
 	field->SetScale(DirectX::XMFLOAT3(1000, 1000, 1));
 	field->SetUVScale(DirectX::XMFLOAT2(25, 25));
-	//auto enemy = new CEnemy();
-	//enemy->SetPos(DirectX::XMFLOAT3(0, 1, 20));
+	auto enemy = new CEnemy();
+	enemy->SetPos(DirectX::XMFLOAT3(0, 1, 20));
 	auto stageDatas = LoadStageData("Assets/CSV/MapTest.csv");
 	//auto stageDatas = LoadStageData("Assets/CSV/Map2.csv");
 	for (auto data : *stageDatas)

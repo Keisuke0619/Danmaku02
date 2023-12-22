@@ -12,9 +12,9 @@ CEnemy::CEnemy()
 }
 void CEnemy::Update()
 {
-	if (m_frame % 30 == 0)
+	for (auto shot : m_shotDatas)
 	{
-		auto shot = CShot::Create(this, m_pos, 5, DirectX::XMConvertToDegrees(GetAngleToPlayer()), RED, SIZE03);
+		CSVShot(shot);
 	}
 	if (m_life <= 0) { Destroy(); }
 }
@@ -35,4 +35,11 @@ float CEnemy::GetAngleToPlayer()
 		return 0;
 	}
 	return atan2f(pl->GetPos().z - m_pos.z, pl->GetPos().x - m_pos.x);
+}
+
+void CEnemy::CSVShot(TEnemyShotData data)
+{
+	if (m_frame % data.waitFrame != 0) { return; }
+	for(int i = -(data.ways / 2); i <= (data.ways / 2); i++)
+	CShot::Create(this, m_pos, data.speed, data.startAngle + (i * data.wayAngle) + (m_frame * data.frameAngle), data.colorID);
 }
