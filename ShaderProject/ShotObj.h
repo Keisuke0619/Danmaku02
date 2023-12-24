@@ -49,7 +49,9 @@ private:
 	TShotData m_shotData;
 	std::list<TShotDataReserve*> m_shotDataReserve;
 	DirectX::XMFLOAT3 m_speed;
+	bool m_isDropItem = true;
 public:
+	virtual ~CShot();
 	void SetKillShot(bool isKillShot = true) { m_isKillShot = isKillShot; }
 	void Update() final;
 	void AddShotData(int frame, float speed, float degAngle, float addSpeed = 0, float addAngle = 0);

@@ -7,7 +7,7 @@ CEnemy::CEnemy()
 	Load("Assets/Model/spot/spot.fbx");
 	UseCollision(true);
 	m_tag = "Enemy";
-	m_life = 100;
+	m_life = 30;
 	m_colliderScale = 2;
 }
 void CEnemy::Update()
@@ -15,6 +15,10 @@ void CEnemy::Update()
 	for (auto shot : m_shotDatas)
 	{
 		CSVShot(shot);
+	}
+	for (auto move : m_moveDatas)
+	{
+
 	}
 	if (m_life <= 0) { Destroy(); }
 }
@@ -41,5 +45,5 @@ void CEnemy::CSVShot(TEnemyShotData data)
 {
 	if (m_frame % data.waitFrame != 0) { return; }
 	for(int i = -(data.ways / 2); i <= (data.ways / 2); i++)
-	CShot::Create(this, m_pos, data.speed, data.startAngle + (i * data.wayAngle) + (m_frame * data.frameAngle), data.colorID);
+		CShot::Create(this, m_pos, data.speed, data.startAngle + (i * data.wayAngle) + (m_frame * data.frameAngle), data.colorID);
 }
