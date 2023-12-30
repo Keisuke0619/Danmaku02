@@ -1,5 +1,5 @@
 #include "ShotObj.h"
-
+#include "CameraBase.h"
 const std::string CShot::ColorName[COLOR_MAX] =
 {
     "AQUA",
@@ -41,6 +41,12 @@ CShot::CShot()
     UseCollision();
 }
 
+CShot::~CShot()
+{
+    // ‚±‚±‚ÅƒAƒCƒeƒ€ì¬
+    if (m_tag == "ShotFromPlayer") { return; }
+}
+
 void CShot::Update()
 {
     if (m_shotDataReserve.size() != 0 && m_shotDataReserve.front()->frame == m_frame)
@@ -63,7 +69,10 @@ void CShot::Update()
         m_speed.z = sinf(m_shotData.angle) * m_shotData.speed;
     }
     DirectXUtil::Increment(&m_pos, m_speed);
-    if (m_frame > 600) { Destroy(); }
+    if (m_pos.z < CameraBase::GetPrimary()->GetPos().z || CameraBase::GetPrimary()->GetPos().z + 100 < m_pos.z)
+    {
+        Destroy();
+    }
 }
 
 void CShot::AddShotData(int frame, float speed, float degAngle, float addSpeed, float addAngle)
@@ -92,6 +101,7 @@ void CShot::OnCollision(CObject* _obj)
         _obj->GetTagName() == "Enemy" && m_tag == "ShotFromPlayer" ||
         _obj->GetTagName() == "Wall")
     {
+        m_isDropItem = false;
         Destroy();
     }
 }
@@ -110,7 +120,7 @@ void CShot::FromPlayer(bool fromPlayer)
 
 
 
-CShot* CShot::Create(CObject* parent, DirectX::XMFLOAT2 pos, float speed, float degAngle, EShotColor shotColor, EShotSize shotSize, float addSpeed, float addAngle)
+CShot* CShot::Create(CObject* parent, DirectX::XMFLOAT2 pos, float speed, float degAngle, std::string color, float addSpeed, float addAngle)
 {
     auto shot = new CShot();
     shot->m_pos.x = pos.x;
@@ -121,8 +131,8 @@ CShot* CShot::Create(CObject* parent, DirectX::XMFLOAT2 pos, float speed, float 
     shot->m_speed = DirectX::XMFLOAT3(cosf(shot->m_shotData.angle) * shot->m_shotData.speed, 0, sinf(shot->m_shotData.angle) * shot->m_shotData.speed);
     shot->m_shotData.addSpeed = addSpeed * SHOT_SPEED_COEF;
     shot->m_shotData.addAngle = DirectX::XMConvertToRadians(addAngle);
-    shot->LoadTexture("Assets/Texture/Bullet/" + ColorName[shotColor] + SizeName[shotSize]);
-    if(parent)
+    shot->LoadTexture("Assets/Texture/Bullet/" + color);
+    if (parent)
         parent->AddChild(shot);
     return shot;
 }

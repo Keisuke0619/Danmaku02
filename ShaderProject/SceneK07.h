@@ -2,7 +2,7 @@
 
 #include "SceneBase.hpp"
 #include "Model.h"
-
+#include "EnemySpawner.h"
 #include <list>
 
 struct ModelData
@@ -24,4 +24,6 @@ private:
 	void InitSky();
 	void DrawSky();
 
+	CEnemySpawner *m_spawner;
+	CObject* m_player;
 };

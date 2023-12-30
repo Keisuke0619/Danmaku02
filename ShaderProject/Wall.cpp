@@ -1,6 +1,6 @@
 #include "Wall.h"
+#include "Defines.h"
 
-#define WALL_SCALE (5)
 CWall::CWall(int x, int y, int id, float offsetX, float offsetY)
 {
 	std::string path = "Assets/Model/Wall/" + std::to_string(id) + ".fbx";

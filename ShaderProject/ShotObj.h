@@ -49,7 +49,9 @@ private:
 	TShotData m_shotData;
 	std::list<TShotDataReserve*> m_shotDataReserve;
 	DirectX::XMFLOAT3 m_speed;
+	bool m_isDropItem = true;
 public:
+	virtual ~CShot();
 	void SetKillShot(bool isKillShot = true) { m_isKillShot = isKillShot; }
 	void Update() final;
 	void AddShotData(int frame, float speed, float degAngle, float addSpeed = 0, float addAngle = 0);
@@ -64,7 +66,17 @@ private:
 	static const std::string SizeName[SHOT_SIZE_MAX];
 	static const float ShotSize[SHOT_SIZE_MAX];
 public:
-	static CShot* Create(CObject* parent, DirectX::XMFLOAT2 pos, float speed, float degAngle, EShotColor shotColor, EShotSize shotSize, float addSpeed = 0, float addAngle = 0);
+	static CShot* Create(CObject* parent, DirectX::XMFLOAT2 pos, float speed, float degAngle, std::string color, float addSpeed = 0, float addAngle = 0);
+
+	static CShot* Create(CObject* parent, DirectX::XMFLOAT3 pos, float speed, float degAngle, std::string color, float addSpeed = 0, float addAngle = 0)
+	{
+		return Create(parent, DirectX::XMFLOAT2(pos.x, pos.z), speed,degAngle,color,addSpeed,addAngle);
+	}
+	static CShot* Create(CObject* parent, DirectX::XMFLOAT2 pos, float speed, float degAngle, EShotColor shotColor, EShotSize shotSize, float addSpeed = 0, float addAngle = 0)
+	{
+		return Create(parent, pos, speed, degAngle, ColorName[shotColor] + SizeName[shotSize], addSpeed, addAngle);
+
+	}
 	static CShot* Create(CObject* parent, DirectX::XMFLOAT3 pos, float speed, float degAngle, EShotColor shotColor, EShotSize shotSize, float addSpeed = 0, float addAngle = 0) 
 	{
 		return Create(parent, DirectX::XMFLOAT2(pos.x, pos.z), speed, degAngle, shotColor, shotSize, addSpeed = 0, addAngle = 0);
