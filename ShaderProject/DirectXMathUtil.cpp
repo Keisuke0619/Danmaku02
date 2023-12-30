@@ -8,6 +8,11 @@ void DirectXUtil::Increment(DirectX::XMFLOAT2* dest, DirectX::XMFLOAT2 src)
     dest->y += src.y;
 }
 
+void DirectXUtil::Increment(DirectX::XMFLOAT2* dest, DirectX::XMFLOAT3 src)
+{
+    Increment(dest, DirectX::XMFLOAT2(src.x, src.y));
+}
+
 void DirectXUtil::Decriment(DirectX::XMFLOAT2* dest, DirectX::XMFLOAT2 src)
 {
     dest->x -= src.x;
@@ -19,6 +24,11 @@ void DirectXUtil::Increment(DirectX::XMFLOAT3* dest, DirectX::XMFLOAT3 src)
     dest->x += src.x;
     dest->y += src.y;
     dest->z += src.z;
+}
+
+void DirectXUtil::Increment(DirectX::XMFLOAT3* dest, DirectX::XMFLOAT2 src)
+{
+    Increment(dest, DirectX::XMFLOAT3(src.x, src.y, 0));
 }
 
 void DirectXUtil::Decriment(DirectX::XMFLOAT3* dest, DirectX::XMFLOAT3 src)
@@ -87,4 +97,10 @@ DirectX::XMFLOAT4 DirectXUtil::Sub(DirectX::XMFLOAT4 left, DirectX::XMFLOAT4 rig
 DirectX::XMFLOAT4 DirectXUtil::Mul(DirectX::XMFLOAT4 src, float num)
 {
     return DirectX::XMFLOAT4(src.x * num, src.y * num, src.z * num, src.w * num);
+}
+
+float DirectXUtil::Dist(DirectX::XMFLOAT2 one, DirectX::XMFLOAT2 another)
+{
+    DirectX::XMFLOAT2 distAxis = DirectX::XMFLOAT2(one.x - another.x, one.y - another.y);
+    return powf(distAxis.x, 2) + powf(distAxis.y, 2);
 }

@@ -6,7 +6,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-#define APP_TITLE "SP31 Shader"
+#define APP_TITLE "Danmaku [HAL名古屋 ゲーム制作専攻 清水圭亮]"
 
 // 画面サイズ
 #define SCREEN_WIDTH (1280)
@@ -15,6 +15,7 @@
 // リソースパス
 #define ASSET(path)	"Assets/"path
 
+#define WALL_SCALE (5)
 
 inline void Error(const char* format, ...)
 {

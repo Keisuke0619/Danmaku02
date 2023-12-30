@@ -12,6 +12,7 @@
 #include "Enemy.h"
 #include "LoadStageData.h"
 #include "Wall.h"
+
 void SceneK07::Init()
 {
 	Shader* shader[] = {
@@ -32,9 +33,9 @@ void SceneK07::Init()
 	InitSky();
 	CCollisionSystem::GetIns()->Create(6, -50, 100, 50, -100);
 
-	auto pl = CreateObj<CPlayer>("Player");
+	m_player = CreateObj<CPlayer>("Player");
 	auto cam = CreateObj<CFollowCamera>("MainCamera");
-	cam->SetTarget(pl);
+	cam->SetTarget(m_player);
 	cam->SetPosOffset(DirectX::XMFLOAT3(0, 5, -5));
 	cam->SetLookOffset(DirectX::XMFLOAT3(0, 0, 4));
 	auto field = new CWorldSprite();
@@ -43,8 +44,6 @@ void SceneK07::Init()
 	field->SetRot(DirectX::XMFLOAT3(3.141592f / 2, 0, 0));
 	field->SetScale(DirectX::XMFLOAT3(1000, 1000, 1));
 	field->SetUVScale(DirectX::XMFLOAT2(25, 25));
-	auto enemy = new CEnemy();
-	enemy->SetPos(DirectX::XMFLOAT3(0, 1, 20));
 	auto stageDatas = LoadStageData("Assets/CSV/MapTest.csv");
 	//auto stageDatas = LoadStageData("Assets/CSV/Map2.csv");
 	for (auto data : *stageDatas)
@@ -52,10 +51,12 @@ void SceneK07::Init()
 		auto tile = new CWall(data.x, data.y, data.id, 14, 4);
 		//auto tile = new CWall(data.x, data.y, data.id, 0,-2);
 	}
+	m_spawner = new CEnemySpawner("Assets/CSV/EnemyTest.csv");
 }
 
 void SceneK07::Uninit()
 {
+	delete m_spawner;
 }
 
 void SceneK07::Update(float tick)
@@ -66,6 +67,8 @@ void SceneK07::Update(float tick)
 	// DCCカメラがメインではないならアップデート。
 	if (primary != cameraDCC || IsKeyPress(VK_RETURN))
 	{
+		if(m_player)
+			m_spawner->Update(DirectX::XMFLOAT2(m_player->GetPos().x, m_player->GetPos().z));
 		CObjectManager::GetIns()->Update();
 		CObjectManager::GetIns()->RemoveUpdate();
 		if (IsKeyTrigger('R'))

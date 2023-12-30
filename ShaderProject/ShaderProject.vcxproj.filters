@@ -159,6 +159,9 @@
     <ClCompile Include="CsvLoader.cpp">
       <Filter>ソース ファイル\App\Base</Filter>
     </ClCompile>
+    <ClCompile Include="EnemySpawner.cpp">
+      <Filter>ソース ファイル\App\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h">

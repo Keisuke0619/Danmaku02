@@ -178,6 +178,7 @@
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="DirectXMathUtil.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LightBase.cpp" />
