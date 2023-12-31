@@ -83,6 +83,7 @@ private:
 	std::map<std::string, Model::Materials> m_materials;
 public:
 	bool Load(const char* file, Model::Meshes* mesh, Model::Materials* material, float scale = 1.0f, bool flip = false, DirectX::XMFLOAT3 offset = {0,0,0});
+	void DeleteAll();
 };
 
 #endif // __MODEL_H__

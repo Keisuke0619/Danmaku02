@@ -48,7 +48,7 @@ void SceneK07::Init()
 	//auto stageDatas = LoadStageData("Assets/CSV/Map2.csv");
 	for (auto data : *stageDatas)
 	{
-		auto tile = new CWall(data.x, data.y, data.id, 14, 4);
+		new CWall(data.x, data.y, data.id, 14, 4);
 		//auto tile = new CWall(data.x, data.y, data.id, 0,-2);
 	}
 	m_spawner = new CEnemySpawner("Assets/CSV/EnemyTest.csv");
@@ -57,6 +57,9 @@ void SceneK07::Init()
 void SceneK07::Uninit()
 {
 	delete m_spawner;
+	CObjectManager::GetIns()->DestroyAll();
+	MeshPool::Ins()->DeleteAll();
+	delete CCollisionSystem::GetIns();
 }
 
 void SceneK07::Update(float tick)
@@ -71,11 +74,6 @@ void SceneK07::Update(float tick)
 			m_spawner->Update(DirectX::XMFLOAT2(m_player->GetPos().x, m_player->GetPos().z));
 		CObjectManager::GetIns()->Update();
 		CObjectManager::GetIns()->RemoveUpdate();
-		if (IsKeyTrigger('R'))
-		{
-			auto enemy = new CEnemy();
-			enemy->SetPos(DirectX::XMFLOAT3((rand() % 11) - 5, 1, 20 + (rand() % 20)));
-		}
 	}
 	UpdateCamera();
 	UpdateCollision();

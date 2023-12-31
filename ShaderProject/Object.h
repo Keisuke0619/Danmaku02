@@ -109,6 +109,7 @@ public:
 	void RemoveUpdate();
 	void Add(CObject* obj);
 	void Destroy(CObject* obj);
+	void DestroyAll();
 private:
 	static CObjectManager* m_ins;
 public:

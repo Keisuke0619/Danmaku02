@@ -152,3 +152,24 @@ void CObjectManager::Destroy(CObject* obj)
 
 	m_destroy.push_back(obj);
 }
+
+void CObjectManager::DestroyAll()
+{
+	auto itr = m_objects.begin();
+	while (itr != m_objects.end())
+	{
+		if ((*itr)->GetTagName() == "Camera")
+		{
+			itr++;
+			continue;
+		}
+		if ((*itr)->GetTagName() == "Player")
+		{
+			itr++;
+			continue;
+		}
+		delete (*itr);
+
+		itr = m_objects.erase(itr);
+	}
+}

@@ -8,6 +8,7 @@ CameraBase::CameraBase()
 	, m_fovy(DirectX::XMConvertToRadians(60.0f)), m_aspect(16.0f / 9.0f), m_near(0.2f), m_far(1000.0f)
 {
 	m_primary = this;
+	m_tag = "Camera";
 }
 CameraBase::~CameraBase()
 {

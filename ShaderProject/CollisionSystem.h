@@ -38,6 +38,7 @@ private:
 private:
 	CCollisionSystem();
 public:
+	~CCollisionSystem();
 	void Create(int level, float left, float top, float right, float bottom);
 	unsigned Regist(TObjectMember* obj, float left, float top, float right, float bottom);
 	std::list<Pair>* GetList();

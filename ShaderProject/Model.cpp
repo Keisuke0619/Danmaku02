@@ -305,3 +305,9 @@ bool MeshPool::Load(const char* file, Model::Meshes* outMesh, Model::Materials* 
 
 	return true;
 }
+
+void MeshPool::DeleteAll()
+{
+	m_materials.clear();
+	m_meshes.clear();
+}

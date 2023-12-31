@@ -5,6 +5,7 @@ class CPlayer : public Model
 {
 public:
 	CPlayer();
+	virtual ~CPlayer();
 	void Update() override;
 	void Move();
 	void Shot();

@@ -29,6 +29,20 @@ CCollisionSystem::CCollisionSystem()
 	m_point[0] = 0;
 }
 
+CCollisionSystem::~CCollisionSystem()
+{
+	for (int i = 0; i < m_spaceNum; i++)
+	{
+		if (m_space[i])
+		{
+			delete m_space[i];
+			m_space[i] = nullptr;
+		}
+	}
+	delete[] m_space;
+	m_space = nullptr;
+}
+
 void CCollisionSystem::Create(int level, float left, float top, float right, float bottom)
 {
 	if (level >= QUAD_TREE_MAX_LEVEL) { return; }
@@ -50,7 +64,7 @@ void CCollisionSystem::Create(int level, float left, float top, float right, flo
 unsigned CCollisionSystem::Regist(TObjectMember* obj, float left, float top, float right, float bottom)
 {
 	auto elem = GetMortonNum(left, top, right, bottom);
-	if (elem < m_spaceNum)
+	if (elem < (unsigned)m_spaceNum)
 	{
 		if (m_space[elem] == nullptr)
 		{
@@ -80,7 +94,7 @@ void CCollisionSystem::CreateSpace(unsigned elem)
 
 		// e‹óŠÔ‚ÉƒWƒƒƒ“ƒv
 		elem = (elem - 1) >> 2;
-		if (elem >= m_spaceNum) break;
+		if (elem >= (unsigned)m_spaceNum) break;
 	}
 }
 
@@ -111,7 +125,7 @@ void CCollisionSystem::GetChild(std::list<CObject*>& stackObj, unsigned elem)
 			m_collisionPair.push_back(pair);
 		}
 	}
-	if (m_point[m_lowestLevel - 1] >= elem)
+	if ((unsigned)m_point[m_lowestLevel - 1] >= elem)
 	{
 
 		for (int i = 0; i < 4; i++)
@@ -119,7 +133,7 @@ void CCollisionSystem::GetChild(std::list<CObject*>& stackObj, unsigned elem)
 			GetChild(stackObj, elem * 4 + 1 + i);
 		}
 	}
-	for (int i = 0; i < stackNum; i++)
+	for (unsigned int i = 0; i < stackNum; i++)
 	{
 		stackObj.pop_back();
 	}
@@ -144,7 +158,7 @@ unsigned CCollisionSystem::GetMortonNum(float left, float top, float right, floa
 	auto addNum = (m_point[m_lowestLevel - level] - 1) / 3;
 	spaceNum += addNum;
 
-	if (spaceNum > m_spaceNum)
+	if (spaceNum > (unsigned)m_spaceNum)
 		return 0xffffffff;
 
 	return spaceNum;

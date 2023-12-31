@@ -16,6 +16,11 @@ CPlayer::CPlayer()
 	if (Player == nullptr) Player = this;
 }
 
+CPlayer::~CPlayer()
+{
+	printf("Delete");
+}
+
 void CPlayer::Update()
 {
 	Shot();
