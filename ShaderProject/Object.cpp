@@ -153,23 +153,23 @@ void CObjectManager::Destroy(CObject* obj)
 	m_destroy.push_back(obj);
 }
 
-void CObjectManager::DestroyAll(std::list<void*> sharedObjects)
+void CObjectManager::DestroyAll()
 {
 	auto itr = m_objects.begin();
 	while (itr != m_objects.end())
 	{
-		if ((*itr)->GetTagName() == "Camera")
-		{
-			itr++;
-			continue;
-		}
-		if ((*itr)->GetTagName() == "Player")
-		{
-			itr++;
-			continue;
-		}
 		delete (*itr);
-
+		*itr = nullptr;
 		itr = m_objects.erase(itr);
+	}
+}
+
+void CObjectManager::RemoveList(void* obj)
+{
+	CObject* ptr = (CObject*)obj;
+	auto result = std::find(m_objects.begin(), m_objects.end(), ptr);
+	if (result != m_objects.end())
+	{
+		m_objects.remove((CObject*)obj);
 	}
 }

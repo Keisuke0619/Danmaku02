@@ -11,13 +11,18 @@ SceneBase::SceneBase()
 }
 SceneBase::~SceneBase()
 {
-	std::list<void*> objects;
 	for (auto obj : m_objects)
 	{
-		void* ptr = obj.second.get();
-		objects.push_back(ptr);
+		if (obj.second != nullptr)
+		{
+			CObjectManager::GetIns()->RemoveList(obj.second);
+			delete obj.second;
+			obj.second = nullptr;
+		}
 	}
-	CObjectManager::GetIns()->DestroyAll(objects);
+	m_objects.clear();
+
+	CObjectManager::GetIns()->DestroyAll();
 	// サブシーンを削除
 	RemoveSubScene();
 
@@ -29,6 +34,7 @@ SceneBase::~SceneBase()
 		++it;
 	}
 	m_items.clear();
+	
 
 	// 親の参照を削除
 	if(m_pParent)
