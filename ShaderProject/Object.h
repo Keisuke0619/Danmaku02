@@ -109,7 +109,10 @@ public:
 	void RemoveUpdate();
 	void Add(CObject* obj);
 	void Destroy(CObject* obj);
-	void DestroyAll(std::list<void*> sharedObjects);
+	void DestroyAll();
+
+	// Use in SceneBase ONLY.
+	void RemoveList(void* obj);
 private:
 	static CObjectManager* m_ins;
 public:
