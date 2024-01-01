@@ -109,7 +109,7 @@ public:
 	void RemoveUpdate();
 	void Add(CObject* obj);
 	void Destroy(CObject* obj);
-	void DestroyAll();
+	void DestroyAll(std::list<void*> sharedObjects);
 private:
 	static CObjectManager* m_ins;
 public:

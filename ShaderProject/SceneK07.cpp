@@ -57,7 +57,6 @@ void SceneK07::Init()
 void SceneK07::Uninit()
 {
 	delete m_spawner;
-	CObjectManager::GetIns()->DestroyAll();
 	MeshPool::Ins()->DeleteAll();
 	delete CCollisionSystem::GetIns();
 }

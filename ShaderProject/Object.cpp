@@ -153,7 +153,7 @@ void CObjectManager::Destroy(CObject* obj)
 	m_destroy.push_back(obj);
 }
 
-void CObjectManager::DestroyAll()
+void CObjectManager::DestroyAll(std::list<void*> sharedObjects)
 {
 	auto itr = m_objects.begin();
 	while (itr != m_objects.end())

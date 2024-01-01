@@ -1,6 +1,7 @@
 #include "SceneBase.hpp"
 #include "Sprite.h"
 #include "CollisionSystem.h"
+#include "Object.h"
 SceneBase::Objects SceneBase::m_objects;
 
 SceneBase::SceneBase()
@@ -10,6 +11,13 @@ SceneBase::SceneBase()
 }
 SceneBase::~SceneBase()
 {
+	std::list<void*> objects;
+	for (auto obj : m_objects)
+	{
+		void* ptr = obj.second.get();
+		objects.push_back(ptr);
+	}
+	CObjectManager::GetIns()->DestroyAll(objects);
 	// サブシーンを削除
 	RemoveSubScene();
 
