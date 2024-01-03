@@ -49,6 +49,9 @@ private:
 	unsigned BitSeparate32(unsigned n);
 	unsigned Get2DMortonNumber(unsigned x, unsigned y);
 	unsigned GetPointElem(float pos_x, float pos_y);
+
+	bool m_enablePairLine = false;
+	void DebugDrawPairLine();
 };
 
 // ‹óŠÔƒNƒ‰ƒX
