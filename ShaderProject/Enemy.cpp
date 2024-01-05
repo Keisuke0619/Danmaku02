@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "ShotObj.h"
 #include "Defines.h"
+#include "Input.h"
 CEnemy::CEnemy()
 {
 	UseCollision(true);
@@ -13,6 +14,11 @@ void CEnemy::Update()
 {
 	CSVRoutine();
 	if (m_life <= 0) { Destroy(); }
+	if (IsKeyPress('W')) { m_pos.z += 0.03f; }
+	if (IsKeyPress('S')) { m_pos.z -= 0.03f; }
+	if (IsKeyPress('A')) { m_pos.x -= 0.03f; }
+	if (IsKeyPress('D')) { m_pos.x += 0.03f; }
+
 }
 
 void CEnemy::SetSpawnData(const char* modelPath, int autoDestroyFrame)

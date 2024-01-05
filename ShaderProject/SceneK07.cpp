@@ -31,7 +31,7 @@ void SceneK07::Init()
 	Sprite::SetPixelShader(nullptr);
 
 	InitSky();
-	CCollisionSystem::GetIns()->Create(6, -50, 100, 50, -100);
+	CCollisionSystem::GetIns()->Create(3, -50, 50, 50, -50);
 
 	m_player = CreateObj<CPlayer>("Player");
 	auto cam = CreateObj<CFollowCamera>("MainCamera");
@@ -44,12 +44,11 @@ void SceneK07::Init()
 	field->SetRot(DirectX::XMFLOAT3(3.141592f / 2, 0, 0));
 	field->SetScale(DirectX::XMFLOAT3(1000, 1000, 1));
 	field->SetUVScale(DirectX::XMFLOAT2(25, 25));
-	auto stageDatas = LoadStageData("Assets/CSV/MapTest.csv");
-	//auto stageDatas = LoadStageData("Assets/CSV/Map2.csv");
+	//auto stageDatas = LoadStageData("Assets/CSV/MapTest.csv");
+	auto stageDatas = LoadStageData("Assets/CSV/Map2.csv");
 	for (auto data : *stageDatas)
 	{
 		new CWall(data.x, data.y, data.id, 14, 4);
-		//auto tile = new CWall(data.x, data.y, data.id, 0,-2);
 	}
 	m_spawner = new CEnemySpawner("Assets/CSV/EnemyTest.csv");
 }

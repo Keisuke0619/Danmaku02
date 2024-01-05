@@ -122,4 +122,6 @@ void SceneRoot::Draw()
 
 	// オブジェクト描画
 	pLight->Draw();
+
+	Geometory::DrawLines();
 }
