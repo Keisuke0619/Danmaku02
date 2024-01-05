@@ -4,6 +4,7 @@
 #include "Geometory.h"
 #include "Input.h"
 #include "CameraBase.h"
+#include "Defines.h"
 CCollisionSystem* CCollisionSystem::Ins;
 CCollisionSystem* CCollisionSystem::GetIns()
 {
@@ -53,6 +54,11 @@ void CCollisionSystem::Create(int level, float left, float top, float right, flo
 	m_spaceNum = (m_point[level + 1] - 1) / 3;
 	m_space = new CSpace*[m_spaceNum];
 	ZeroMemory(m_space, sizeof(CSpace*) * m_spaceNum);
+	
+	left *= WALL_SCALE;
+	top *= WALL_SCALE;
+	right *= WALL_SCALE;
+	bottom *= WALL_SCALE;
 
 	m_left = left;
 	m_top = top;

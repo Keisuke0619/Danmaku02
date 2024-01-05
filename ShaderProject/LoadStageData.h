@@ -9,3 +9,4 @@ struct TMapTile
 	unsigned id;
 };
 std::list<TMapTile>* LoadStageData(std::string stagePath);
+void CreateStage(std::string stagePath, int offsetX = 0, int offsetY = 0);
