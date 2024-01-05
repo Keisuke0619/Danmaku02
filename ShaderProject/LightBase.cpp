@@ -28,7 +28,6 @@ void LightBase::Draw()
 	);
 	Geometory::SetColor(m_diffuse);
 	Geometory::AddLine(drawPos, end);
-	Geometory::DrawLines();
 
 	DirectX::XMFLOAT4X4 mat;
 	DirectX::XMStoreFloat4x4(&mat, DirectX::XMMatrixTranspose(

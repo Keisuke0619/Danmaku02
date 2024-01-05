@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "Geometory.h"
 #include "Input.h"
+#include "CameraBase.h"
 CCollisionSystem* CCollisionSystem::Ins;
 CCollisionSystem* CCollisionSystem::GetIns()
 {
@@ -128,12 +129,12 @@ void CCollisionSystem::GetChild(std::list<CObject*>& stackObj, unsigned elem)
 			m_collisionPair.push_back(pair);
 		}
 	}
-	if ((unsigned)m_point[m_lowestLevel - 1] >= elem)
+	for (int i = 0; i < 4; i++)
 	{
-
-		for (int i = 0; i < 4; i++)
+		auto nextElem = elem * 4 + 1 + i;
+		if (nextElem < m_spaceNum)
 		{
-			GetChild(stackObj, elem * 4 + 1 + i);
+			GetChild(stackObj, nextElem);
 		}
 	}
 	for (unsigned int i = 0; i < stackNum; i++)
@@ -198,6 +199,8 @@ void CCollisionSystem::DebugDrawPairLine()
 		auto end = pair.second->GetPos();
 		Geometory::AddLine(start, DirectX::XMFLOAT4(1, 0, 0, 1), end, DirectX::XMFLOAT4(0, 0, 1, 1));
 	}
+	Geometory::SetView(CameraBase::GetPrimary()->GetView());
+	Geometory::SetProjection(CameraBase::GetPrimary()->GetProj());
 }
 
 

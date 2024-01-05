@@ -70,13 +70,14 @@ void CObject::Update()
 
 void CObject::RegistCollision()
 {
-	CCollisionSystem::GetIns()->Regist(
+	auto elem = CCollisionSystem::GetIns()->Regist(
 		&m_collisionData,
 		m_pos.x - m_colliderScale * 0.5f,
 		m_pos.z - m_colliderScale * 0.5f,
 		m_pos.x + m_colliderScale * 0.5f,
 		m_pos.z + m_colliderScale * 0.5f
 	);
+	CDebugWindow::Print(m_tag.c_str(), (int)elem);
 }
 
 void CObject::ReloadWorldMatrix()
