@@ -18,7 +18,6 @@ CPlayer::CPlayer()
 
 CPlayer::~CPlayer()
 {
-	printf("Delete");
 }
 
 void CPlayer::Update()
@@ -65,7 +64,6 @@ void CPlayer::Move()
 	{
 		m_rot.y = atan2f(-addPos.x, -addPos.z);
 	}
-	
 }
 
 void CPlayer::Shot()
@@ -97,6 +95,5 @@ void CPlayer::OnCollision(CObject* _obj)
 {
 	if (_obj->GetTagName() == "Wall")
 	{
-		CDebugWindow::Print("‚ ‚½‚Á‚½", m_pos);
 	}
 }
