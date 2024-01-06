@@ -18,8 +18,8 @@ CWall::CWall(int x, int y, int id, float offsetX, float offsetY)
 #ifdef  _DEBUG
 	UseCollision(false);
 #else //  _DEBUG
-#endif
 	UseCollision(true);
+#endif
 	m_tag = "Wall";
 }
 
