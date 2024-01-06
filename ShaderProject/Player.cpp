@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "Input.h"
 #include "ShotObj.h"
+#include "Wall.h"
+#include "CameraBase.h"
 
 #define PLAYER_SHOT_COLLIDER_SCALE (1.0f)
 
@@ -31,6 +33,7 @@ void CPlayer::Update()
 /// </summary>
 void CPlayer::Move()
 {
+	m_prePos = m_pos;
 	// 移動ステータス
 	int m_state = 0;
 	// 移動ベクトル
@@ -64,6 +67,7 @@ void CPlayer::Move()
 	{
 		m_rot.y = atan2f(-addPos.x, -addPos.z);
 	}
+	CDebugWindow::Print("Move\n");
 }
 
 void CPlayer::Shot()
@@ -95,5 +99,16 @@ void CPlayer::OnCollision(CObject* _obj)
 {
 	if (_obj->GetTagName() == "Wall")
 	{
+
+
+
+
+
+
+		m_pos = m_prePos;
+		ReloadWorldMatrix();
+		CameraBase::GetPrimary()->Update();
+		CDebugWindow::Print("Collision\n");
+
 	}
 }
