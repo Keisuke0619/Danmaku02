@@ -44,7 +44,7 @@ void SceneK07::Init()
 	field->SetScale(DirectX::XMFLOAT3(1000, 1000, 1));
 	field->SetUVScale(DirectX::XMFLOAT2(25, 25));
 	CreateStage("Assets/CSV/MapTest.csv", 14, 4);
-	//auto stageDatas = LoadStageData("Assets/CSV/Map2.csv");
+	//CreateStage("Assets/CSV/Map2.csv", 4, 3);
 	
 	m_spawner = new CEnemySpawner("Assets/CSV/EnemyTest.csv");
 }
@@ -62,13 +62,7 @@ void SceneK07::Update(float tick)
 	CameraBase* cameraDCC = GetObj<CameraBase>("Camera");
 	auto primary = CameraBase::GetPrimary();
 	// DCCカメラがメインではないならアップデート。
-	if (primary != cameraDCC || IsKeyPress(VK_RETURN))
-	{
-		if(m_player)
-			m_spawner->Update(DirectX::XMFLOAT2(m_player->GetPos().x, m_player->GetPos().z));
-		CObjectManager::GetIns()->Update();
-		CObjectManager::GetIns()->RemoveUpdate();
-	}
+	
 	UpdateCamera();
 	UpdateCollision();
 	
@@ -104,6 +98,9 @@ void SceneK07::UpdateCamera()
 	// DCCカメラがメインではないならアップデート。
 	if (primary != cameraDCC || IsKeyPress(VK_RETURN))
 	{
+		if (m_player)
+			m_spawner->Update(DirectX::XMFLOAT2(m_player->GetPos().x, m_player->GetPos().z));
+
 		CObjectManager::GetIns()->Update();
 		CObjectManager::GetIns()->RemoveUpdate();
 	}

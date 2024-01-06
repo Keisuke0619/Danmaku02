@@ -12,7 +12,7 @@ public:
 	void OnCollision(CObject* _obj) override;
 private:
 	bool m_isShot;
-
+	DirectX::XMFLOAT3 m_prePos;
 
 public:
 	static CPlayer* GetPrimary() { return Player; };
