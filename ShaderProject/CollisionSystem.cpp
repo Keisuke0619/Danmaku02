@@ -5,6 +5,8 @@
 #include "Input.h"
 #include "CameraBase.h"
 #include "Defines.h"
+#include "DebugText.h"
+
 CCollisionSystem* CCollisionSystem::Ins;
 CCollisionSystem* CCollisionSystem::GetIns()
 {
@@ -92,6 +94,8 @@ std::list<CCollisionSystem::Pair>* CCollisionSystem::GetList()
 	
 	GetChild(stackObj, 0);
 	DebugDrawPairLine();
+
+	DebugText::SetData(DebugText::SLOT_COLLISION, m_collisionPair.size());
 	return &m_collisionPair;
 }
 

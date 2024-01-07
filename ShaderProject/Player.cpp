@@ -3,6 +3,7 @@
 #include "ShotObj.h"
 #include "Wall.h"
 #include "CameraBase.h"
+#include "DebugText.h"
 
 #define PLAYER_SHOT_COLLIDER_SCALE (1.0f)
 
@@ -67,6 +68,8 @@ void CPlayer::Move()
 	{
 		m_rot.y = atan2f(-addPos.x, -addPos.z);
 	}
+	DebugText::SetData(DebugText::SLOT_PLAYER_POS_X, m_pos.x);
+	DebugText::SetData(DebugText::SLOT_PLAYER_POS_Y, m_pos.z);
 }
 
 void CPlayer::Shot()

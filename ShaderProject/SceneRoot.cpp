@@ -6,6 +6,8 @@
 #include "Input.h"
 #include "Geometory.h"
 
+#include "DebugText.h"
+
 #include "SceneK07.h"
 //--- ’è”’è‹`
 enum SceneKind
@@ -75,6 +77,9 @@ void SceneRoot::Init()
 	// ƒV[ƒ“‚Ìì¬
 	m_index = setting.index;
 	ChangeScene();
+
+	// debug text
+	DebugText::Init();
 }
 
 void SceneRoot::Uninit()
@@ -101,6 +106,8 @@ void SceneRoot::Uninit()
 
 void SceneRoot::Update(float tick)
 {
+	DebugText::SetData(DebugText::SLOT_FPS, 1.0f / tick);
+	DebugText::Update();
 #ifdef _DEBUG
 	if (IsKeyTrigger(VK_ESCAPE))
 	{
@@ -124,4 +131,6 @@ void SceneRoot::Draw()
 	pLight->Draw();
 
 	Geometory::DrawLines();
+
+	DebugText::Draw();
 }

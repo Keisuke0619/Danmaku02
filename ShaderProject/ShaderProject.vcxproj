@@ -174,6 +174,7 @@
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="CsvLoader.cpp" />
+    <ClCompile Include="DebugText.cpp" />
     <ClCompile Include="DebugWindow.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="DirectXMathUtil.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="CsvLoader.h" />
+    <ClInclude Include="DebugText.h" />
     <ClInclude Include="DebugWindow.hpp" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="DirectX.h" />
