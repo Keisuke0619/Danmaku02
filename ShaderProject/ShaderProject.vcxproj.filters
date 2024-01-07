@@ -162,6 +162,9 @@
     <ClCompile Include="EnemySpawner.cpp">
       <Filter>ソース ファイル\App\Base</Filter>
     </ClCompile>
+    <ClCompile Include="DebugText.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h">
@@ -262,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="CsvLoader.h">
       <Filter>ヘッダー ファイル\App\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugText.h">
+      <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

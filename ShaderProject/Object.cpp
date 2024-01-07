@@ -1,5 +1,6 @@
 #include "Object.h"
 #include "DebugWindow.hpp"
+#include "DebugText.h"
 CObject::CObject()
 {
 	m_collisionData.obj = this;
@@ -117,6 +118,7 @@ void CObjectManager::Update()
 		if (obj == nullptr) continue;
 		obj->UpdateBase();
 	}
+	DebugText::SetData(DebugText::SLOT_OBJECTS, m_objects.size());
 }
 
 // 全オブジェクトのドローを回す。描画マスクにより、スキップすることもある。
