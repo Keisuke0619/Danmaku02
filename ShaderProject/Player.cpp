@@ -78,18 +78,18 @@ void CPlayer::Shot()
 	if (IsKeyPress('Z') == false) return;
 	if (m_frame % 10 == 0)
 	{
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 2; i++)
 		{
-			auto shot = CShot::Create(this, DirectX::XMFLOAT2(m_pos.x, m_pos.z), 14, 270 - DirectX::XMConvertToDegrees(m_rot.y) + (rand() % 11) - 5, YELLOW, SIZE07);
+			auto shot = CShot::Create(this, DirectX::XMFLOAT2(m_pos.x, m_pos.z), 18, 270 - DirectX::XMConvertToDegrees(m_rot.y) + (rand() % 11) - 5, YELLOW, SIZE07);
 			shot->FromPlayer();
 			shot->SetColliderScale(PLAYER_SHOT_COLLIDER_SCALE);
 		}
 	}
 	if (m_frame % 12 == 0)
 	{
-		for (int i = -10; i <= 10; i++)
+		for (int i = -5; i <= 5; i++)
 		{
-			auto shot = CShot::Create(this, DirectX::XMFLOAT2(m_pos.x, m_pos.z), 12, 270 - DirectX::XMConvertToDegrees(m_rot.y) + 3 * i, WHITE, SIZE07);
+			auto shot = CShot::Create(this, DirectX::XMFLOAT2(m_pos.x, m_pos.z), 16, 270 - DirectX::XMConvertToDegrees(m_rot.y) + 3 * i, WHITE, SIZE07);
 			shot->FromPlayer();
 			shot->SetColliderScale(PLAYER_SHOT_COLLIDER_SCALE);
 		}
