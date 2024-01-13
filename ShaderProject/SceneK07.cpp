@@ -12,6 +12,7 @@
 #include "Enemy.h"
 #include "LoadStageData.h"
 #include "Wall.h"
+#include "EventCamera.h"
 
 void SceneK07::Init()
 {
@@ -110,7 +111,11 @@ void SceneK07::UpdateCamera()
 		auto defaultCamera = GetObj<CameraBase>("MainCamera");
 		CameraBase::SetPrimary(primary == cameraDCC ? defaultCamera : cameraDCC);
 	}
-
+	if (IsKeyTrigger('T'))
+	{
+		auto evCam = new CEventCamera("Assets/CSV/EventCamera.csv");
+		//evCam->SetFinishCallBack(&Test);
+	}
 }
 
 
@@ -184,4 +189,10 @@ void SceneK07::DrawSky()
 		Sprite::SetTexture(skies[i]);
 		Sprite::Draw();
 	}
+}
+
+void SceneK07::Test()
+{
+	//CameraBase::SetPrimary(GetObj<CameraBase>("MainCamera"));
+	printf("CALLBACK");
 }

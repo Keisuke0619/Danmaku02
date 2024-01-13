@@ -178,8 +178,10 @@
     <ClCompile Include="DebugWindow.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="DirectXMathUtil.cpp" />
+    <ClCompile Include="Easing.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
+    <ClCompile Include="EventCamera.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LightBase.cpp" />
@@ -215,8 +217,10 @@
     <ClInclude Include="Defines.h" />
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="DirectXMathUtil.h" />
+    <ClInclude Include="Easing.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemySpawner.h" />
+    <ClInclude Include="EventCamera.h" />
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="LightBase.h" />
