@@ -44,7 +44,8 @@ void SceneK07::Init()
 	field->SetRot(DirectX::XMFLOAT3(3.141592f / 2, 0, 0));
 	field->SetScale(DirectX::XMFLOAT3(1000, 1000, 1));
 	field->SetUVScale(DirectX::XMFLOAT2(25, 25));
-	CreateStage("Assets/CSV/MapTest.csv", 14, 4);
+	//CreateStage("Assets/CSV/MapTest.csv", 14, 4);
+	CreateStage("Assets/CSV/Map01.csv", 10, 2);
 	//CreateStage("Assets/CSV/Map2.csv", 4, 3);
 	
 	m_spawner = new CEnemySpawner("Assets/CSV/EnemyTest.csv");

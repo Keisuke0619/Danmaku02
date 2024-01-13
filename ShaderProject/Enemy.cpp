@@ -14,17 +14,13 @@ void CEnemy::Update()
 {
 	CSVRoutine();
 	if (m_life <= 0) { Destroy(); }
-	if (IsKeyPress('W')) { m_pos.z += 0.03f; }
-	if (IsKeyPress('S')) { m_pos.z -= 0.03f; }
-	if (IsKeyPress('A')) { m_pos.x -= 0.03f; }
-	if (IsKeyPress('D')) { m_pos.x += 0.03f; }
-
 }
 
-void CEnemy::SetSpawnData(const char* modelPath, int autoDestroyFrame)
+void CEnemy::SetSpawnData(const char* modelPath, int autoDestroyFrame, int hp)
 {
 	Load(modelPath);
 	m_destroyFrame = autoDestroyFrame;
+	m_life = hp;
 }
 
 void CEnemy::SetOriginPos(DirectX::XMFLOAT2 pos, float height)
@@ -124,6 +120,8 @@ void CEnemy::CSVShot(TEnemyShotData data)
 
 	auto angle = data.startAngle;
 	if (angle == 1000) { angle = DirectX::XMConvertToDegrees(GetAngleToPlayer()); }
+	if (angle == 2000) { angle = (rand() % 3600) * 0.1f; }
+
 	for(int i = -(data.ways / 2); i <= (data.ways / 2); i++)
 		CShot::Create(nullptr, m_pos, data.speed, angle + (i * data.wayAngle) + (m_frame * data.frameAngle), data.colorID);
 }

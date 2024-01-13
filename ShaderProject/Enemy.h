@@ -23,7 +23,7 @@ public:
 	CEnemy();
 	void Update();
 
-	void SetSpawnData(const char* modelPath, int autoDestroyFrame);
+	void SetSpawnData(const char* modelPath, int autoDestroyFrame, int m_hp);
 	void SetOriginPos(DirectX::XMFLOAT2 pos, float height = 0.0f);
 	void PushData(TEnemyMoveData data);
 	void PushData(TEnemyShotData data);

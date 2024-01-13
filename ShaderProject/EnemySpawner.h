@@ -9,6 +9,7 @@ struct TSpawnData
 	DirectX::XMFLOAT2 pos;
 	int destroyFrame;
 	float distance;
+	int hp;
 	std::list<TEnemyMoveData> moves;
 	std::list<TEnemyShotData> shots;
 	int activeFrame = 0;

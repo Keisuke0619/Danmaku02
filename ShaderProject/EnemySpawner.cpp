@@ -25,6 +25,7 @@ CEnemySpawner::CEnemySpawner(std::string filePath)
 			spawnData.pos.y			= std::stof(line[5]) * WALL_SCALE;
 			spawnData.destroyFrame	= std::stoi(line[6]);
 			spawnData.distance		= std::stof(line[7]) * WALL_SCALE;
+			spawnData.hp			= std::stoi(line[8]);
 			break;
 		case 1:
 		{
@@ -92,7 +93,7 @@ void CEnemySpawner::Update(DirectX::XMFLOAT2 pos)
 				enemy->PushData(move);
 			}
 			enemy->SetOriginPos(itr->pos);
-			enemy->SetSpawnData(itr->modelPath.c_str(), itr->destroyFrame);
+			enemy->SetSpawnData(itr->modelPath.c_str(), itr->destroyFrame, itr->hp);
 		}
 		itr->activeFrame++;
 
