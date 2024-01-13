@@ -2,11 +2,19 @@
 #include "Geometory.h"
 
 CameraBase* CameraBase::m_primary;
+CameraBase* CameraBase::m_pre;
+
+CameraBase* CameraBase::GetPrimary()
+{
+	if (m_primary) return m_primary; 
+	m_primary = m_pre; return m_primary;
+}
 
 CameraBase::CameraBase()
 	: m_look(0.0f, 0.0f, 0.0f), m_up(0.0f, 1.0f, 0.0f)
 	, m_fovy(DirectX::XMConvertToRadians(60.0f)), m_aspect(16.0f / 9.0f), m_near(0.2f), m_far(1000.0f)
 {
+	if (m_primary) { m_pre = m_primary; }
 	m_primary = this;
 	m_tag = "Camera";
 }

@@ -20,10 +20,10 @@ public:
 	void Draw();
 
 	void UpdateCamera();
+	static void Test();
 private:
 	void InitSky();
 	void DrawSky();
-
 	CEnemySpawner *m_spawner;
 	CObject* m_player;
 };
