@@ -281,6 +281,9 @@
     <ClInclude Include="Easing.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
+    <ClInclude Include="EventCallback.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VS_Object.hlsl">

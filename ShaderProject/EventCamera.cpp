@@ -2,6 +2,7 @@
 #include "CsvLoader.h"
 #include "Easing.h"
 
+#pragma warning (disable : 4244)
 CEventCamera::CEventCamera(std::string path)
 	:CameraBase()
 {
@@ -32,17 +33,21 @@ void CEventCamera::Update()
 		if (isEnd)
 		{
 			Destroy();
-			m_primary = m_pre;
-			//if(m_callback)
-				//m_callback();
+			for (auto call : m_callbacks)
+			{
+				call.first->CallBack(call.second);
+			}
 		}
 	}
 }
 
-//void CEventCamera::SetFinishCallBack(void(T::* callback)())
-//{
-//	m_callback = callback;
-//}
+void CEventCamera::AddCallBack(IEventCallBack* call, int id)
+{
+	std::pair<IEventCallBack*, int> data;
+	data.first = call;
+	data.second = id;
+	m_callbacks.push_back(data);
+}
 
 bool CEventCamera::NextAnchor()
 {

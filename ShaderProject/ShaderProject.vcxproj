@@ -220,6 +220,7 @@
     <ClInclude Include="Easing.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemySpawner.h" />
+    <ClInclude Include="EventCallback.h" />
     <ClInclude Include="EventCamera.h" />
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="Input.h" />
