@@ -4,6 +4,7 @@
 #include "Wall.h"
 #include "CameraBase.h"
 #include "DebugText.h"
+#include "DataPool.h"
 
 #define PLAYER_SHOT_COLLIDER_SCALE (1.0f)
 
@@ -17,6 +18,8 @@ CPlayer::CPlayer()
 	m_pos.y = 1.0f;
 	m_tag = "Player";
 	if (Player == nullptr) Player = this;
+
+	DataPool::AddData("Int_PlayerCollision", &m_testCollisionNum);
 }
 
 CPlayer::~CPlayer()
@@ -168,4 +171,12 @@ void CPlayer::OnCollision(CObject* _obj)
 		// カメラ系行列も更新
 		CameraBase::GetPrimary()->Update();
 	}
+
+	if (_obj->GetTagName() == "ShotFromEnemy")
+	{
+		m_testCollisionNum++;
+		DebugText::SetData(DebugText::SLOT_PLAYER_COLLIDED, m_testCollisionNum);
+	}
+
+
 }

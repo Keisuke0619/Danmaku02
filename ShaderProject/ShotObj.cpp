@@ -69,7 +69,7 @@ void CShot::Update()
         m_speed.z = sinf(m_shotData.angle) * m_shotData.speed;
     }
     DirectXUtil::Increment(&m_pos, m_speed);
-    if (m_pos.z < CameraBase::GetPrimary()->GetPos().z || CameraBase::GetPrimary()->GetPos().z + 100 < m_pos.z)
+    if (m_pos.z < CameraBase::GetPrimary()->GetPos().z || CameraBase::GetPrimary()->GetPos().z + 35 < m_pos.z)
     {
         Destroy();
     }

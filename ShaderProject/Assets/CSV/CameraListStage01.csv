@@ -1,4 +1,2 @@
-posX,posY,posZ,lookX,lookY,lookZ,Frames
-0,12,290,0,0,0,0
-0,20,30,0,0,0,180
-0,19,30,0,0,0,60
+path,minX,minY,maxX,maxY
+EventCamera.csv,-1,40,1,44
