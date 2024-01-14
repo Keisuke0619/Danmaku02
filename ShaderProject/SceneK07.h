@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "EnemySpawner.h"
 #include <list>
+#include "EventCallback.h"
 
 struct ModelData
 {
@@ -11,7 +12,7 @@ struct ModelData
 	class Model* model;
 };
 
-class SceneK07 : public SceneBase
+class SceneK07 : public SceneBase, IEventCallBack
 {
 public:
 	void Init();
@@ -20,10 +21,13 @@ public:
 	void Draw();
 
 	void UpdateCamera();
-	static void Test();
+	void UpdateEvent();
 private:
 	void InitSky();
 	void DrawSky();
 	CEnemySpawner *m_spawner;
 	CObject* m_player;
+
+	// IEventCallBack ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
+	void CallBack(int eventID) override;
 };

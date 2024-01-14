@@ -1,7 +1,10 @@
 #pragma once
 
 #include "CameraBase.h"
-#include <memory>
+#include <map>
+#include <list>
+#include "EventCallback.h"
+
 struct TEventCameraLerpPos
 {
 	DirectX::XMFLOAT3 begin;
@@ -20,14 +23,13 @@ public:
 	CEventCamera(std::string path);
 
 	void Update() override;
-	//void SetFinishCallBack(void(T::*callback)());
+	void AddCallBack(IEventCallBack* call, int id = 0);
 private:
-	//void (T::*m_callback)();
 	TEventCameraLerpPos m_posAnchor;
 	TEventCameraLerpPos m_targetAnchor;
 	std::list<TEventCameraData> m_csv;
 	int m_changeFrames;
 	float m_progress;
-
+	std::list<std::pair<IEventCallBack*, int>> m_callbacks;
 	bool NextAnchor();
 };

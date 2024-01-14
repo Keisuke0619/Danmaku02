@@ -115,8 +115,13 @@ void SceneK07::UpdateCamera()
 	if (IsKeyTrigger('T'))
 	{
 		auto evCam = new CEventCamera("Assets/CSV/EventCamera.csv");
-		//evCam->SetFinishCallBack(&Test);
+		evCam->AddCallBack(this);
 	}
+}
+
+void SceneK07::UpdateEvent()
+{
+
 }
 
 
@@ -192,8 +197,9 @@ void SceneK07::DrawSky()
 	}
 }
 
-void SceneK07::Test()
+void SceneK07::CallBack(int eventID)
 {
-	//CameraBase::SetPrimary(GetObj<CameraBase>("MainCamera"));
-	printf("CALLBACK");
+	auto defaultCamera = GetObj<CameraBase>("MainCamera");
+	CameraBase::SetPrimary(defaultCamera);
 }
+
