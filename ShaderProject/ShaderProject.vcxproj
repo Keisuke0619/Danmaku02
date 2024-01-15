@@ -170,6 +170,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Billborad.cpp" />
+    <ClCompile Include="BossStage01.cpp" />
+    <ClCompile Include="BossStage01.h" />
     <ClCompile Include="CameraDCC.cpp" />
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />

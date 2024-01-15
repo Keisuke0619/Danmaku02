@@ -14,7 +14,7 @@
 #include "Wall.h"
 #include "EventCamera.h"
 #include "DataPool.h"
-
+#include "BossStage01.h"
 
 
 void SceneK07::Init()
@@ -123,6 +123,7 @@ void SceneK07::UpdateEvent()
 		auto evCam = new CEventCamera("Assets/CSV/EventCamera.csv");
 		evCam->AddCallBack(this);
 		testOnceFlag = true;
+		new CBossStage01();
 	}
 }
 
