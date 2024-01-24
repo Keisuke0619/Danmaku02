@@ -162,6 +162,7 @@ void CObjectManager::DestroyAll()
 	{
 		delete (*itr);
 		*itr = nullptr;
+
 		itr = m_objects.erase(itr);
 	}
 	m_destroy.clear();

@@ -11,6 +11,7 @@ SceneBase::SceneBase()
 }
 SceneBase::~SceneBase()
 {
+	if (m_isOverlay) return;
 	for (auto obj : m_objects)
 	{
 		if (obj.second == nullptr)
@@ -50,15 +51,15 @@ SceneBase::~SceneBase()
 void SceneBase::_update(float tick)
 {
 	m_frame++;
+	Update(tick);
 	if (m_pSubScene)
 		m_pSubScene->_update(tick);
-	Update(tick);
 }
 void SceneBase::_draw()
 {
+	Draw();
 	if (m_pSubScene)
 		m_pSubScene->_draw();
-	Draw();
 }
 
 /// @brief サブシーンの削除

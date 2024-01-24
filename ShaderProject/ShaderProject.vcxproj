@@ -182,6 +182,7 @@
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="DirectXMathUtil.cpp" />
     <ClCompile Include="InclutionShot.cpp" />
+    <ClCompile Include="ScenePause.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="DirectXMathUtil.h" />
     <ClInclude Include="InclutionShot.h" />
+    <ClInclude Include="ScenePause.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemySpawner.h" />

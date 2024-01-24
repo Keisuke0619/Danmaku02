@@ -17,13 +17,14 @@ CPlayer::CPlayer()
 	UseCollision(true);
 	m_pos.y = 1.0f;
 	m_tag = "Player";
-	if (Player == nullptr) Player = this;
+	Player = this;
 
 	DataPool::AddData("Int_PlayerCollision", &m_testCollisionNum);
 }
 
 CPlayer::~CPlayer()
 {
+	Player = nullptr;
 }
 
 void CPlayer::Update()

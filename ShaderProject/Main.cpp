@@ -6,6 +6,7 @@
 #include "Input.h"
 #include "SceneRoot.h"
 #include "Defines.h"
+#include "DebugText.h"
 //--- ƒOƒ[ƒoƒ‹•Ï”
 std::shared_ptr<SceneRoot> g_pScene;
 
@@ -29,6 +30,8 @@ HRESULT Init(HWND hWnd, UINT width, UINT height)
 	hr = dsv->Create(width, height, false);
 
 	SetRenderTargets(1, &rtv, dsv);
+	// debug text
+	DebugText::Init();
 	return hr;
 }
 
@@ -46,6 +49,7 @@ void Update(float tick)
 {
 	UpdateInput();
 	g_pScene->_update(tick);
+	DebugText::Update();
 }
 
 void Draw()
@@ -57,7 +61,8 @@ void Draw()
 	GetContext()->ClearDepthStencilView(dsv->GetView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	g_pScene->_draw();
-	
+
+	DebugText::Draw();
 	SwapDirectX();
 }
 
