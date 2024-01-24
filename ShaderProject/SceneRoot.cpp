@@ -79,8 +79,7 @@ void SceneRoot::Init()
 	m_index = setting.index;
 	ChangeScene();
 
-	// debug text
-	DebugText::Init();
+	
 }
 
 void SceneRoot::Uninit()
@@ -108,7 +107,6 @@ void SceneRoot::Uninit()
 void SceneRoot::Update(float tick)
 {
 	DebugText::SetData(DebugText::SLOT_FPS, 1.0f / tick);
-	DebugText::Update();
 	CameraBase* pCamera = GetObj<CameraBase>("Camera");
 	LightBase* pLight = GetObj<LightBase>("Light");
 	pCamera->Update();
@@ -128,6 +126,4 @@ void SceneRoot::Draw()
 	pLight->Draw();
 
 	Geometory::DrawLines();
-
-	DebugText::Draw();
 }

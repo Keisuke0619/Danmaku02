@@ -1,7 +1,7 @@
 #pragma once
 
 #include <list>
-#define	QUAD_TREE_MAX_LEVEL (9)
+#define	QUAD_TREE_MAX_LEVEL (10)
 
 class CSpace;
 class CObject;

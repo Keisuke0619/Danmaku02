@@ -34,6 +34,15 @@ void CWorldSprite::Draw(Shader* vs, Shader* ps)
 	Sprite::SetUVScale(1, 1);
 }
 
+void CWorldSprite::ReleaseTexture()
+{
+	for (auto tex : m_texMap)
+	{
+		delete tex.second;
+	}
+	m_texMap.clear();
+}
+
 void CWorldSprite::SetWorldMatrix()
 {
 	Sprite::SetWorld(m_world);

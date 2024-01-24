@@ -17,6 +17,8 @@ public:
 	void Draw(Shader* vs, Shader* ps) override;
 
 	void SetUVScale(DirectX::XMFLOAT2 uvScale) { m_uvScale = uvScale; }
+
+	static void ReleaseTexture();
 protected:
 	virtual void SetWorldMatrix();
 private:

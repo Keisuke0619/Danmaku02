@@ -15,7 +15,7 @@
 #include "EventCamera.h"
 #include "DataPool.h"
 #include "BossStage01.h"
-
+#include "ScenePause.h"
 
 void SceneK07::Init()
 {
@@ -36,7 +36,7 @@ void SceneK07::Init()
 
 	InitSky();
 
-	m_player = CreateObj<CPlayer>("Player");
+	m_player = new CPlayer;
 	auto cam = CreateObj<CFollowCamera>("MainCamera");
 	cam->SetTarget(m_player);
 	cam->SetPosOffset(DirectX::XMFLOAT3(0, 10, -5));
@@ -59,11 +59,19 @@ void SceneK07::Uninit()
 	delete m_spawner;
 	MeshPool::Ins()->DeleteAll();
 	delete CCollisionSystem::GetIns();
+	CWorldSprite::ReleaseTexture();
 	DataPool::ClearAll();
 }
 
 void SceneK07::Update(float tick)
 {
+	if (m_pause)
+	{
+		return;
+	}
+
+	InputPause();
+
 	// DCCƒJƒƒ‰‚ÆŒ»İ‚ÌƒƒCƒ“ƒJƒƒ‰‚ğæ“¾
 	CameraBase* cameraDCC = GetObj<CameraBase>("Camera");
 	auto primary = CameraBase::GetPrimary();
@@ -99,6 +107,22 @@ void SceneK07::Draw()
 	CObjectManager::GetIns()->Draw(vs, ps, RENDER_MODEL);
 	CObjectManager::GetIns()->Draw(vs, ps, RENDER_ALPHA);
 
+}
+
+void SceneK07::InputPause()
+{
+	if (m_pSubScene)
+	{
+		RemoveSubScene();
+		return;
+	}
+	if (IsKeyTrigger(VK_ESCAPE))
+	{
+		auto scene = AddSubScene<CScenePause>();
+		scene->SetCallBack(this);
+		m_pause = true;
+		return;
+	}
 }
 
 void SceneK07::UpdateCamera()
@@ -202,7 +226,14 @@ void SceneK07::DrawSky()
 
 void SceneK07::CallBack(int eventID)
 {
-	auto defaultCamera = GetObj<CameraBase>("MainCamera");
-	CameraBase::SetPrimary(defaultCamera);
+	if (eventID == 0)
+	{
+		auto defaultCamera = GetObj<CameraBase>("MainCamera");
+		CameraBase::SetPrimary(defaultCamera);
+	}
+	if (eventID == 1)
+	{
+		m_pause = false;
+	}
 }
 

@@ -20,6 +20,7 @@ public:
 	void Update(float tick);
 	void Draw();
 
+	void InputPause();
 	void UpdateCamera();
 	void UpdateEvent();
 private:
@@ -27,7 +28,7 @@ private:
 	void DrawSky();
 	CEnemySpawner *m_spawner;
 	CObject* m_player;
-
+	bool m_pause = false;
 	// IEventCallBack ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
 	void CallBack(int eventID) override;
 };

@@ -43,7 +43,7 @@ protected:
 	SceneBase* m_pSubScene;
 	Items m_items;
 	int m_frame = 0;
-
+	bool m_isOverlay = false;
 
 private:
 	bool CollisionCircleCircle(CObject* circle1, CObject* circle2);

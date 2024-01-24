@@ -51,7 +51,7 @@ void CreateStage(std::string stagePath, int offsetX, int offsetY)
 #ifdef  _DEBUG
     CCollisionSystem::GetIns()->Create(6, left, top, right, bottom);
 #else
-    CCollisionSystem::GetIns()->Create(8, left, top, right, bottom);
+    CCollisionSystem::GetIns()->Create(6, left, top, right, bottom);
 #endif //  _DEBUG
 
     for (auto data : *stageDatas)
