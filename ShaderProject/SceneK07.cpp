@@ -49,7 +49,7 @@ void SceneK07::Init()
 	field->SetUVScale(DirectX::XMFLOAT2(25, 25));
 	//CreateStage("Assets/CSV/MapTest.csv", 14, 4);
 	CreateStage("Assets/CSV/Map01.csv", 10, 2);
-	//CreateStage("Assets/CSV/Map2.csv", 4, 3);
+	//CreateStage("Assets/CSV/Map02.csv", 4, 3);
 	
 	m_spawner = new CEnemySpawner("Assets/CSV/EnemyTest.csv");
 }

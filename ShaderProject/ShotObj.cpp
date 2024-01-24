@@ -1,5 +1,7 @@
 #include "ShotObj.h"
 #include "CameraBase.h"
+
+#define ADDSHOT_NULL_MIN (1129893.0f)
 const std::string CShot::ColorName[COLOR_MAX] =
 {
     "AQUA",
@@ -34,6 +36,8 @@ const float CShot::ShotSize[SHOT_SIZE_MAX] =
     1.0f,
 };
 
+float CShot::ShotDeleteDepth = 35;
+
 CShot::CShot()
 {
     m_tag = "ShotFromEnemy";
@@ -54,8 +58,8 @@ void CShot::Update()
         auto reserve = m_shotDataReserve.front();
         auto data = reserve->data;
         m_shotDataReserve.pop_front();
-        if (data.speed == ADDSHOT_NULL) { data.speed = m_shotData.speed; }
-        if (data.speed == ADDSHOT_NULL) { data.speed = m_shotData.speed; }
+        if (data.speed >= ADDSHOT_NULL_MIN * SHOT_SPEED_COEF) { data.speed = m_shotData.speed; }
+        if (data.angle >= DirectX::XMConvertToRadians(ADDSHOT_NULL_MIN)) { data.angle = m_shotData.angle; }
         m_shotData = data;
         m_speed.x = cosf(m_shotData.angle) * m_shotData.speed;
         m_speed.z = sinf(m_shotData.angle) * m_shotData.speed;
@@ -69,7 +73,7 @@ void CShot::Update()
         m_speed.z = sinf(m_shotData.angle) * m_shotData.speed;
     }
     DirectXUtil::Increment(&m_pos, m_speed);
-    if (m_pos.z < CameraBase::GetPrimary()->GetPos().z || CameraBase::GetPrimary()->GetPos().z + 35 < m_pos.z)
+    if (m_pos.z < CameraBase::GetPrimary()->GetPos().z || CameraBase::GetPrimary()->GetPos().z + ShotDeleteDepth < m_pos.z)
     {
         Destroy();
     }
@@ -123,6 +127,12 @@ void CShot::FromPlayer(bool fromPlayer)
 CShot* CShot::Create(CObject* parent, DirectX::XMFLOAT2 pos, float speed, float degAngle, std::string color, float addSpeed, float addAngle)
 {
     auto shot = new CShot();
+    SetInit(shot, parent, pos, speed, degAngle, color, addSpeed, addAngle);
+    return shot;
+}
+
+void CShot::SetInit(CShot* shot, CObject* parent, DirectX::XMFLOAT2 pos, float speed, float degAngle, std::string color, float addSpeed, float addAngle)
+{
     shot->m_pos.x = pos.x;
     shot->m_pos.y = 1;
     shot->m_pos.z = pos.y;
@@ -132,7 +142,16 @@ CShot* CShot::Create(CObject* parent, DirectX::XMFLOAT2 pos, float speed, float 
     shot->m_shotData.addSpeed = addSpeed * SHOT_SPEED_COEF;
     shot->m_shotData.addAngle = DirectX::XMConvertToRadians(addAngle);
     shot->LoadTexture("Assets/Texture/Bullet/" + color);
+    // サイズ設定用計算
+    auto len = color.size();    // "XXXX01.png"
+    int size = color[len - 5] - '1';
+    shot->m_colliderScale = ShotSize[size];
     if (parent)
         parent->AddChild(shot);
-    return shot;
+
+}
+
+void CShot::SetDeleteDepth(float newDepth)
+{
+    ShotDeleteDepth = newDepth;
 }

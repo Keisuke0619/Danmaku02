@@ -21,6 +21,7 @@ class CCollisionSystem
 {
 public:
 	static CCollisionSystem* GetIns();
+	static void Delete();
 private:
 	static CCollisionSystem* Ins;
 	using Pair = std::pair<CObject*, CObject*>;

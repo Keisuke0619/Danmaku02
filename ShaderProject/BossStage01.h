@@ -17,12 +17,14 @@ public:
 private:
 	void Move();
 	void SetMove(DirectX::XMFLOAT2 nextPos, int frames);
+	void RandomMove(int frames);
 
 	void ChangePhase();
 	void Phase01();
 	void Phase02();
 	void Phase03();
 	void Phase04();
+
 
 	const int m_MaxLife = 1000;
 	const int m_MaxPhase = 4;

@@ -47,6 +47,7 @@ void CreateStage(std::string stagePath, int offsetX, int offsetY)
     int top     = -offsetY - 1;
     int right   = g_loadStageMaxX + left + 2;
     int bottom  = g_loadStageMaxY + top  + 2;
+    CCollisionSystem::Delete();
 #ifdef  _DEBUG
     CCollisionSystem::GetIns()->Create(6, left, top, right, bottom);
 #else

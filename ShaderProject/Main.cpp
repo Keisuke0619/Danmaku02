@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "Input.h"
 #include "SceneRoot.h"
+#include "Defines.h"
 //--- ƒOƒ[ƒoƒ‹•Ï”
 std::shared_ptr<SceneRoot> g_pScene;
 

@@ -13,14 +13,21 @@ SceneBase::~SceneBase()
 {
 	for (auto obj : m_objects)
 	{
-		if (obj.second != nullptr)
+		if (obj.second == nullptr)
+			continue;
+		CObjectManager::GetIns()->RemoveList(obj.second);
+		for (auto name : m_items)
 		{
-			CObjectManager::GetIns()->RemoveList(obj.second);
-			delete obj.second;
-			obj.second = nullptr;
+			if (name == obj.first)
+			{
+				delete obj.second;
+				obj.second = nullptr;
+				continue;
+			}
 		}
+		
 	}
-	m_objects.clear();
+	//m_objects.clear();
 
 	CObjectManager::GetIns()->DestroyAll();
 	// サブシーンを削除

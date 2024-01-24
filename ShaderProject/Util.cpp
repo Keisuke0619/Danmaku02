@@ -1,5 +1,6 @@
-#include "Easing.h"
+#include "Util.h"
 #include <math.h>
+#include <stdlib.h>
 
 float Liner(float progress);
 float InSine(float p);
@@ -8,7 +9,7 @@ float InOutSine(float p);
 
 
 static const float PI = 3.1415926535f;
-float (*g_func[Util::EType::TYPE_MAX])(float) = 
+float (*g_func[Util::EEaseType::TYPE_MAX])(float) = 
 {
     &Liner,
     &InSine,
@@ -16,12 +17,12 @@ float (*g_func[Util::EType::TYPE_MAX])(float) =
     &InOutSine,
 };
 
-float Util::Lerp(float progress, float begin, float end, EType easeType)
+float Util::Lerp(float progress, float begin, float end, EEaseType easeType)
 {
     return begin + (end - begin) * Ease(progress, easeType);
 }
 
-DirectX::XMFLOAT2 Util::Lerp(float progress, DirectX::XMFLOAT2 begin, DirectX::XMFLOAT2 end, EType easeType)
+DirectX::XMFLOAT2 Util::Lerp(float progress, DirectX::XMFLOAT2 begin, DirectX::XMFLOAT2 end, EEaseType easeType)
 {
     return DirectX::XMFLOAT2(
         Lerp(progress, begin.x, end.x, easeType),
@@ -29,7 +30,7 @@ DirectX::XMFLOAT2 Util::Lerp(float progress, DirectX::XMFLOAT2 begin, DirectX::X
     );
 }
 
-DirectX::XMFLOAT3 Util::Lerp(float progress, DirectX::XMFLOAT3 begin, DirectX::XMFLOAT3 end, EType easeType)
+DirectX::XMFLOAT3 Util::Lerp(float progress, DirectX::XMFLOAT3 begin, DirectX::XMFLOAT3 end, EEaseType easeType)
 {
     return DirectX::XMFLOAT3(
         Lerp(progress, begin.x, end.x, easeType),
@@ -38,7 +39,7 @@ DirectX::XMFLOAT3 Util::Lerp(float progress, DirectX::XMFLOAT3 begin, DirectX::X
     );
 }
 
-DirectX::XMFLOAT4 Util::Lerp(float progress, DirectX::XMFLOAT4 begin, DirectX::XMFLOAT4 end, EType easeType)
+DirectX::XMFLOAT4 Util::Lerp(float progress, DirectX::XMFLOAT4 begin, DirectX::XMFLOAT4 end, EEaseType easeType)
 {
     return DirectX::XMFLOAT4(
         Lerp(progress, begin.x, end.x, easeType),
@@ -48,9 +49,21 @@ DirectX::XMFLOAT4 Util::Lerp(float progress, DirectX::XMFLOAT4 begin, DirectX::X
     );
 }
 
-float Util::Ease(float progress, EType easeType)
+float Util::Ease(float progress, EEaseType easeType)
 {
     return (*g_func[easeType])(progress);
+}
+
+float Util::Rand()
+{
+    return (float)rand() / RAND_MAX;
+
+}
+
+float Util::Rand(float min, float max)
+{
+    float range = max - min;
+    return min + range * Rand();
 }
 
 float Liner(float progress)

@@ -28,5 +28,6 @@ vector<vector<string>> CSVLoad(std::string path, bool isDeleteHeader)
         vector<string> len = split(line, ',');
         ret.push_back(len);
     }
+    ifs.close();
     return ret;
 }

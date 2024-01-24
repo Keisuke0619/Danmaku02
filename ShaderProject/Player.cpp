@@ -13,7 +13,7 @@ CPlayer* CPlayer::Player;
 CPlayer::CPlayer()
 {
 	Load("Assets/Model/spot/spot.fbx");
-	m_colliderScale = 0.4f;
+	m_colliderScale = 1.0f;
 	UseCollision(true);
 	m_pos.y = 1.0f;
 	m_tag = "Player";
@@ -71,6 +71,14 @@ void CPlayer::Move()
 	{
 		m_rot.y = atan2f(-addPos.x, -addPos.z);
 	}
+	
+	if (IsKeyPress('U'))
+	{
+		m_pos.x = 0;
+		m_pos.z = 200;
+	}
+
+
 	DebugText::SetData(DebugText::SLOT_PLAYER_POS_X, m_pos.x);
 	DebugText::SetData(DebugText::SLOT_PLAYER_POS_Y, m_pos.z);
 }

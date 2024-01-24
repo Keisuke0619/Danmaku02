@@ -73,10 +73,10 @@ void CObject::RegistCollision()
 {
 	auto elem = CCollisionSystem::GetIns()->Regist(
 		&m_collisionData,
-		m_pos.x - m_colliderScale * 0.5f,
-		m_pos.z - m_colliderScale * 0.5f,
-		m_pos.x + m_colliderScale * 0.5f,
-		m_pos.z + m_colliderScale * 0.5f
+		m_pos.x - m_colliderScale,
+		m_pos.z - m_colliderScale,
+		m_pos.x + m_colliderScale,
+		m_pos.z + m_colliderScale
 	);
 }
 
@@ -164,6 +164,7 @@ void CObjectManager::DestroyAll()
 		*itr = nullptr;
 		itr = m_objects.erase(itr);
 	}
+	m_destroy.clear();
 }
 
 void CObjectManager::RemoveList(void* obj)

@@ -15,6 +15,13 @@ CCollisionSystem* CCollisionSystem::GetIns()
 	return Ins;
 }
 
+void CCollisionSystem::Delete()
+{
+	if (Ins == nullptr) return;
+	delete Ins;
+	Ins = nullptr;
+}
+
 // システムクラス
 CCollisionSystem::CCollisionSystem()
 {
@@ -47,12 +54,12 @@ CCollisionSystem::~CCollisionSystem()
 	}
 	delete[] m_space;
 	m_space = nullptr;
+	Ins = nullptr;
 }
 
 void CCollisionSystem::Create(int level, float left, float top, float right, float bottom)
 {
 	if (level >= QUAD_TREE_MAX_LEVEL) { return; }
-
 	m_spaceNum = (m_point[level + 1] - 1) / 3;
 	m_space = new CSpace*[m_spaceNum];
 	ZeroMemory(m_space, sizeof(CSpace*) * m_spaceNum);
