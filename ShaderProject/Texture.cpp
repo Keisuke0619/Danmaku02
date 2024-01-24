@@ -1,7 +1,7 @@
 #include "Texture.h"
 #include "DirectXTex/TextureLoad.h"
 
-/// <summary>
+/// <sum_)mary>
 /// テクスチャ
 /// </summary>
 Texture::Texture()

@@ -5,11 +5,12 @@ namespace DebugText
 {
 	const std::string Header[SLOT_MAX] =
 	{
-		"FPS    :",
-		"PosX   :",
-		"PosY   :",
-		"Objects:",
-		"ColList:",
+		"FPS     :",
+		"PosX    :",
+		"PosY    :",
+		"Objects :",
+		"ColList :",
+		"ColCount:",
 	};
 	float g_datas[SLOT_MAX] = 
 	{
@@ -18,9 +19,10 @@ namespace DebugText
 		0,
 		0,
 		0,
+		0,
 	};
 	Texture* g_texture;
-	bool g_enable = false;
+	bool g_enable = true;
 }
 void DebugText::Init()
 {

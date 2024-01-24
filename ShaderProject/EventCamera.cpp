@@ -1,6 +1,6 @@
 #include "EventCamera.h"
 #include "CsvLoader.h"
-#include "Easing.h"
+#include "Util.h"
 
 #pragma warning (disable : 4244)
 CEventCamera::CEventCamera(std::string path)
@@ -24,8 +24,8 @@ CEventCamera::CEventCamera(std::string path)
 
 void CEventCamera::Update()
 {
-	m_pos = Util::Lerp(m_progress, m_posAnchor.begin, m_posAnchor.end, Util::EType::TYPE_INOUT_SINE);
-	m_look = Util::Lerp(m_progress, m_targetAnchor.begin, m_targetAnchor.end, Util::EType::TYPE_INOUT_SINE);
+	m_pos = Util::Lerp(m_progress, m_posAnchor.begin, m_posAnchor.end, Util::EEaseType::TYPE_INOUT_SINE);
+	m_look = Util::Lerp(m_progress, m_targetAnchor.begin, m_targetAnchor.end, Util::EEaseType::TYPE_INOUT_SINE);
 	m_progress += 1.0f / m_changeFrames;
 	if (m_progress >= 1.0f)
 	{

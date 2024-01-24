@@ -2,7 +2,7 @@
 #include "Billborad.h"
 #include <list>
 #define SHOT_SPEED_COEF (1.0f / 60)
-#define ADDSHOT_NULL (1597534862.0f)
+#define ADDSHOT_NULL (1129894.0f)
 
 struct TShotData
 {
@@ -43,17 +43,17 @@ enum EShotSize
 };
 class CShot : public CBillBoard
 {
-private:
-	CShot();
+protected:
 	bool m_isKillShot;
 	TShotData m_shotData;
 	std::list<TShotDataReserve*> m_shotDataReserve;
 	DirectX::XMFLOAT3 m_speed;
 	bool m_isDropItem = true;
 public:
+	CShot();
 	virtual ~CShot();
 	void SetKillShot(bool isKillShot = true) { m_isKillShot = isKillShot; }
-	void Update() final;
+	void Update();
 	void AddShotData(int frame, float speed, float degAngle, float addSpeed = 0, float addAngle = 0);
 	void OnCollision(CObject* _obj) override;
 	void FromPlayer(bool fromPlayer = true);
@@ -65,6 +65,8 @@ private:
 	static const std::string ColorName[COLOR_MAX];
 	static const std::string SizeName[SHOT_SIZE_MAX];
 	static const float ShotSize[SHOT_SIZE_MAX];
+protected:
+	static float ShotDeleteDepth;
 public:
 	static CShot* Create(CObject* parent, DirectX::XMFLOAT2 pos, float speed, float degAngle, std::string color, float addSpeed = 0, float addAngle = 0);
 
@@ -81,4 +83,7 @@ public:
 	{
 		return Create(parent, DirectX::XMFLOAT2(pos.x, pos.z), speed, degAngle, shotColor, shotSize, addSpeed = 0, addAngle = 0);
 	};
+
+	static void SetInit(CShot* shot, CObject* parent, DirectX::XMFLOAT2 pos, float speed, float degAngle, std::string color, float addSpeed = 0, float addAngle = 0);
+	static void SetDeleteDepth(float newDepth);
 };

@@ -13,6 +13,9 @@
 #include "LoadStageData.h"
 #include "Wall.h"
 #include "EventCamera.h"
+#include "DataPool.h"
+#include "BossStage01.h"
+
 
 void SceneK07::Init()
 {
@@ -36,17 +39,17 @@ void SceneK07::Init()
 	m_player = CreateObj<CPlayer>("Player");
 	auto cam = CreateObj<CFollowCamera>("MainCamera");
 	cam->SetTarget(m_player);
-	cam->SetPosOffset(DirectX::XMFLOAT3(0, 5, -5));
+	cam->SetPosOffset(DirectX::XMFLOAT3(0, 10, -5));
 	cam->SetLookOffset(DirectX::XMFLOAT3(0, 0, 4));
 	auto field = new CWorldSprite();
-	field->LoadTexture("Assets/Texture/BayerMatrix.png");
+	field->LoadTexture("Assets/Texture/Ground.jpg");
 	field->SetPos(DirectX::XMFLOAT3(0, 0, 0));
 	field->SetRot(DirectX::XMFLOAT3(3.141592f / 2, 0, 0));
 	field->SetScale(DirectX::XMFLOAT3(1000, 1000, 1));
 	field->SetUVScale(DirectX::XMFLOAT2(25, 25));
 	//CreateStage("Assets/CSV/MapTest.csv", 14, 4);
 	CreateStage("Assets/CSV/Map01.csv", 10, 2);
-	//CreateStage("Assets/CSV/Map2.csv", 4, 3);
+	//CreateStage("Assets/CSV/Map02.csv", 4, 3);
 	
 	m_spawner = new CEnemySpawner("Assets/CSV/EnemyTest.csv");
 }
@@ -56,6 +59,7 @@ void SceneK07::Uninit()
 	delete m_spawner;
 	MeshPool::Ins()->DeleteAll();
 	delete CCollisionSystem::GetIns();
+	DataPool::ClearAll();
 }
 
 void SceneK07::Update(float tick)
@@ -63,11 +67,16 @@ void SceneK07::Update(float tick)
 	// DCCカメラと現在のメインカメラを取得
 	CameraBase* cameraDCC = GetObj<CameraBase>("Camera");
 	auto primary = CameraBase::GetPrimary();
-	// DCCカメラがメインではないならアップデート。
 	
 	UpdateCamera();
+	UpdateEvent();
+	if (m_player)
+		m_spawner->Update(DirectX::XMFLOAT2(m_player->GetPos().x, m_player->GetPos().z));
+
+	CObjectManager::GetIns()->Update();
+	CObjectManager::GetIns()->RemoveUpdate();
+
 	UpdateCollision();
-	
 }
 
 
@@ -97,31 +106,25 @@ void SceneK07::UpdateCamera()
 	// DCCカメラと現在のメインカメラを取得
 	CameraBase* cameraDCC = GetObj<CameraBase>("Camera");
 	auto primary = CameraBase::GetPrimary();
-	// DCCカメラがメインではないならアップデート。
-	if (primary != cameraDCC || IsKeyPress(VK_RETURN))
-	{
-		if (m_player)
-			m_spawner->Update(DirectX::XMFLOAT2(m_player->GetPos().x, m_player->GetPos().z));
-
-		CObjectManager::GetIns()->Update();
-		CObjectManager::GetIns()->RemoveUpdate();
-	}
 	// CtrlでDCCカメラと普通のカメラをSwitch
 	if (IsKeyTrigger(VK_CONTROL))
 	{
 		auto defaultCamera = GetObj<CameraBase>("MainCamera");
 		CameraBase::SetPrimary(primary == cameraDCC ? defaultCamera : cameraDCC);
 	}
-	if (IsKeyTrigger('T'))
-	{
-		auto evCam = new CEventCamera("Assets/CSV/EventCamera.csv");
-		evCam->AddCallBack(this);
-	}
+	
 }
 
 void SceneK07::UpdateEvent()
 {
-
+	static bool testOnceFlag = false;
+	if(testOnceFlag == false && m_player && m_player->GetPos().z > 44 * WALL_SCALE)
+	{
+		auto evCam = new CEventCamera("Assets/CSV/EventCamera.csv");
+		evCam->AddCallBack(this);
+		testOnceFlag = true;
+		new CBossStage01();
+	}
 }
 
 

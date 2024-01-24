@@ -14,6 +14,7 @@ private:
 	bool m_isShot;
 	DirectX::XMFLOAT3 m_prePos;
 
+	int m_testCollisionNum = 0;
 public:
 	static CPlayer* GetPrimary() { return Player; };
 private:

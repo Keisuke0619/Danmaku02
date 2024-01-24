@@ -170,15 +170,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Billborad.cpp" />
+    <ClCompile Include="BossStage01.cpp" />
+    <ClCompile Include="BossStage01.h" />
     <ClCompile Include="CameraDCC.cpp" />
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="CsvLoader.cpp" />
+    <ClCompile Include="DataPool.cpp" />
     <ClCompile Include="DebugText.cpp" />
     <ClCompile Include="DebugWindow.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="DirectXMathUtil.cpp" />
-    <ClCompile Include="Easing.cpp" />
+    <ClCompile Include="InclutionShot.cpp" />
+    <ClCompile Include="Util.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="EventCamera.cpp" />
@@ -212,12 +216,14 @@
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="CsvLoader.h" />
+    <ClInclude Include="DataPool.h" />
     <ClInclude Include="DebugText.h" />
     <ClInclude Include="DebugWindow.hpp" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="DirectXMathUtil.h" />
-    <ClInclude Include="Easing.h" />
+    <ClInclude Include="InclutionShot.h" />
+    <ClInclude Include="Util.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="EventCallback.h" />

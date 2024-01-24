@@ -13,18 +13,9 @@
 enum SceneKind
 {
 	SCENE_K07,
+	SCENE_K00,
 	SCENE_MAX
 };
-
-void SceneRoot::ChangeScene()
-{
-	switch (m_index)
-	{
-	default:
-	case SCENE_K07: AddSubScene<SceneK07>(); break;
-	}
-}
-
 
 //--- 構造体
 // @brief シーン情報保存
@@ -39,6 +30,17 @@ struct ViewSetting
 	float lightSV;
 	int index;
 };
+
+void SceneRoot::ChangeScene()
+{
+	switch (m_index)
+	{
+	default:
+	case SCENE_K07: AddSubScene<SceneK07>(); break;
+	case SCENE_K00: AddSubScene<SceneK07>(); break;
+	}
+}
+
 const char* SettingFileName = "Assets/setting.dat";
 
 void SceneRoot::Init()
@@ -72,7 +74,6 @@ void SceneRoot::Init()
 	pLight->SetRot(setting.lightRadXZ, setting.lightRadY);
 	pLight->SetHSV(setting.lightH, setting.lightSV);
 	pLight->UpdateParam();
-
 
 	// シーンの作成
 	m_index = setting.index;
@@ -108,19 +109,15 @@ void SceneRoot::Update(float tick)
 {
 	DebugText::SetData(DebugText::SLOT_FPS, 1.0f / tick);
 	DebugText::Update();
-#ifdef _DEBUG
-	if (IsKeyTrigger(VK_ESCAPE))
-	{
-		system("cls");
-	}
-#endif
 	CameraBase* pCamera = GetObj<CameraBase>("Camera");
 	LightBase* pLight = GetObj<LightBase>("Light");
-	if (!IsKeyPress(VK_SHIFT))
+	pCamera->Update();
+	pLight->Update();
+	if (IsKeyTrigger('N'))
 	{
-		pCamera->Update();
-		pLight->Update();
-		return;
+		//MeshPool::Ins()->DeleteAll();
+		RemoveSubScene();
+		ChangeScene();
 	}
 }
 void SceneRoot::Draw()
