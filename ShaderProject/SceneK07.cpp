@@ -226,12 +226,12 @@ void SceneK07::DrawSky()
 
 void SceneK07::CallBack(int eventID)
 {
-	if (eventID == 0)
+	if (eventID == EVENT_FINISH_EVENT_CAMERA)
 	{
 		auto defaultCamera = GetObj<CameraBase>("MainCamera");
 		CameraBase::SetPrimary(defaultCamera);
 	}
-	if (eventID == 1)
+	if (eventID == EVENT_CLOSE_PAUSE_WINDOW)
 	{
 		m_pause = false;
 	}
