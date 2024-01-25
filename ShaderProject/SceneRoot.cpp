@@ -9,6 +9,7 @@
 #include "DebugText.h"
 
 #include "SceneK07.h"
+#include "SceneTitle.h"
 //--- íËêîíËã`
 enum SceneKind
 {
@@ -31,14 +32,21 @@ struct ViewSetting
 	int index;
 };
 
-void SceneRoot::ChangeScene()
+void SceneRoot::SetNextScene(ESceneID id)
 {
-	switch (m_index)
+	m_nextSceneID = id;
+}
+
+void SceneRoot::SceneChange()
+{
+	RemoveSubScene();
+	switch (m_nextSceneID)
 	{
-	default:
-	case SCENE_K07: AddSubScene<SceneK07>(); break;
-	case SCENE_K00: AddSubScene<SceneK07>(); break;
+	case SCENE_GAME: AddSubScene<SceneK07>(); break;
+	case SCENE_TITLE: AddSubScene<CSceneTitle>(); break;
 	}
+
+	m_nextSceneID = SCENE_NONE;
 }
 
 const char* SettingFileName = "Assets/setting.dat";
@@ -77,7 +85,7 @@ void SceneRoot::Init()
 
 	// ÉVÅ[ÉìÇÃçÏê¨
 	m_index = setting.index;
-	ChangeScene();
+	SetNextScene(SCENE_GAME);
 
 	
 }
@@ -113,9 +121,11 @@ void SceneRoot::Update(float tick)
 	pLight->Update();
 	if (IsKeyTrigger('N'))
 	{
-		//MeshPool::Ins()->DeleteAll();
-		RemoveSubScene();
-		ChangeScene();
+		SetNextScene(SCENE_GAME);
+	}
+	if (m_nextSceneID != SCENE_NONE)
+	{
+		SceneChange();
 	}
 }
 void SceneRoot::Draw()

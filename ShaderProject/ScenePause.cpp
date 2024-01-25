@@ -29,6 +29,7 @@ void CScenePause::Draw()
 {
 	Sprite::Reset();
 	Sprite::SetTexture(m_back);
+	Sprite::SetSize(2, 2);
 	Sprite::Draw();
 	Sprite::Reset();
 }
