@@ -7,7 +7,7 @@
 #include <list>
 #include <Windows.h>
 #include "Object.h"
-
+#include "ObjectManager.h"
 // @breif シーン基本クラス
 class SceneBase
 {

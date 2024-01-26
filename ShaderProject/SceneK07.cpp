@@ -230,6 +230,7 @@ void SceneK07::CallBack(int eventID)
 	{
 		auto defaultCamera = GetObj<CameraBase>("MainCamera");
 		CameraBase::SetPrimary(defaultCamera);
+		defaultCamera->SetFovY(90);
 	}
 	if (eventID == EVENT_CLOSE_PAUSE_WINDOW)
 	{
