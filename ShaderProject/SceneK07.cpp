@@ -1,5 +1,6 @@
 #include "SceneK07.h"
 
+#include "Pipeline.h"
 #include "CameraBase.h"
 #include "Input.h"
 #include "Sprite.h"
@@ -52,10 +53,12 @@ void SceneK07::Init()
 	//CreateStage("Assets/CSV/Map02.csv", 4, 3);
 	
 	m_spawner = new CEnemySpawner("Assets/CSV/EnemyTest.csv");
+	PipelineInit();
 }
 
 void SceneK07::Uninit()
 {
+	PipelineUninit();
 	delete m_spawner;
 	MeshPool::Ins()->DeleteAll();
 	delete CCollisionSystem::GetIns();
@@ -101,11 +104,8 @@ void SceneK07::Draw()
 	auto vs = GetObj<Shader>("VS_Object");
 	auto ps = GetObj<Shader>("PS_TexColor");
 
-
-	Sprite::SetView(CameraBase::GetPrimary()->GetView());
-	Sprite::SetProjection(CameraBase::GetPrimary()->GetProj());
-	CObjectManager::GetIns()->Draw(vs, ps, RENDER_MODEL);
-	CObjectManager::GetIns()->Draw(vs, ps, RENDER_ALPHA);
+	PipelineDraw(rtvDefault, dsvDefault);
+	
 
 }
 
