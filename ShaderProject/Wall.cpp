@@ -1,6 +1,6 @@
 #include "Wall.h"
 #include "Defines.h"
-
+#include "CameraBase.h"
 CWall::CWall(int x, int y, int id, float offsetX, float offsetY)
 {
 	bool enableCollision = id > 0;
@@ -25,4 +25,11 @@ CWall::CWall(int x, int y, int id, float offsetX, float offsetY)
 
 void CWall::Update()
 {
+}
+
+void CWall::Draw(Shader* vs, Shader* ps)
+{
+	auto anchor = CameraBase::GetPrimary()->GetPos().z;
+	if (m_pos.z < anchor - 5 || anchor + 120 < m_pos.z) return;
+	Model::Draw(vs, ps);
 }

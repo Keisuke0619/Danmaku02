@@ -23,16 +23,6 @@ void CObjectManager::Update()
 // 全オブジェクトのドローを回す。描画マスクにより、スキップすることもある。
 void CObjectManager::Draw(Shader* vs, Shader* ps, unsigned drawMask)
 {
-
-
-
-
-
-
-
-
-
-
 	for (auto obj : m_objects)
 	{
 		if (obj == nullptr)continue;
