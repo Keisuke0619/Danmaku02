@@ -25,7 +25,7 @@ Texture2D worldTex : register(t2);
 
 float4 main(PS_IN pin) : SV_TARGET
 {
-    float4 col = float4(0.2f, 0.2f, 0.2f, 1);
+    float4 col = float4(0.05f, 0.05f, 0.05f, 1);
     float4 albedo = albedoTex.Sample(samp, pin.uv);
     float3 worldPos = worldTex.Sample(samp, pin.uv).rgb;
     float4 normal = normalTex.Sample(samp, pin.uv);
@@ -46,7 +46,7 @@ float4 main(PS_IN pin) : SV_TARGET
         // å∏êäèàóù
         float attenuation = saturate(1.0f - toLightDistance / lights[i].range);
         // é©ëRÇ…
-        attenuation = pow(attenuation, 2);
+        attenuation = pow(attenuation, 5);
         col.rgb += lights[i].color * dotNV * attenuation;
     }
     return float4(albedo.rgb * col.rgb, 1.0f);

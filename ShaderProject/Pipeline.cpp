@@ -64,8 +64,8 @@ void PipelineInit()
 	for (int i = 0; i < 30; i++)
 	{
 		g_pipePointLight[i].color = { 1, 1, 0.5f, 1 };
-		g_pipePointLight[i].pos = { 0, 1, i * 10 + 2.5f };
-		g_pipePointLight[i].range = 25;
+		g_pipePointLight[i].pos = { 0, 3, i * 20 + 2.5f };
+		g_pipePointLight[i].range = 50;
 	}
 }
 
