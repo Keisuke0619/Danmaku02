@@ -195,6 +195,9 @@
     <ClCompile Include="Pipeline.cpp">
       <Filter>ソース ファイル\App\Base</Filter>
     </ClCompile>
+    <ClCompile Include="Torch.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h">
@@ -325,6 +328,9 @@
     </ClInclude>
     <ClInclude Include="Pipeline.h">
       <Filter>ヘッダー ファイル\App\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Torch.h">
+      <Filter>ヘッダー ファイル\App\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

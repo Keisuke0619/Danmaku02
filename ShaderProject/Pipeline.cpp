@@ -60,13 +60,6 @@ void PipelineInit()
 	g_pipeRTV[2]->Create(DXGI_FORMAT_R32G32B32A32_FLOAT, SCREEN_WIDTH, SCREEN_HEIGHT);
 	g_pipeRTV[3]->Create(DXGI_FORMAT_R32_FLOAT, SCREEN_WIDTH, SCREEN_HEIGHT);
 	SetCullingMode(D3D11_CULL_FRONT);
-
-	for (int i = 0; i < 30; i++)
-	{
-		g_pipePointLight[i].color = { 1, 1, 0.5f, 1 };
-		g_pipePointLight[i].pos = { 0, 3, i * 20 + 2.5f };
-		g_pipePointLight[i].range = 50;
-	}
 }
 
 void PipelineUninit()
@@ -126,5 +119,31 @@ void PipelineDraw(RenderTarget* rtv, DepthStencil* dsv)
 		Sprite::SetWorld(mat);
 		Sprite::SetSize(1.5f, 0.75f);
 		Sprite::Draw();
+	}
+}
+
+void PipelinePushPointLight(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 color, float range)
+{
+	for (int i = 0; i < 128; i++)
+	{
+		if (g_pipePointLight[i].range != 0)
+		{
+			int a = 0;
+			continue;
+		}
+		g_pipePointLight[i].pos = pos;
+		g_pipePointLight[i].color = DirectX::XMFLOAT4(color.x, color.y, color.z, 1);
+		g_pipePointLight[i].range = range;
+		break;
+	}
+}
+
+void PipelineClearPointLight()
+{
+	for (auto point : g_pipePointLight)
+	{
+		point.color = { 0,0,0,0 };
+		point.pos = { 0,0,0 };
+		point.range = 0;
 	}
 }

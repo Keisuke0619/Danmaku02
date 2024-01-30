@@ -17,7 +17,7 @@
 #include "DataPool.h"
 #include "BossStage01.h"
 #include "ScenePause.h"
-
+#include "Torch.h"
 void SceneK07::Init()
 {
 	Shader* shader[] = {
@@ -56,6 +56,7 @@ void SceneK07::Init()
 	
 	m_spawner = new CEnemySpawner("Assets/CSV/EnemyTest.csv");
 	PipelineInit();
+	CTorch::SetTorch("Assets/CSV/PointLight01.csv");
 }
 
 void SceneK07::Uninit()
