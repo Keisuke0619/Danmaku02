@@ -53,11 +53,11 @@ public:
 
 public:
 	bool Load(const char* file, float scale = 1.0f, bool flip = false, DirectX::XMFLOAT3 offset = {0,0,0});
-	void Draw(Shader* vs, Shader* ps);
+	virtual void Draw(Shader* vs, Shader* ps);
 	void TestDraw();
 	
 	void RemakeVertex(int vtxSize, std::function<void(RemakeInfo& data)> func);
-
+	void SetAutoHidden(bool isAutoHidden = true) { m_isAutoHidden = isAutoHidden; }
 private:
 	void MakeDefaultShader();
 
@@ -69,7 +69,7 @@ private:
 	Materials m_materials;
 	VertexShader* m_pVS;
 	PixelShader* m_pPS;
-
+	bool m_isAutoHidden = true;
 };
 
 class MeshPool

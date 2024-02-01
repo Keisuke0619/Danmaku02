@@ -33,7 +33,7 @@ public:
 	void SetPos(DirectX::XMFLOAT3 pos);
 	void SetLook(DirectX::XMFLOAT3 look);
 	void SetUp(DirectX::XMFLOAT3 up);
-
+	void SetFovY(float degFovY);
 protected:
 	DirectX::XMFLOAT3 m_look, m_up;
 	float m_fovy, m_aspect, m_near, m_far;

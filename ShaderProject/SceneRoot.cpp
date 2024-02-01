@@ -10,13 +10,6 @@
 
 #include "SceneK07.h"
 #include "SceneTitle.h"
-//--- 定数定義
-enum SceneKind
-{
-	SCENE_K07,
-	SCENE_K00,
-	SCENE_MAX
-};
 
 //--- 構造体
 // @brief シーン情報保存
@@ -61,7 +54,7 @@ void SceneRoot::Init()
 		DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f),
 		0.0f, DirectX::XM_PIDIV4,
 		0.0f, 1.0f,
-		SCENE_K07
+		0
 	};
 	FILE* fp;
 	fopen_s(&fp, SettingFileName, "rb");

@@ -1,6 +1,6 @@
 #include "Wall.h"
 #include "Defines.h"
-
+#include "CameraBase.h"
 CWall::CWall(int x, int y, int id, float offsetX, float offsetY)
 {
 	bool enableCollision = id > 0;

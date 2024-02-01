@@ -88,3 +88,8 @@ void CameraBase::SetUp(DirectX::XMFLOAT3 up)
 {
 	m_up = up;
 }
+
+void CameraBase::SetFovY(float degFovY)
+{
+	m_fovy = DirectX::XMConvertToRadians(degFovY);
+}

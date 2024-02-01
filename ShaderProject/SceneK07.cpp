@@ -1,5 +1,6 @@
 #include "SceneK07.h"
 
+#include "Pipeline.h"
 #include "CameraBase.h"
 #include "Input.h"
 #include "Sprite.h"
@@ -16,7 +17,7 @@
 #include "DataPool.h"
 #include "BossStage01.h"
 #include "ScenePause.h"
-
+#include "Torch.h"
 void SceneK07::Init()
 {
 	Shader* shader[] = {
@@ -41,21 +42,27 @@ void SceneK07::Init()
 	cam->SetTarget(m_player);
 	cam->SetPosOffset(DirectX::XMFLOAT3(0, 10, -5));
 	cam->SetLookOffset(DirectX::XMFLOAT3(0, 0, 4));
-	auto field = new CWorldSprite();
-	field->LoadTexture("Assets/Texture/Ground.jpg");
-	field->SetPos(DirectX::XMFLOAT3(0, 0, 0));
-	field->SetRot(DirectX::XMFLOAT3(3.141592f / 2, 0, 0));
-	field->SetScale(DirectX::XMFLOAT3(1000, 1000, 1));
-	field->SetUVScale(DirectX::XMFLOAT2(25, 25));
+	//auto field = new CWorldSprite();
+	//field->LoadTexture("Assets/Texture/Ground.jpg");
+	//field->SetPos(DirectX::XMFLOAT3(0, 0, 0));
+	//field->SetRot(DirectX::XMFLOAT3(3.141592f / 2, 0, 0));
+	//field->SetScale(DirectX::XMFLOAT3(1000, 1000, 1));
+	//field->SetUVScale(DirectX::XMFLOAT2(25, 25));
+	auto field = new Model();
+	field->Load("Assets/Model/Wall/Ground.fbx", 1000, false, {0, -5.5f, 0});
+	field->SetAutoHidden(false);
 	//CreateStage("Assets/CSV/MapTest.csv", 14, 4);
 	CreateStage("Assets/CSV/Map01.csv", 10, 2);
 	//CreateStage("Assets/CSV/Map02.csv", 4, 3);
 	
 	m_spawner = new CEnemySpawner("Assets/CSV/EnemyTest.csv");
+	PipelineInit();
+	CTorch::SetTorch("Assets/CSV/PointLight01.csv");
 }
 
 void SceneK07::Uninit()
 {
+	PipelineUninit();
 	delete m_spawner;
 	MeshPool::Ins()->DeleteAll();
 	delete CCollisionSystem::GetIns();
@@ -101,11 +108,8 @@ void SceneK07::Draw()
 	auto vs = GetObj<Shader>("VS_Object");
 	auto ps = GetObj<Shader>("PS_TexColor");
 
-
-	Sprite::SetView(CameraBase::GetPrimary()->GetView());
-	Sprite::SetProjection(CameraBase::GetPrimary()->GetProj());
-	CObjectManager::GetIns()->Draw(vs, ps, RENDER_MODEL);
-	CObjectManager::GetIns()->Draw(vs, ps, RENDER_ALPHA);
+	PipelineDraw(rtvDefault, dsvDefault);
+	
 
 }
 
@@ -178,6 +182,7 @@ void SceneK07::InitSky()
 
 void SceneK07::DrawSky()
 {
+	return;
 	DirectX::XMFLOAT4X4 mat[3] = {};
 	mat[1] = CameraBase::GetPrimary()->GetView();
 	mat[2] = CameraBase::GetPrimary()->GetProj();
@@ -230,6 +235,7 @@ void SceneK07::CallBack(int eventID)
 	{
 		auto defaultCamera = GetObj<CameraBase>("MainCamera");
 		CameraBase::SetPrimary(defaultCamera);
+		defaultCamera->SetFovY(90);
 	}
 	if (eventID == EVENT_CLOSE_PAUSE_WINDOW)
 	{
