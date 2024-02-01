@@ -50,6 +50,7 @@ void SceneK07::Init()
 	//field->SetUVScale(DirectX::XMFLOAT2(25, 25));
 	auto field = new Model();
 	field->Load("Assets/Model/Wall/Ground.fbx", 1000, false, {0, -5.5f, 0});
+	field->SetAutoHidden(false);
 	//CreateStage("Assets/CSV/MapTest.csv", 14, 4);
 	CreateStage("Assets/CSV/Map01.csv", 10, 2);
 	//CreateStage("Assets/CSV/Map02.csv", 4, 3);
@@ -181,6 +182,7 @@ void SceneK07::InitSky()
 
 void SceneK07::DrawSky()
 {
+	return;
 	DirectX::XMFLOAT4X4 mat[3] = {};
 	mat[1] = CameraBase::GetPrimary()->GetView();
 	mat[2] = CameraBase::GetPrimary()->GetProj();

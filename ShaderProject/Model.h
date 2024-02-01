@@ -57,7 +57,7 @@ public:
 	void TestDraw();
 	
 	void RemakeVertex(int vtxSize, std::function<void(RemakeInfo& data)> func);
-
+	void SetAutoHidden(bool isAutoHidden = true) { m_isAutoHidden = isAutoHidden; }
 private:
 	void MakeDefaultShader();
 
@@ -69,7 +69,7 @@ private:
 	Materials m_materials;
 	VertexShader* m_pVS;
 	PixelShader* m_pPS;
-
+	bool m_isAutoHidden = true;
 };
 
 class MeshPool

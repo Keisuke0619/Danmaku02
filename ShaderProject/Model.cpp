@@ -70,6 +70,9 @@ bool Model::Load(const char* file, float scale, bool flip, DirectX::XMFLOAT3 off
 
 void Model::Draw(Shader* vs, Shader* ps)
 {
+	auto anchor = CameraBase::GetPrimary()->GetPos().z;
+	if (m_isAutoHidden && (m_pos.z < anchor - 5 || anchor + 120 < m_pos.z)) return;
+
 	DirectX::XMFLOAT4X4 mat[3];
 	mat[0] = m_world;
 	mat[1] = CameraBase::GetPrimary()->GetView();

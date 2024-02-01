@@ -56,7 +56,7 @@ void Draw()
 {
 	auto rtv = g_pScene->GetObj<RenderTarget>("RTV");
 	auto dsv = g_pScene->GetObj<DepthStencil>("DSV");
-	float color[4] = { 0.8f, 0.9f, 1.0f, 1.0f };
+	float color[4] = { 0.005f, 0.005f, 0.01f, 1.0f };
 	GetContext()->ClearRenderTargetView(rtv->GetView(), color);
 	GetContext()->ClearDepthStencilView(dsv->GetView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 

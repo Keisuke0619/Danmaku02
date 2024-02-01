@@ -34,12 +34,15 @@ void CTorch::SetTorch(std::string csvPath)
 }
 CTorch::CTorch(int x, int y, int direction, DirectX::XMFLOAT3 col)
 {
-	const DirectX::XMFLOAT3 offset = {0, 3, 0};
+	const DirectX::XMFLOAT3 constOffset = {-1.5f, 4.0f, 1.5f};
 	Load("Assets/Model/Torch/Torch.fbx", WALL_SCALE);
 	m_tag = "Torch";
 	m_pos = DirectX::XMFLOAT3(x * WALL_SCALE, 0, y * WALL_SCALE);
 	m_isStaticPosition = true;
 	m_rot.y = 3.141592f * 0.5f * direction;
+	auto offset = constOffset;
+	offset.x *= cosf(m_rot.y);
+	offset.z *= sinf(m_rot.y);
 	PipelinePushPointLight(DirectXUtil::Add(m_pos, offset), col, 50.0f);
 	ReloadWorldMatrix();
 

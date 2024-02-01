@@ -6,5 +6,4 @@ class CWall : public Model
 public:
 	CWall(int x, int y, int id, float offsetX, float offsetY);
 	void Update() override;
-	void Draw(Shader* vs, Shader* ps) override;
 };

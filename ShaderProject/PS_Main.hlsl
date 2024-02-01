@@ -15,7 +15,7 @@ struct Light
 
 cbuffer LightBuf : register(b0)
 {
-    Light lights[10];
+    Light lights[16];
 }
 
 sampler samp : register(s0);
@@ -34,7 +34,7 @@ float4 main(PS_IN pin) : SV_TARGET
         discard;
     }
     float3 N = normalize(normal);
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 16; i++)
     {
         // ピクセルから点光源に向かうベクトル
         float3 toLight = lights[i].pos - worldPos.xyz;
