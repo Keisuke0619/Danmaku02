@@ -7,6 +7,7 @@
 #include "SceneRoot.h"
 #include "Defines.h"
 #include "DebugText.h"
+#include "Effect.h"
 //--- ƒOƒ[ƒoƒ‹•Ï”
 std::shared_ptr<SceneRoot> g_pScene;
 
@@ -32,11 +33,13 @@ HRESULT Init(HWND hWnd, UINT width, UINT height)
 	SetRenderTargets(1, &rtv, dsv);
 	// debug text
 	DebugText::Init();
+	Efk::Init();
 	return hr;
 }
 
 void Uninit()
 {
+	Efk::Uninit();
 	g_pScene->Uninit();
 	g_pScene.reset();
 	UninitInput();
@@ -50,6 +53,7 @@ void Update(float tick)
 	UpdateInput();
 	g_pScene->_update(tick);
 	DebugText::Update();
+	Efk::Update(tick);
 }
 
 void Draw()
@@ -61,7 +65,7 @@ void Draw()
 	GetContext()->ClearDepthStencilView(dsv->GetView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	g_pScene->_draw();
-
+	Efk::Draw();
 	DebugText::Draw();
 	SwapDirectX();
 }

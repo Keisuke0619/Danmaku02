@@ -125,8 +125,5 @@ void SceneRoot::Draw()
 {
 	LightBase* pLight = GetObj<LightBase>("Light");
 
-	// オブジェクト描画
-	pLight->Draw();
-
 	Geometory::DrawLines();
 }

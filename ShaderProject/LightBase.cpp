@@ -13,32 +13,6 @@ LightBase::~LightBase()
 {
 }
 
-#ifdef _DEBUG
-void LightBase::Draw()
-{
-	auto player = CPlayer::GetPrimary();
-	if (player == nullptr)return;
-	auto drawPos = player->GetPos();
-	Geometory::SetView(CameraBase::GetPrimary()->GetView());
-	Geometory::SetProjection(CameraBase::GetPrimary()->GetProj());
-	DirectX::XMFLOAT3 end(
-		drawPos.x - m_direction.x,
-		drawPos.y - m_direction.y,
-		drawPos.z - m_direction.z
-	);
-	Geometory::SetColor(m_diffuse);
-	Geometory::AddLine(drawPos, end);
-
-	DirectX::XMFLOAT4X4 mat;
-	DirectX::XMStoreFloat4x4(&mat, DirectX::XMMatrixTranspose(
-		DirectX::XMMatrixScaling(0.1f, 0.1f, 0.1f) *
-		DirectX::XMMatrixTranslation(end.x, end.y, end.z)
-	));
-	Geometory::SetWorld(mat);
-	Geometory::DrawBox();
-}
-#endif
-
 DirectX::XMFLOAT3 LightBase::GetPos()
 {
 	return m_pos;
