@@ -1,5 +1,6 @@
 #include "SceneK07.h"
 
+#include "BossStage01.h"
 #include "Pipeline.h"
 #include "CameraBase.h"
 #include "Input.h"
@@ -15,7 +16,6 @@
 #include "Wall.h"
 #include "EventCamera.h"
 #include "DataPool.h"
-#include "BossStage01.h"
 #include "ScenePause.h"
 #include "Torch.h"
 void SceneK07::Init()
@@ -35,19 +35,13 @@ void SceneK07::Init()
 	Sprite::SetVertexShader(nullptr);
 	Sprite::SetPixelShader(nullptr);
 
-	InitSky();
-
 	m_player = new CPlayer;
+
 	auto cam = CreateObj<CFollowCamera>("MainCamera");
 	cam->SetTarget(m_player);
 	cam->SetPosOffset(DirectX::XMFLOAT3(0, 10, -5));
 	cam->SetLookOffset(DirectX::XMFLOAT3(0, 0, 4));
-	//auto field = new CWorldSprite();
-	//field->LoadTexture("Assets/Texture/Ground.jpg");
-	//field->SetPos(DirectX::XMFLOAT3(0, 0, 0));
-	//field->SetRot(DirectX::XMFLOAT3(3.141592f / 2, 0, 0));
-	//field->SetScale(DirectX::XMFLOAT3(1000, 1000, 1));
-	//field->SetUVScale(DirectX::XMFLOAT2(25, 25));
+
 	auto field = new Model();
 	field->Load("Assets/Model/Wall/Ground.fbx", 1000, false, {0, -5.5f, 0});
 	field->SetAutoHidden(false);
@@ -99,10 +93,6 @@ void SceneK07::Draw()
 {
 	auto rtvDefault = GetObj<RenderTarget>("RTV");
 	auto dsvDefault = GetObj<DepthStencil>("DSV");
-
-	// スカイキューブ描画
-	SetRenderTargets(1, &rtvDefault, nullptr);
-	DrawSky();
 
 	SetRenderTargets(1, &rtvDefault, dsvDefault);
 	auto vs = GetObj<Shader>("VS_Object");
@@ -182,7 +172,6 @@ void SceneK07::InitSky()
 
 void SceneK07::DrawSky()
 {
-	return;
 	DirectX::XMFLOAT4X4 mat[3] = {};
 	mat[1] = CameraBase::GetPrimary()->GetView();
 	mat[2] = CameraBase::GetPrimary()->GetProj();

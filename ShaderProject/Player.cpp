@@ -32,10 +32,6 @@ void CPlayer::Update()
 {
 	Shot();
 	Move();
-	if (IsKeyTrigger('O'))
-	{
-		Efk::Play(u"Assets/Effect/Spawn.efkefc", m_pos.x, m_pos.y + 1, m_pos.z);
-	}
 }
 
 /// <summary>

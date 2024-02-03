@@ -53,25 +53,14 @@ void Efk::Uninit()
 void Efk::Update(float tick)
 {
 	g_efkRender->SetTime(g_efkTime+=tick);
+	Manager::UpdateParameter updateParameter;
+	g_efkManager->Update(updateParameter);
 }
 
 void Efk::Draw()
 {
-	auto pos = CameraBase::GetPrimary()->GetPos();
-	auto viewerPosition = Vector3D(pos.x, pos.y, pos.z);
-	Matrix44 projectionMatrix;
-	projectionMatrix.PerspectiveFovRH(90.0f / 180.0f * 3.14f, (float)SCREEN_WIDTH / SCREEN_HEIGHT, 1.0f, 500.0f);
-
-	Matrix44 cameraMatrix;
-	cameraMatrix.LookAtRH(viewerPosition, Vector3D(0.0f, 0.0f, 0.0f), Vector3D(0.0f, 1.0f, 0.0f));
-
-
-	Effekseer::Manager::LayerParameter layerParameter;
-	layerParameter.ViewerPosition = viewerPosition;
-	g_efkManager->SetLayerParameter(0, layerParameter);
-
-	g_efkRender->SetProjectionMatrix(projectionMatrix);
-	g_efkRender->SetCameraMatrix(cameraMatrix);
+	g_efkRender->SetProjectionMatrix(GetMat(CameraBase::GetPrimary()->GetProj()));
+	g_efkRender->SetCameraMatrix(GetMat(CameraBase::GetPrimary()->GetView()));
 
 	g_efkRender->BeginRendering();
 
@@ -95,9 +84,13 @@ Effekseer::Handle Efk::Play(const char16_t* path, float x, float y, float z)
 		g_effects[path] = Effect::Create(g_efkManager, path);
 	}
 	auto ret = g_efkManager->Play(g_effects[path], x, y, z);
-	g_efkManager->SetRotation(ret, 0, 0, 0);
-	g_efkManager->SetScale(ret, 100, 100, 100);
 	return ret;
+}
+
+Effekseer::Handle Efk::Stop(Effekseer::Handle h)
+{
+	g_efkManager->StopEffect(h);
+	return -1;
 }
 
 

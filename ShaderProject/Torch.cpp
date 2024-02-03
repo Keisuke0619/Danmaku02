@@ -4,6 +4,7 @@
 #include "Pipeline.h"
 #include <list>
 #include "DirectXMathUtil.h"
+#include "CameraBase.h"
 void CTorch::SetTorch(std::string csvPath)
 {
 	auto csv = CSVLoad(csvPath, true);
@@ -43,7 +44,20 @@ CTorch::CTorch(int x, int y, int direction, DirectX::XMFLOAT3 col)
 	auto offset = constOffset;
 	offset.x *= cosf(m_rot.y);
 	offset.z *= sinf(m_rot.y);
-	PipelinePushPointLight(DirectXUtil::Add(m_pos, offset), col, 50.0f);
+	m_lightPos = DirectXUtil::Add(m_pos, offset);
+	PipelinePushPointLight(m_lightPos, col, 50.0f);
 	ReloadWorldMatrix();
 
+}
+
+void CTorch::Update()
+{
+	if ((m_pos.z < CameraBase::GetPrimary()->GetPos().z || CameraBase::GetPrimary()->GetPos().z < m_pos.z - 100) && m_efk != -1)
+	{
+		m_efk = Efk::Stop(m_efk);
+	}
+	else if (m_efk == -1)
+	{
+		m_efk = Efk::Play(u"Assets/Effect/Torch.efkefc", m_lightPos.x, m_lightPos.y, m_lightPos.z);
+	}
 }
