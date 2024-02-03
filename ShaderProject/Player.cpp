@@ -5,6 +5,7 @@
 #include "CameraBase.h"
 #include "DebugText.h"
 #include "DataPool.h"
+#include "Effect.h"
 
 #define PLAYER_SHOT_COLLIDER_SCALE (1.0f)
 

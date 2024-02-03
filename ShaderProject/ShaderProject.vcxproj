@@ -79,11 +79,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir);$(ProjectDir)EffekseerHeader\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)EffekseerLib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir);$(ProjectDir)EffekseerHeader\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)EffekseerLib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -181,6 +183,7 @@
     <ClCompile Include="DebugWindow.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="DirectXMathUtil.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="InclutionShot.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Pipeline.cpp" />
@@ -227,6 +230,11 @@
     <ClInclude Include="Defines.h" />
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="DirectXMathUtil.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffekseerHeader\Effekseer.h" />
+    <ClInclude Include="EffekseerHeader\Effekseer.Modules.h" />
+    <ClInclude Include="EffekseerHeader\Effekseer.SIMD.h" />
+    <ClInclude Include="EffekseerHeader\EffekseerRendererDX11.h" />
     <ClInclude Include="InclutionShot.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Pipeline.h" />

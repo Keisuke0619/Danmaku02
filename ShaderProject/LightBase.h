@@ -9,12 +9,6 @@ public:
 	LightBase();
 	~LightBase();
 
-#ifdef _DEBUG
-	void Draw();
-#else
-	void Draw() {}
-#endif
-
 	virtual void Update() = 0;
 
 	DirectX::XMFLOAT3 GetPos();

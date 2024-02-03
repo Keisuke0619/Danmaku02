@@ -3,6 +3,7 @@
 #include "ShotObj.h"
 #include "Defines.h"
 #include "Input.h"
+#include "Effect.h"
 CEnemy::CEnemy()
 {
 	UseCollision(true);
@@ -12,6 +13,10 @@ CEnemy::CEnemy()
 }
 void CEnemy::Update()
 {
+	if (m_frame == 0)
+	{
+		Efk::Play(u"Assets/Effect/Spawn.efkefc", m_pos.x, m_pos.y, m_pos.z);
+	}
 	CSVRoutine();
 	if (m_life <= 0) { Destroy(); }
 }
