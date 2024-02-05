@@ -35,7 +35,7 @@ void CTorch::SetTorch(std::string csvPath)
 }
 CTorch::CTorch(int x, int y, int direction, DirectX::XMFLOAT3 col)
 {
-	const DirectX::XMFLOAT3 constOffset = {-1.5f, 4.0f, 1.5f};
+	const DirectX::XMFLOAT3 constOffset = {-1.6f, 3.7f, 1.6f};
 	Load("Assets/Model/Torch/Torch.fbx", WALL_SCALE);
 	m_tag = "Torch";
 	m_pos = DirectX::XMFLOAT3(x * WALL_SCALE, 0, y * WALL_SCALE);
@@ -47,17 +47,18 @@ CTorch::CTorch(int x, int y, int direction, DirectX::XMFLOAT3 col)
 	m_lightPos = DirectXUtil::Add(m_pos, offset);
 	PipelinePushPointLight(m_lightPos, col, 50.0f);
 	ReloadWorldMatrix();
+		m_efk = Efk::Play(u"Assets/Effect/Torch.efkefc", m_lightPos.x, m_lightPos.y, m_lightPos.z);
 
 }
 
 void CTorch::Update()
 {
-	if ((m_pos.z < CameraBase::GetPrimary()->GetPos().z || CameraBase::GetPrimary()->GetPos().z < m_pos.z - 100) && m_efk != -1)
-	{
-		m_efk = Efk::Stop(m_efk);
-	}
-	else if (m_efk == -1)
-	{
-		m_efk = Efk::Play(u"Assets/Effect/Torch.efkefc", m_lightPos.x, m_lightPos.y, m_lightPos.z);
-	}
+	//if ((m_pos.z < CameraBase::GetPrimary()->GetPos().z || CameraBase::GetPrimary()->GetPos().z < m_pos.z - 100) && m_efk != -1)
+	//{
+	//	m_efk = Efk::Stop(m_efk);
+	//}
+	//else if (m_efk == -1)
+	//{
+	//	m_efk = Efk::Play(u"Assets/Effect/Torch.efkefc", m_lightPos.x, m_lightPos.y, m_lightPos.z);
+	//}
 }

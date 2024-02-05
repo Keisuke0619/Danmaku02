@@ -53,12 +53,12 @@ void CPlayer::Move()
 	auto addVec = DirectX::XMLoadFloat3(&addPos);
 	addVec = DirectX::XMVector3Normalize(addVec);
 	// 移動速度をかけてFloat3に戻す
-	addVec = DirectX::XMVectorScale(addVec, 0.1f);
+	addVec = DirectX::XMVectorScale(addVec, 0.2f);
 	DirectX::XMStoreFloat3(&addPos, addVec);
 	// もし移動している＆シフトが押されているなら低速移動に。正規化したベクトルに定数をかける。
 	if (m_state == 1 && IsKeyPress(VK_SHIFT))
 	{
-		const float dashCoef = 0.7f;
+		const float dashCoef = 0.6f;
 		addPos.x *= dashCoef;
 		addPos.y *= dashCoef;
 		addPos.z *= dashCoef;
