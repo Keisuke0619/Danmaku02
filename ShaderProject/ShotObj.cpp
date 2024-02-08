@@ -36,6 +36,10 @@ const float CShot::ShotSize[SHOT_SIZE_MAX] =
     1.0f,
 };
 
+TShotGeometory CShot::ShotVtx[1024];
+std::queue<TShotGeometory*> CShot::EmptyShotQueue;
+
+
 float CShot::ShotDeleteDepth = 35;
 
 CShot::CShot()
@@ -43,10 +47,21 @@ CShot::CShot()
     m_tag = "ShotFromEnemy";
     m_isKillShot = false;
     UseCollision();
+
+    m_myPointer = EmptyShotQueue.front();
+    EmptyShotQueue.pop();
+
+    m_myPointer->scale = 1;
+    m_myPointer->uv = DirectX::XMFLOAT2(0, 0);
+    m_myPointer->uvSize = DirectX::XMFLOAT2(0.125f, 0.125f);
 }
 
 CShot::~CShot()
 {
+    EmptyShotQueue.push(m_myPointer);
+
+
+
     // Ç±Ç±Ç≈ÉAÉCÉeÉÄçÏê¨
     if (m_tag == "ShotFromPlayer") { return; }
 }
@@ -77,6 +92,11 @@ void CShot::Update()
     {
         Destroy();
     }
+}
+
+void CShot::Draw(Shader* vs, Shader* ps)
+{
+    return;
 }
 
 void CShot::AddShotData(int frame, float speed, float degAngle, float addSpeed, float addAngle)
@@ -154,4 +174,25 @@ void CShot::SetInit(CShot* shot, CObject* parent, DirectX::XMFLOAT2 pos, float s
 void CShot::SetDeleteDepth(float newDepth)
 {
     ShotDeleteDepth = newDepth;
+}
+
+void CShot::Init()
+{
+    auto ptr = ShotVtx;
+    for (int i = 0; i < 1024; i++)
+    {
+        EmptyShotQueue.push(ptr++);
+    }
+}
+
+void CShot::AllDraw()
+{
+
+
+
+
+    ID3D11DeviceContext* pContext = GetContext();
+    ID3D11ShaderResourceView* pSRV = nullptr;
+    pContext->GSSetShaderResources(0, 1, &pSRV);
+    pContext->GSSetShader(nullptr, nullptr, 0);
 }
