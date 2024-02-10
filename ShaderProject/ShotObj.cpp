@@ -1,6 +1,5 @@
 #include "ShotObj.h"
 #include "CameraBase.h"
-
 #define ADDSHOT_NULL_MIN (1129893.0f)
 const std::string CShot::ColorName[COLOR_MAX] =
 {
@@ -36,8 +35,11 @@ const float CShot::ShotSize[SHOT_SIZE_MAX] =
     1.0f,
 };
 
-TShotGeometory CShot::ShotVtx[1024];
-std::queue<TShotGeometory*> CShot::EmptyShotQueue;
+TShotGeometry CShot::ShotVtx[1024];
+std::queue<TShotGeometry*> CShot::EmptyShotQueue;
+MeshBuffer* CShot::DrawMesh;
+Shader* CShot::Shaders[3];
+Texture CShot::ShotTex;
 
 
 float CShot::ShotDeleteDepth = 35;
@@ -51,7 +53,6 @@ CShot::CShot()
     m_myPointer = EmptyShotQueue.front();
     EmptyShotQueue.pop();
 
-    m_myPointer->scale = 1;
     m_myPointer->uv = DirectX::XMFLOAT2(0, 0);
     m_myPointer->uvSize = DirectX::XMFLOAT2(0.125f, 0.125f);
 }
@@ -92,6 +93,10 @@ void CShot::Update()
     {
         Destroy();
     }
+    m_myPointer->vtx.x = m_pos.x;
+    m_myPointer->vtx.y = m_pos.y;
+    m_myPointer->vtx.z = m_pos.z;
+    m_myPointer->vtx.z = 1.0f;
 }
 
 void CShot::Draw(Shader* vs, Shader* ps)
@@ -183,16 +188,42 @@ void CShot::Init()
     {
         EmptyShotQueue.push(ptr++);
     }
+    MeshBuffer::Description desc = {};
+    desc.vtxSize = sizeof(TShotGeometry);
+    desc.vtxCount = 1024;
+    desc.pVtx = ShotVtx;
+    desc.topology = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST;
+
+    DrawMesh = new MeshBuffer(desc);
+    Shaders[0] = new VertexShader();
+    Shaders[0]->Load("Assets/Shader/VS_Shot.cso");
+    Shaders[1] = new GeometryShader();
+    Shaders[1]->Load("Assets/Shader/GS_Shot.cso");    
+    Shaders[2] = new PixelShader();
+    Shaders[2]->Load("Assets/Shader/PS_TexColor.cso");
+    ShotTex.Create("Assets/Texture/Bullet/bullets.png");
+}
+
+void CShot::Uninit()
+{
+    for (int i = 0; i < 3; i++)
+    {
+        delete Shaders[i];
+    }
+    delete DrawMesh;
 }
 
 void CShot::AllDraw()
 {
-
-
-
-
-    ID3D11DeviceContext* pContext = GetContext();
-    ID3D11ShaderResourceView* pSRV = nullptr;
-    pContext->GSSetShaderResources(0, 1, &pSRV);
-    pContext->GSSetShader(nullptr, nullptr, 0);
+    DirectX::XMFLOAT4X4 mat[2];
+    mat[0] = CameraBase::GetPrimary()->GetView();
+    mat[1] = CameraBase::GetPrimary()->GetProj();
+    Shaders[1]->WriteBuffer(0, mat);
+    Shaders[2]->SetTexture(0, &ShotTex);
+    for (int i = 0; i < 3; i++)
+    {
+        Shaders[i]->Bind();
+    }
+    DrawMesh->Draw();
+    GeometryShader::Unbind();
 }

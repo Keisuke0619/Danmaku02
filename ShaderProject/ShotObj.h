@@ -2,6 +2,8 @@
 #include "Billborad.h"
 #include <list>
 #include <queue>
+#include "MeshBuffer.h"
+
 #define SHOT_SPEED_COEF (1.0f / 60)
 #define ADDSHOT_NULL (1129894.0f)
 
@@ -43,10 +45,9 @@ enum EShotSize
 	SHOT_SIZE_MAX
 };
 
-struct TShotGeometory
+struct TShotGeometry
 {
-	DirectX::XMFLOAT3 vtx;
-	float scale;
+	DirectX::XMFLOAT4 vtx;
 	DirectX::XMFLOAT2 uv;
 	DirectX::XMFLOAT2 uvSize;
 };
@@ -59,7 +60,7 @@ protected:
 	std::list<TShotDataReserve*> m_shotDataReserve;
 	DirectX::XMFLOAT3 m_speed;
 	bool m_isDropItem = true;
-	TShotGeometory* m_myPointer;
+	TShotGeometry* m_myPointer;
 public:
 	CShot();
 	virtual ~CShot();
@@ -77,8 +78,11 @@ private:
 	static const std::string ColorName[COLOR_MAX];
 	static const std::string SizeName[SHOT_SIZE_MAX];
 	static const float ShotSize[SHOT_SIZE_MAX];
-	static TShotGeometory ShotVtx[1024];
-	static std::queue<TShotGeometory*> EmptyShotQueue;
+	static TShotGeometry ShotVtx[1024];
+	static std::queue<TShotGeometry*> EmptyShotQueue;
+	static MeshBuffer* DrawMesh;
+	static Shader* Shaders[3];
+	static Texture ShotTex;
 protected:
 	static float ShotDeleteDepth;
 public:
@@ -101,5 +105,6 @@ public:
 	static void SetInit(CShot* shot, CObject* parent, DirectX::XMFLOAT2 pos, float speed, float degAngle, std::string color, float addSpeed = 0, float addAngle = 0);
 	static void SetDeleteDepth(float newDepth);
 	static void Init();
+	static void Uninit();
 	static void AllDraw();
 };

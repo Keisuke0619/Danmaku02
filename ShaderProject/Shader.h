@@ -3,6 +3,7 @@
 
 #include "DirectX.h"
 #include "Texture.h"
+#include "UnorderedAccessView.h"
 #include <string>
 #include <map>
 #include <vector>
@@ -14,7 +15,11 @@ protected:
 	enum Kind
 	{
 		Vertex,
-		Pixel
+		Geometry,
+		Hull,
+		Domain,
+		Pixel,
+		Compute,
 	};
 protected:
 	Shader(Kind kind);
@@ -75,5 +80,68 @@ protected:
 private:
 	ID3D11PixelShader* m_pPS;
 };
+
+//----------
+// ハルシェーダー
+class HullShader : public Shader
+{
+public:
+	HullShader();
+	~HullShader();
+	void Bind();
+	static void Unbind();
+protected:
+	HRESULT MakeShader(void* pData, UINT size);
+private:
+	ID3D11HullShader* m_pHS;
+};
+
+//----------
+// ドメインシェーダー
+class DomainShader : public Shader
+{
+public:
+	DomainShader();
+	~DomainShader();
+	void Bind();
+	static void Unbind();
+protected:
+	HRESULT MakeShader(void* pData, UINT size);
+private:
+	ID3D11DomainShader* m_pDS;
+};
+
+//----------
+// ジオメトリシェーダー
+class GeometryShader : public Shader
+{
+public:
+	GeometryShader();
+	~GeometryShader();
+	void Bind();
+	static void Unbind();
+protected:
+	HRESULT MakeShader(void* pData, UINT size);
+private:
+	ID3D11GeometryShader* m_pGS;
+};
+
+//----------
+// コンピュートシェーダー
+class ComputeShader : public Shader
+{
+public:
+	ComputeShader();
+	~ComputeShader();
+	void Bind();
+	static void Unbind();
+	void Dispatch(UINT num, UnorderedAccessView** ppUAV, UINT thread);
+
+protected:
+	HRESULT MakeShader(void* pData, UINT size);
+private:
+	ID3D11ComputeShader* m_pCS;
+};
+
 
 #endif

@@ -45,7 +45,11 @@ HRESULT Shader::Compile(const char *pCode)
 	static const char *pTargetList[] = 
 	{
 		"vs_5_0",
-		"ps_5_0"
+		"gs_5_0",
+		"hs_5_0",
+		"ds_5_0",
+		"ps_5_0",
+		"cs_5_0"
 	};
 
 	HRESULT hr;
@@ -70,13 +74,17 @@ void Shader::WriteBuffer(UINT slot, void* pData)
 }
 void Shader::SetTexture(UINT slot, Texture* tex)
 {
-	if (!tex || slot >= m_pTextures.size()) { return; }
-	ID3D11ShaderResourceView* pTex = tex->GetResource();
+	if (slot >= m_pTextures.size()) { return; }
+	ID3D11ShaderResourceView* pTex = tex ? tex->GetResource() : nullptr;
 	m_pTextures[slot] = pTex;
 	switch (m_kind)
 	{
 	case Vertex:	GetContext()->VSSetShaderResources(slot, 1, &pTex); break;
+	case Geometry:	GetContext()->GSSetShaderResources(slot, 1, &pTex); break;
 	case Pixel:		GetContext()->PSSetShaderResources(slot, 1, &pTex); break;
+	case Hull:		GetContext()->HSSetShaderResources(slot, 1, &pTex); break;
+	case Domain:	GetContext()->DSSetShaderResources(slot, 1, &pTex); break;
+	case Compute:	GetContext()->CSSetShaderResources(slot, 1, &pTex); break;
 	}
 }
 
@@ -112,7 +120,7 @@ HRESULT Shader::Make(void* pData, UINT size)
 		if (FAILED(hr)) { return hr; }
 	}
 	// テクスチャ領域作成
-	m_pTextures.resize(shaderDesc.TextureNormalInstructions, nullptr);
+	m_pTextures.resize(shaderDesc.BoundResources, nullptr);
 
 	return MakeShader(pData, size);
 }
@@ -249,4 +257,141 @@ void PixelShader::Bind(void)
 HRESULT PixelShader::MakeShader(void* pData, UINT size)
 {
 	return GetDevice()->CreatePixelShader(pData, size, NULL, &m_pPS);
+}
+
+//----------
+// ハルシェーダ
+HullShader::HullShader()
+	: Shader(Shader::Hull)
+	, m_pHS(nullptr)
+{
+}
+HullShader::~HullShader()
+{
+	SAFE_RELEASE(m_pHS);
+}
+void HullShader::Bind(void)
+{
+	ID3D11DeviceContext* pContext = GetContext();
+	pContext->HSSetShader(m_pHS, nullptr, 0);
+	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_4_CONTROL_POINT_PATCHLIST);
+	for (int i = 0; i < m_pBuffers.size(); ++i)
+		pContext->HSSetConstantBuffers(i, 1, &m_pBuffers[i]);
+	for (int i = 0; i < m_pTextures.size(); ++i)
+		pContext->HSSetShaderResources(i, 1, &m_pTextures[i]);
+}
+void HullShader::Unbind(void)
+{
+	GetContext()->HSSetShader(nullptr, nullptr, 0);
+}
+HRESULT HullShader::MakeShader(void* pData, UINT size)
+{
+	return GetDevice()->CreateHullShader(pData, size, NULL, &m_pHS);
+}
+
+//----------
+// ドメインシェーダ
+DomainShader::DomainShader()
+	: Shader(Shader::Domain)
+	, m_pDS(nullptr)
+{
+}
+DomainShader::~DomainShader()
+{
+	SAFE_RELEASE(m_pDS);
+}
+void DomainShader::Bind(void)
+{
+	ID3D11DeviceContext* pContext = GetContext();
+	pContext->DSSetShader(m_pDS, nullptr, 0);
+	for (int i = 0; i < m_pBuffers.size(); ++i)
+		pContext->DSSetConstantBuffers(i, 1, &m_pBuffers[i]);
+	for (int i = 0; i < m_pTextures.size(); ++i)
+		pContext->DSSetShaderResources(i, 1, &m_pTextures[i]);
+}
+void DomainShader::Unbind(void)
+{
+	GetContext()->DSSetShader(nullptr, nullptr, 0);
+}
+HRESULT DomainShader::MakeShader(void* pData, UINT size)
+{
+	return GetDevice()->CreateDomainShader(pData, size, NULL, &m_pDS);
+}
+
+
+//----------
+// ジオメトリシェーダー
+GeometryShader::GeometryShader()
+	: Shader(Shader::Compute)
+	, m_pGS(nullptr)
+{
+}
+GeometryShader::~GeometryShader()
+{
+	SAFE_RELEASE(m_pGS);
+}
+void GeometryShader::Bind()
+{
+	ID3D11DeviceContext* pContext = GetContext();
+	pContext->GSSetShader(m_pGS, nullptr, 0);
+	for (int i = 0; i < m_pBuffers.size(); ++i)
+		pContext->GSSetConstantBuffers(i, 1, &m_pBuffers[i]);
+	for (int i = 0; i < m_pTextures.size(); ++i)
+		pContext->GSSetShaderResources(i, 1, &m_pTextures[i]);
+}
+void GeometryShader::Unbind()
+{
+	ID3D11DeviceContext* pContext = GetContext();
+	ID3D11ShaderResourceView* pSRV = nullptr;
+	pContext->GSSetShaderResources(0, 1, &pSRV);
+	pContext->GSSetShader(nullptr, nullptr, 0);
+}
+HRESULT GeometryShader::MakeShader(void* pData, UINT size)
+{
+	return GetDevice()->CreateGeometryShader(pData, size, NULL, &m_pGS);
+}
+
+//----------
+// コンピュートシェーダー
+ComputeShader::ComputeShader()
+	: Shader(Shader::Geometry)
+	, m_pCS(nullptr)
+{
+}
+ComputeShader::~ComputeShader()
+{
+	SAFE_RELEASE(m_pCS);
+}
+void ComputeShader::Bind()
+{
+	ID3D11DeviceContext* pContext = GetContext();
+	pContext->CSSetShader(m_pCS, nullptr, 0);
+	for (int i = 0; i < m_pBuffers.size(); ++i)
+		pContext->CSSetConstantBuffers(i, 1, &m_pBuffers[i]);
+	for (int i = 0; i < m_pTextures.size(); ++i)
+		pContext->CSSetShaderResources(i, 1, &m_pTextures[i]);
+}
+void ComputeShader::Unbind()
+{
+	ID3D11DeviceContext* pContext = GetContext();
+	ID3D11UnorderedAccessView* pUAV = nullptr;
+	ID3D11ShaderResourceView* pSRV = nullptr;
+
+	pContext->CSSetUnorderedAccessViews(0, 1, &pUAV, nullptr);
+	pContext->CSSetShaderResources(0, 1, &pSRV);
+	GetContext()->CSSetShader(nullptr, nullptr, 0);
+}
+void ComputeShader::Dispatch(UINT num, UnorderedAccessView** ppUAV, UINT thread)
+{
+	ID3D11DeviceContext* pContext = GetContext();
+	ID3D11UnorderedAccessView* ptr[4];
+	if (num > 4) num = 4;
+	for (int i = 0; i < num; ++i)
+		ptr[i] = ppUAV[i]->GetUAV();
+	pContext->CSSetUnorderedAccessViews(0, num, ptr, nullptr);
+	pContext->Dispatch(thread, 1, 1);
+}
+HRESULT ComputeShader::MakeShader(void* pData, UINT size)
+{
+	return GetDevice()->CreateComputeShader(pData, size, NULL, &m_pCS);
 }

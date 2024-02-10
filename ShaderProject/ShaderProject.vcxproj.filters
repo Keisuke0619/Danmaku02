@@ -67,6 +67,9 @@
     <Filter Include="ソース ファイル\App\Effekseer">
       <UniqueIdentifier>{e0e9f3d9-920e-47cf-8549-1f9fb7c449a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\GeometryShader">
+      <UniqueIdentifier>{f4594c0f-1e2d-4ac4-a12d-aecc30459423}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Startup.cpp">
@@ -206,6 +209,9 @@
     </ClCompile>
     <ClCompile Include="Effect.cpp">
       <Filter>ソース ファイル\App\Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="UnorderedAccessView.cpp">
+      <Filter>ソース ファイル\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -356,6 +362,9 @@
     <ClInclude Include="EffekseerHeader\EffekseerRendererDX11.h">
       <Filter>ヘッダー ファイル\Effekseer</Filter>
     </ClInclude>
+    <ClInclude Include="UnorderedAccessView.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VS_Object.hlsl">
@@ -372,6 +381,12 @@
     </FxCompile>
     <FxCompile Include="PS_Main.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_Shot.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="GS_Shot.hlsl">
+      <Filter>リソース ファイル\GeometryShader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

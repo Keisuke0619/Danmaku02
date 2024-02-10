@@ -5,7 +5,7 @@
 #include "Model.h"
 #include "Input.h"
 #include "Geometory.h"
-
+#include "ShotObj.h"
 #include "DebugText.h"
 
 #include "SceneK07.h"
@@ -124,6 +124,6 @@ void SceneRoot::Update(float tick)
 void SceneRoot::Draw()
 {
 	LightBase* pLight = GetObj<LightBase>("Light");
-
+	CShot::AllDraw();
 	Geometory::DrawLines();
 }

@@ -8,6 +8,7 @@
 #include "Defines.h"
 #include "DebugText.h"
 #include "Effect.h"
+#include "ShotObj.h"
 //--- ƒOƒ[ƒoƒ‹•Ï”
 std::shared_ptr<SceneRoot> g_pScene;
 
@@ -34,11 +35,13 @@ HRESULT Init(HWND hWnd, UINT width, UINT height)
 	// debug text
 	DebugText::Init();
 	Efk::Init();
+	CShot::Init();
 	return hr;
 }
 
 void Uninit()
 {
+	CShot::Uninit();
 	Efk::Uninit();
 	g_pScene->Uninit();
 	g_pScene.reset();
