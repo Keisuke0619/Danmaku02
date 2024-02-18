@@ -5,6 +5,7 @@
 #include <crtdbg.h>
 #include "DebugWindow.hpp"
 #include "Object.h"
+#include "audio.h"
 
 // timeGetTime周りの使用
 #pragma comment(lib, "winmm.lib")
@@ -75,6 +76,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	DWORD countStartTime = timeGetTime();
 	DWORD preExecTime = countStartTime;
 
+	// 音関連
+	Audio::InitMaster();
+
 	//--- ウィンドウの管理
 	while (1)
 	{
@@ -103,6 +107,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 	}
 
+	Audio::UninitMaster();
 
 	// 終了時
 	timeEndPeriod(1);

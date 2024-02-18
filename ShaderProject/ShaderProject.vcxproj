@@ -171,6 +171,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="audio.cpp" />
     <ClCompile Include="Billborad.cpp" />
     <ClCompile Include="BossStage01.cpp" />
     <ClCompile Include="BossStage01.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="WorldSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="audio.h" />
     <ClInclude Include="Billborad.h" />
     <ClInclude Include="CameraDCC.h" />
     <ClInclude Include="CameraBase.h" />
