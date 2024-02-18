@@ -61,7 +61,8 @@ void Sound::ReleaseAll()
 	
 	for (auto itr = g_soundInstance.begin(); itr != g_soundInstance.end(); itr++)
 	{
-		itr->second->Uninit();
+		auto ptr = itr->second;
+		ptr->Uninit();
 		delete itr->second;
 	}
 	g_soundInstance.clear();

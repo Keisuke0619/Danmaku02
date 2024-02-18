@@ -40,6 +40,7 @@ HRESULT Init(HWND hWnd, UINT width, UINT height)
 
 void Uninit()
 {
+	Sound::ReleaseAll();
 	Efk::Uninit();
 	g_pScene->Uninit();
 	g_pScene.reset();

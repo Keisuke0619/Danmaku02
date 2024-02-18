@@ -63,6 +63,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
+	// 音関連
+	Audio::InitMaster();
+
 	// 初期化処理
 	if (FAILED(Init(hWnd, SCREEN_WIDTH, SCREEN_HEIGHT)))
 	{
@@ -76,8 +79,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	DWORD countStartTime = timeGetTime();
 	DWORD preExecTime = countStartTime;
 
-	// 音関連
-	Audio::InitMaster();
+	
 
 	//--- ウィンドウの管理
 	while (1)
@@ -107,13 +109,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 	}
 
-	Audio::UninitMaster();
+	
 
 	// 終了時
 	timeEndPeriod(1);
 
 	Uninit();
 	CDebugWindow::Close();
+	Audio::UninitMaster();
 	UnregisterClass(wcex.lpszClassName, hInstance);
 
 	return 0;
