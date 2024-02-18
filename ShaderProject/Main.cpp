@@ -8,6 +8,7 @@
 #include "Defines.h"
 #include "DebugText.h"
 #include "Effect.h"
+#include "SoundUtil.h"
 //--- ƒOƒ[ƒoƒ‹•Ï”
 std::shared_ptr<SceneRoot> g_pScene;
 
@@ -39,6 +40,7 @@ HRESULT Init(HWND hWnd, UINT width, UINT height)
 
 void Uninit()
 {
+	Sound::ReleaseAll();
 	Efk::Uninit();
 	g_pScene->Uninit();
 	g_pScene.reset();
@@ -54,6 +56,7 @@ void Update(float tick)
 	g_pScene->_update(tick);
 	DebugText::Update();
 	Efk::Update(tick);
+	Sound::Update(tick);
 }
 
 void Draw()

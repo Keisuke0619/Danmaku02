@@ -171,6 +171,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="audio.cpp" />
     <ClCompile Include="Billborad.cpp" />
     <ClCompile Include="BossStage01.cpp" />
     <ClCompile Include="BossStage01.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="ScenePause.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
+    <ClCompile Include="SoundUtil.cpp" />
     <ClCompile Include="Torch.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -219,6 +221,7 @@
     <ClCompile Include="WorldSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="audio.h" />
     <ClInclude Include="Billborad.h" />
     <ClInclude Include="CameraDCC.h" />
     <ClInclude Include="CameraBase.h" />
@@ -240,6 +243,7 @@
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="ScenePause.h" />
     <ClInclude Include="SceneTitle.h" />
+    <ClInclude Include="SoundUtil.h" />
     <ClInclude Include="Torch.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Enemy.h" />
