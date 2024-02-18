@@ -190,6 +190,7 @@
     <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="ScenePause.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
+    <ClCompile Include="SoundUtil.cpp" />
     <ClCompile Include="Torch.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="ScenePause.h" />
     <ClInclude Include="SceneTitle.h" />
+    <ClInclude Include="SoundUtil.h" />
     <ClInclude Include="Torch.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Enemy.h" />

@@ -6,6 +6,7 @@
 #include "DebugText.h"
 #include "DataPool.h"
 #include "Effect.h"
+#include "SoundUtil.h"
 
 #define PLAYER_SHOT_COLLIDER_SCALE (1.0f)
 
@@ -30,6 +31,10 @@ CPlayer::~CPlayer()
 
 void CPlayer::Update()
 {
+	if (IsKeyTrigger('J'))
+	{
+		Sound::FadeOut("testSine.wav", 1);
+	}
 	Shot();
 	Move();
 }

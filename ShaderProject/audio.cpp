@@ -1,6 +1,6 @@
 // Audioコンポーネント [audio.cpp]
 #include "audio.h"
-
+#include "Util.h"
 IXAudio2*				Audio::m_Xaudio = nullptr;
 IXAudio2MasteringVoice*	Audio::m_MasteringVoice = nullptr;
 
@@ -114,4 +114,44 @@ void Audio::Play(bool Loop)
 */
 	// 再生
 	m_SourceVoice->Start();
+}
+
+void Audio::Stop()
+{
+	m_SourceVoice->Stop();
+}
+
+bool Audio::Update(float tick)
+{
+	m_time += tick;
+	if (m_isFadeIn)
+	{
+		m_SourceVoice->SetVolume(Util::Ease(m_time / m_fadeSecond, Util::EEaseType::TYPE_IN_SINE));
+	}
+	else
+	{
+		m_SourceVoice->SetVolume(1 - m_time / m_fadeSecond);
+	}
+	bool ret = m_time >= m_fadeSecond;
+	if (ret && m_isFadeIn == false)
+	{
+		Stop();
+	}
+	return ret;
+}
+
+void Audio::FadeOut(float seconds)
+{
+	m_fadeSecond = seconds;
+	m_isFadeIn = false;
+	m_time = 0;
+}
+
+void Audio::FadeIn(float seconds, bool loop)
+{
+	m_fadeSecond = seconds;
+	m_isFadeIn = true;
+	m_time = 0;
+	m_SourceVoice->SetVolume(0);
+	Play(loop);
 }

@@ -18,6 +18,8 @@
 #include "DataPool.h"
 #include "ScenePause.h"
 #include "Torch.h"
+#include "SoundUtil.h"
+
 void SceneK07::Init()
 {
 	Shader* shader[] = {
@@ -52,6 +54,7 @@ void SceneK07::Init()
 	m_spawner = new CEnemySpawner("Assets/CSV/EnemyTest.csv");
 	PipelineInit();
 	CTorch::SetTorch("Assets/CSV/PointLight01.csv");
+	Sound::Play("testSine.wav");
 }
 
 void SceneK07::Uninit()

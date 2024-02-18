@@ -207,6 +207,12 @@
     <ClCompile Include="Effect.cpp">
       <Filter>ソース ファイル\App\Effekseer</Filter>
     </ClCompile>
+    <ClCompile Include="audio.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundUtil.cpp">
+      <Filter>ソース ファイル\App\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h">
@@ -355,6 +361,12 @@
     </ClInclude>
     <ClInclude Include="EffekseerHeader\EffekseerRendererDX11.h">
       <Filter>ヘッダー ファイル\Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="audio.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundUtil.h">
+      <Filter>ヘッダー ファイル\App\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
