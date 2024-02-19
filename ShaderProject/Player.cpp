@@ -31,10 +31,6 @@ CPlayer::~CPlayer()
 
 void CPlayer::Update()
 {
-	if (IsKeyTrigger('J'))
-	{
-		Sound::FadeOut("testSine.wav", 1);
-	}
 	Shot();
 	Move();
 }
