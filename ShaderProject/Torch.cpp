@@ -29,11 +29,12 @@ void CTorch::SetTorch(std::string csvPath)
 				std::atof(line[3].c_str()),
 				std::atof(line[4].c_str()),
 				std::atof(line[5].c_str())
-			)
+			),
+			std::atof(line[6].c_str())
 		);
 	}
 }
-CTorch::CTorch(int x, int y, int direction, DirectX::XMFLOAT3 col)
+CTorch::CTorch(int x, int y, int direction, DirectX::XMFLOAT3 col, float range)
 {
 	const DirectX::XMFLOAT3 constOffset = {-1.6f, 3.7f, 1.6f};
 	Load("Assets/Model/Torch/Torch.fbx", WALL_SCALE);
@@ -45,7 +46,7 @@ CTorch::CTorch(int x, int y, int direction, DirectX::XMFLOAT3 col)
 	offset.x *= cosf(m_rot.y);
 	offset.z *= sinf(m_rot.y);
 	m_lightPos = DirectXUtil::Add(m_pos, offset);
-	PipelinePushPointLight(m_lightPos, col, 50.0f);
+	PipelinePushPointLight(m_lightPos, col, range);
 	ReloadWorldMatrix();
 		m_efk = Efk::Play(u"Assets/Effect/Torch.efkefc", m_lightPos.x, m_lightPos.y, m_lightPos.z);
 

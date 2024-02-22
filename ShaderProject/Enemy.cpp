@@ -4,12 +4,15 @@
 #include "Defines.h"
 #include "Input.h"
 #include "Effect.h"
+#include "SoundUtil.h"
+
 CEnemy::CEnemy()
 {
 	UseCollision(true);
 	m_tag = "Enemy";
 	m_life = 30;
 	m_colliderScale = 2;
+	Sound::Play("Spawn.wav");
 }
 void CEnemy::Update()
 {
@@ -129,6 +132,7 @@ void CEnemy::CSVShot(TEnemyShotData data)
 
 	for(int i = -(data.ways / 2); i <= (data.ways / 2); i++)
 		CShot::Create(nullptr, m_pos, data.speed, angle + (i * data.wayAngle) + (m_frame * data.frameAngle), data.colorID);
+	Sound::Play("EnemyShot.wav");
 }
 
 bool CEnemy::CSVMove(TEnemyMoveData data)

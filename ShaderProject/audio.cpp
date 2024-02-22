@@ -140,7 +140,7 @@ bool Audio::Update(float tick)
 	}
 	else
 	{
-		m_SourceVoice->SetVolume(m_maxVolume - m_time / m_fadeSecond);
+		m_SourceVoice->SetVolume(m_maxVolume - (m_time / m_fadeSecond) * m_maxVolume);
 	}
 	bool ret = m_time >= m_fadeSecond;
 	if (ret && m_isFadeIn == false)
