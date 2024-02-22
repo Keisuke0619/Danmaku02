@@ -31,10 +31,6 @@ CPlayer::~CPlayer()
 
 void CPlayer::Update()
 {
-	if (IsKeyTrigger('J'))
-	{
-		Sound::FadeOut("testSine.wav", 1);
-	}
 	Shot();
 	Move();
 }
@@ -102,6 +98,7 @@ void CPlayer::Shot()
 			shot->FromPlayer();
 			shot->SetColliderScale(PLAYER_SHOT_COLLIDER_SCALE);
 		}
+
 	}
 	if (m_frame % 12 == 0)
 	{
@@ -111,6 +108,7 @@ void CPlayer::Shot()
 			shot->FromPlayer();
 			shot->SetColliderScale(PLAYER_SHOT_COLLIDER_SCALE);
 		}
+		Sound::Play("Shot.wav");
 	}
 	m_isShot = true;
 }

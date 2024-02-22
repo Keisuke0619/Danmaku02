@@ -18,6 +18,7 @@ private:
 	float m_time;
 	float m_fadeSecond;
 	bool m_isFadeIn;
+	float m_maxVolume;
 public:
 	static void InitMaster();
 	static void UninitMaster();
@@ -30,5 +31,6 @@ public:
 	void Stop();
 	bool Update(float tick);
 	void FadeOut(float seconds);
-	void FadeIn(float seconds, bool loop = false);
+	void FadeIn(float seconds, float maxVol = 1.0f, bool loop = false);
+	void SetVolume(float volume);
 };

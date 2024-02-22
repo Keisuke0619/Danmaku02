@@ -30,12 +30,12 @@ void Sound::FadeOut(std::string fileName, float second)
 	}
 }
 
-void Sound::FadeIn(std::string fileName, float second, bool loop)
+void Sound::FadeIn(std::string fileName, float second, float maxVol, bool loop)
 {
 	CheckAndLoad(fileName);
 	if (std::find(g_updateList.begin(), g_updateList.end(), g_soundInstance[fileName]) == g_updateList.end())
 	{
-		g_soundInstance[fileName]->FadeIn(second, loop);
+		g_soundInstance[fileName]->FadeIn(second, maxVol, loop);
 		g_updateList.push_back(g_soundInstance[fileName]);
 	}
 
@@ -54,6 +54,12 @@ void Sound::Update(float tick)
 			itr++;
 		}
 	}
+}
+
+void Sound::SetVolume(std::string fileName, float volume)
+{
+	if (g_soundInstance.count(fileName) == 0) { return; }
+	g_soundInstance[fileName]->SetVolume(volume);
 }
 
 void Sound::ReleaseAll()

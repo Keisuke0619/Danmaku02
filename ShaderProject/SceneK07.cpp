@@ -54,7 +54,8 @@ void SceneK07::Init()
 	m_spawner = new CEnemySpawner("Assets/CSV/EnemyTest.csv");
 	PipelineInit();
 	CTorch::SetTorch("Assets/CSV/PointLight01.csv");
-	Sound::Play("testSine.wav");
+	Sound::Play("RASHOMON.wav", true);
+	Sound::SetVolume("RASHOMON.wav", 0.2f);
 }
 
 void SceneK07::Uninit()
@@ -145,6 +146,9 @@ void SceneK07::UpdateEvent()
 		evCam->AddCallBack(this);
 		testOnceFlag = true;
 		new CBossStage01();
+		Sound::FadeOut("RASHOMON.wav", 1.0f);
+		Sound::FadeIn("Coolness.wav", 1.0f, 0.2f, true);
+
 	}
 }
 
