@@ -7,7 +7,7 @@
 #include "DataPool.h"
 #include "Effect.h"
 #include "SoundUtil.h"
-
+#include "ShotKiller.h"
 #define PLAYER_SHOT_COLLIDER_SCALE (1.0f)
 
 CPlayer* CPlayer::Player;
@@ -31,6 +31,10 @@ CPlayer::~CPlayer()
 
 void CPlayer::Update()
 {
+	if (IsKeyTrigger('K'))
+	{
+		new CShotKiller(m_pos);
+	}
 	Shot();
 	Move();
 }

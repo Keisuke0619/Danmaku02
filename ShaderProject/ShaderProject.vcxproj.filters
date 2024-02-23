@@ -213,6 +213,9 @@
     <ClCompile Include="SoundUtil.cpp">
       <Filter>ソース ファイル\App\Base</Filter>
     </ClCompile>
+    <ClCompile Include="ShotKiller.cpp">
+      <Filter>ソース ファイル\App\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h">
@@ -367,6 +370,9 @@
     </ClInclude>
     <ClInclude Include="SoundUtil.h">
       <Filter>ヘッダー ファイル\App\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotKiller.h">
+      <Filter>ヘッダー ファイル\App\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

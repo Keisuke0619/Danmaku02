@@ -108,6 +108,10 @@ void CShot::OnCollision(CObject* _obj)
         m_isDropItem = false;
         Destroy();
     }
+    if (_obj->GetTagName() == "EnemyShotDestroy" && m_tag == "ShotFromEnemy")
+    {
+        Destroy();
+    }
 }
 
 void CShot::FromPlayer(bool fromPlayer)
