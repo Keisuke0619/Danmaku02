@@ -68,7 +68,6 @@ void Draw()
 	GetContext()->ClearDepthStencilView(dsv->GetView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	g_pScene->_draw();
-	Efk::Draw();
 	DebugText::Draw();
 	SwapDirectX();
 }

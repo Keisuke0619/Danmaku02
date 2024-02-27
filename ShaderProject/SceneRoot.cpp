@@ -10,7 +10,9 @@
 
 #include "SceneK07.h"
 #include "SceneTitle.h"
+#include "SceneResult.h"
 
+#include "DataPool.h"
 //--- 構造体
 // @brief シーン情報保存
 struct ViewSetting
@@ -25,21 +27,27 @@ struct ViewSetting
 	int index;
 };
 
-void SceneRoot::SetNextScene(ESceneID id)
+
+void SceneRoot::SetNextScene(ESceneID id, float delay)
 {
 	m_nextSceneID = id;
+	m_sceneDelay = m_time + delay;
 }
 
 void SceneRoot::SceneChange()
 {
+	if (m_sceneDelay < 0 || m_sceneDelay > m_time) return;
+	m_sceneDelay = -1;
 	RemoveSubScene();
 	switch (m_nextSceneID)
 	{
 	case SCENE_GAME: AddSubScene<SceneK07>(); break;
 	case SCENE_TITLE: AddSubScene<CSceneTitle>(); break;
+	case SCENE_RESULT: AddSubScene<CSceneResult>(); break;
 	}
 
 	m_nextSceneID = SCENE_NONE;
+	DataPool::AddData("SceneRoot", this);
 }
 
 const char* SettingFileName = "Assets/setting.dat";
@@ -78,9 +86,11 @@ void SceneRoot::Init()
 
 	// シーンの作成
 	m_index = setting.index;
-	SetNextScene(SCENE_GAME);
+	SetNextScene(SCENE_TITLE);
 
-	
+	DataPool::AddData("SceneRoot", this);
+	m_time = 0;
+	m_sceneDelay = 0;
 }
 
 void SceneRoot::Uninit()
@@ -112,14 +122,11 @@ void SceneRoot::Update(float tick)
 	LightBase* pLight = GetObj<LightBase>("Light");
 	pCamera->Update();
 	pLight->Update();
-	if (IsKeyTrigger('N'))
-	{
-		SetNextScene(SCENE_GAME);
-	}
 	if (m_nextSceneID != SCENE_NONE)
 	{
 		SceneChange();
 	}
+	m_time += tick;
 }
 void SceneRoot::Draw()
 {

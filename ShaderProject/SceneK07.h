@@ -29,6 +29,7 @@ private:
 	CEnemySpawner *m_spawner;
 	CObject* m_player;
 	bool m_pause = false;
+	bool m_eventFlag = false;
 	// IEventCallBack ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
 	void CallBack(int eventID) override;
 };

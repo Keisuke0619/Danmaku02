@@ -11,6 +11,7 @@ namespace DebugText
 		"Objects :",
 		"ColList :",
 		"ColCount:",
+		"Score   :"
 	};
 	float g_datas[SLOT_MAX] = 
 	{
@@ -20,9 +21,12 @@ namespace DebugText
 		0,
 		0,
 		0,
+		0,
 	};
 	Texture* g_texture;
 	bool g_enable = true;
+	const float uvSize = 1.0f / 16;
+	float g_fontScale = 0.06f;
 }
 void DebugText::Init()
 {
@@ -47,8 +51,7 @@ void DebugText::Draw()
 	{
 		return;
 	}
-	const float uvSize = 1.0f / 16;
-	const float fontSize = 0.06f;
+	const float fontSize = 1.0f;
 	const float anchorX = -0.95f;
 	const float anchorY = 0.95f;
 	float posX = anchorX;
@@ -60,25 +63,57 @@ void DebugText::Draw()
 		str += Header[i] + std::to_string(g_datas[i]) + "\n";
 	}
 	const char* ptr = str.c_str();
-	Sprite::Reset();
-	Sprite::SetTexture(g_texture);
-	Sprite::SetUVScale(uvSize, uvSize);
-	Sprite::SetSize(fontSize, fontSize);
+	
+	StartDrawString(fontSize);
+
 	while (*ptr != '\0')
 	{
 		char uvX = *ptr & 0xf;
 		char uvY = (*ptr & 0xf0) >> 4;
 		Sprite::SetUVPos(uvX * uvSize, uvY * uvSize);
 		Sprite::SetOffset(posX, posY);
-		posX += fontSize * 0.4f;
+		posX += g_fontScale * 0.4f;
 		if (*ptr == '\n')
 		{
 			posX = anchorX;
-			posY -= fontSize;
+			posY -= g_fontScale;
 		}
 		Sprite::Draw();
 		ptr++;
 	}
+
+	EndDrawString();
+}
+
+void DebugText::StartDrawString(float fontScale)
+{
+	const float FontScaleCoef = 0.06f;
+
+	g_fontScale = fontScale * FontScaleCoef;
+	Sprite::Reset();
+	Sprite::SetTexture(g_texture);
+	Sprite::SetUVScale(uvSize, uvSize);
+	Sprite::SetSize(g_fontScale, g_fontScale);
+}
+
+void DebugText::DrawString(float posX, float posY, std::string str)
+{
+	const char* ptr = str.c_str();
+
+	while (*ptr != '\0')
+	{
+		char uvX = *ptr & 0xf;
+		char uvY = (*ptr & 0xf0) >> 4;
+		Sprite::SetUVPos(uvX * uvSize, uvY * uvSize);
+		Sprite::SetOffset(posX, posY);
+		posX += g_fontScale * 0.5f;
+		Sprite::Draw();
+		ptr++;
+	}
+}
+
+void DebugText::EndDrawString()
+{
 	Sprite::SetOffset(0, 0);
 	Sprite::SetUVPos(0, 0);
 	Sprite::SetUVScale(1, 1);

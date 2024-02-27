@@ -189,7 +189,11 @@
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="ScenePause.cpp" />
+    <ClCompile Include="SceneResult.cpp" />
+    <ClCompile Include="SceneResult.h" />
     <ClCompile Include="SceneTitle.cpp" />
+    <ClCompile Include="Score.cpp" />
+    <ClCompile Include="ShotKiller.cpp" />
     <ClCompile Include="SoundUtil.cpp" />
     <ClCompile Include="Torch.cpp" />
     <ClCompile Include="Util.cpp" />
@@ -243,6 +247,8 @@
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="ScenePause.h" />
     <ClInclude Include="SceneTitle.h" />
+    <ClInclude Include="Score.h" />
+    <ClInclude Include="ShotKiller.h" />
     <ClInclude Include="SoundUtil.h" />
     <ClInclude Include="Torch.h" />
     <ClInclude Include="Util.h" />

@@ -19,12 +19,14 @@ public:
 	void Uninit();
 	void Update(float tick);
 	void Draw();
-	void SetNextScene(ESceneID id);
-
+	void SetNextScene(ESceneID id, float delay = 0);
 private:
 	int m_index;
 	ESceneID m_nextSceneID;
+	float m_sceneDelay;
+	float m_time;
 	void SceneChange();
+	void DelayChange();
 };
 
 #endif // __SCENE_ROOT_H__
