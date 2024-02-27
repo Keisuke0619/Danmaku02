@@ -5,6 +5,9 @@
 #include "DirectXMathUtil.h"
 #include "ShotObj.h"
 #include "InclutionShot.h"
+#include "DataPool.h"
+#include "SceneRoot.h"
+#include "Score.h"
 CBossStage01::CBossStage01()
 {
 	Load("Assets/Model/Spot/Spot.fbx");
@@ -33,6 +36,8 @@ void CBossStage01::Update()
 	if (m_life <= 0)
 	{
 		Destroy();
+		((SceneRoot*)DataPool::GetData("SceneRoot"))->SetNextScene(SceneRoot::SCENE_RESULT, 5.0f);
+		CScore::Ins()->AddScore(1000);
 	}
 }
 
@@ -81,6 +86,8 @@ void CBossStage01::ChangePhase()
 	m_phaseNum = (m_MaxLife - m_life) / phaseRange;
 	if (prePhase != m_phaseNum)
 	{
+		CScore::Ins()->AddScore(1000);
+		CScore::Ins()->AddCombo(10);
 		m_frame = 0;
 	}
 }

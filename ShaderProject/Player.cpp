@@ -8,6 +8,7 @@
 #include "Effect.h"
 #include "SoundUtil.h"
 #include "ShotKiller.h"
+#include "SceneResult.h"
 #define PLAYER_SHOT_COLLIDER_SCALE (1.0f)
 
 CPlayer* CPlayer::Player;
@@ -31,10 +32,7 @@ CPlayer::~CPlayer()
 
 void CPlayer::Update()
 {
-	if (IsKeyTrigger('K'))
-	{
-		new CShotKiller(m_pos);
-	}
+	
 	Shot();
 	Move();
 }
@@ -193,6 +191,7 @@ void CPlayer::OnCollision(CObject* _obj)
 	{
 		m_testCollisionNum++;
 		DebugText::SetData(DebugText::SLOT_PLAYER_COLLIDED, m_testCollisionNum);
+		CSceneResult::m_collisionCount = m_testCollisionNum;
 	}
 
 

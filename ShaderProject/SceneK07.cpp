@@ -20,6 +20,7 @@
 #include "Torch.h"
 #include "SoundUtil.h"
 
+#include "Effect.h"
 void SceneK07::Init()
 {
 	Shader* shader[] = {
@@ -55,7 +56,7 @@ void SceneK07::Init()
 	PipelineInit();
 	CTorch::SetTorch("Assets/CSV/PointLight01.csv");
 	Sound::Play("RASHOMON.wav", true);
-	Sound::SetVolume("RASHOMON.wav", 0.2f);
+	Sound::SetVolume("RASHOMON.wav", 0.4f);
 }
 
 void SceneK07::Uninit()
@@ -66,6 +67,7 @@ void SceneK07::Uninit()
 	delete CCollisionSystem::GetIns();
 	CWorldSprite::ReleaseTexture();
 	DataPool::ClearAll();
+	Sound::FadeOut("Coolness.wav", 1.0f);
 }
 
 void SceneK07::Update(float tick)
@@ -104,7 +106,7 @@ void SceneK07::Draw()
 
 	PipelineDraw(rtvDefault, dsvDefault);
 	
-
+	Efk::Draw();
 }
 
 void SceneK07::InputPause()
@@ -139,15 +141,14 @@ void SceneK07::UpdateCamera()
 
 void SceneK07::UpdateEvent()
 {
-	static bool testOnceFlag = false;
-	if(testOnceFlag == false && m_player && m_player->GetPos().z > 44 * WALL_SCALE)
+	if(m_eventFlag == false && m_player && m_player->GetPos().z > 44 * WALL_SCALE)
 	{
 		auto evCam = new CEventCamera("Assets/CSV/EventCamera.csv");
 		evCam->AddCallBack(this);
-		testOnceFlag = true;
+		m_eventFlag = true;
 		new CBossStage01();
 		Sound::FadeOut("RASHOMON.wav", 1.0f);
-		Sound::FadeIn("Coolness.wav", 1.0f, 0.2f, true);
+		Sound::FadeIn("Coolness.wav", 1.0f, 0.4f, true);
 
 	}
 }

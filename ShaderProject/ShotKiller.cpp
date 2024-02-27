@@ -8,3 +8,8 @@ CShotKiller::CShotKiller(DirectX::XMFLOAT3 pos)
 	m_pos = pos;
 	m_tag = "EnemyShotDestroy";
 }
+
+void CShotKiller::OnCollision(CObject* _obj)
+{
+	int a = 0;
+}

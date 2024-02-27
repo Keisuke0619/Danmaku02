@@ -5,7 +5,7 @@
 #include "Input.h"
 #include "Effect.h"
 #include "SoundUtil.h"
-
+#include "Score.h"
 CEnemy::CEnemy()
 {
 	UseCollision(true);
@@ -21,7 +21,11 @@ void CEnemy::Update()
 		Efk::Play(u"Assets/Effect/Spawn.efkefc", m_pos.x, m_pos.y, m_pos.z);
 	}
 	CSVRoutine();
-	if (m_life <= 0) { Destroy(); }
+	if (m_life <= 0) {
+		CScore::Ins()->AddCombo();
+		CScore::Ins()->AddScore(10);
+		Destroy();
+	}
 }
 
 void CEnemy::SetSpawnData(const char* modelPath, int autoDestroyFrame, int hp)

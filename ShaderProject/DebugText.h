@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-
+#include <string>
 
 namespace DebugText
 {
@@ -18,6 +18,7 @@ namespace DebugText
 		SLOT_OBJECTS,
 		SLOT_COLLISION,
 		SLOT_PLAYER_COLLIDED,
+		SLOT_SCORE,
 
 		SLOT_MAX
 	};
@@ -25,4 +26,8 @@ namespace DebugText
 	void Update();
 	void SetData(ESlot slot, float data);
 	void Draw();
+
+	void StartDrawString(float fontScale);
+	void DrawString(float x, float y, std::string str);
+	void EndDrawString();
 }
