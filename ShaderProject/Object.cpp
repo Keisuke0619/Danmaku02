@@ -18,10 +18,12 @@ CObject::~CObject()
 
 void CObject::Destroy(bool isRoot)
 {
+	// 子オブジェクトすべてを削除。
 	for (auto child : m_childObj)
 	{
 		child->Destroy(isRoot = false);
 	}
+	// 削除リストに登録されていないなら登録。削除のルートオブジェクト以外なら自分を子からリムーブ（？）
 	if (m_registedDestroy == false)
 	{
 		CObjectManager::GetIns()->Destroy(this);
@@ -97,6 +99,7 @@ void CObject::ReloadWorldMatrix()
 
 void CObject::ReloadVtxVector()
 {
+	// 四頂点の座標を取得
 	for (int i = 0; i < 4; i++)
 	{
 		m_boxVtxVector[i] = DirectX::XMFLOAT2(cosf(m_rot.y + 6.28f * 0.125f + 6.28f * 0.25f * i), sinf(m_rot.y + 6.28f * 0.125f + 6.28f * 0.25f * i));

@@ -24,7 +24,7 @@ namespace DebugText
 		0,
 	};
 	Texture* g_texture;
-	bool g_enable = true;
+	bool g_enable = false;
 	const float uvSize = 1.0f / 16;
 	float g_fontScale = 0.06f;
 }

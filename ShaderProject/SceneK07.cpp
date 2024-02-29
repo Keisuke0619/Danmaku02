@@ -19,6 +19,8 @@
 #include "ScenePause.h"
 #include "Torch.h"
 #include "SoundUtil.h"
+#include "DebugText.h"
+#include "Score.h"
 
 #include "Effect.h"
 void SceneK07::Init()
@@ -107,6 +109,11 @@ void SceneK07::Draw()
 	PipelineDraw(rtvDefault, dsvDefault);
 	
 	Efk::Draw();
+
+	DebugText::StartDrawString(2);
+	DebugText::DrawString(0.2f, 0.9f, "Score:" + std::to_string(CScore::Ins()->GetScore()));
+	DebugText::DrawString(0.2f, 0.8f, "Combo:" + std::to_string(CScore::Ins()->GetCombo()));
+	DebugText::EndDrawString();
 }
 
 void SceneK07::InputPause()

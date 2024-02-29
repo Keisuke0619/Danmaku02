@@ -23,7 +23,7 @@ void CEnemy::Update()
 	CSVRoutine();
 	if (m_life <= 0) {
 		CScore::Ins()->AddCombo();
-		CScore::Ins()->AddScore(10);
+		CScore::Ins()->AddScore(GetAddScore(100));
 		Destroy();
 	}
 }
@@ -32,7 +32,7 @@ void CEnemy::SetSpawnData(const char* modelPath, int autoDestroyFrame, int hp)
 {
 	Load(modelPath);
 	m_destroyFrame = autoDestroyFrame;
-	m_life = hp;
+	m_life = m_maxLife = hp;
 }
 
 void CEnemy::SetOriginPos(DirectX::XMFLOAT2 pos, float height)
@@ -75,6 +75,12 @@ float CEnemy::GetAngleToPlayer()
 		return 0;
 	}
 	return atan2f(pl->GetPos().z - m_pos.z, pl->GetPos().x - m_pos.x);
+}
+
+int CEnemy::GetAddScore(int max)
+{
+	int ret = max - (int)(m_frame / (m_maxLife) * 0.25f); 
+	return ret < 1 ? 1 : ret;
 }
 
 void CEnemy::CSVRoutine()

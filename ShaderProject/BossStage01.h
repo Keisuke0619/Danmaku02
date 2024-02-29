@@ -30,6 +30,6 @@ private:
 	const int m_MaxPhase = 4;
 	int m_life;
 	int m_phaseNum;
-	void (CBossStage01::*m_phase[4])(void);
+	void (CBossStage01::*m_phase[4])(void);	// 敵のフェーズ関数ポインタを保存しておく配列
 	TLerpData m_moveData;
 };

@@ -7,15 +7,16 @@
 #include "Score.h"
 #include <stdio.h>
 #include "DebugText.h"
-
+#include "DebugWindow.hpp"
 int CSceneResult::m_collisionCount;
 
 void CSceneResult::Init()
 {
 	m_banner[0] = new Texture();
-	m_banner[1] = new Texture();
 	m_banner[0]->Create("Assets/Texture/UI/Result_Banner01.png");
+	m_banner[1] = new Texture();
 	m_banner[1]->Create("Assets/Texture/UI/Result_Banner02.png");
+
 
 	m_score = CScore::Ins()->GetScore();
 	FILE* fp = fopen("Assets/CSV/Rank.dat", "rb");
@@ -33,7 +34,7 @@ void CSceneResult::Init()
 	}
 	for (int i = 0; i < RANKING_NUM - 1; i++)
 	{
-		if (m_rankData[i].score <= m_score)
+		if (m_rankData[i].score < m_score)
 		{
 			m_rank = i;
 			memcpy(&(m_rankData[i + 1]), &(m_rankData[i]), sizeof(TRankData) * (RANKING_NUM - i - 1));
@@ -53,13 +54,13 @@ void CSceneResult::Init()
 		m_drawTex = m_banner[0];
 	}
 	Sound::FadeIn("Graduation.wav", 1.0f, 0.3f, true);
+	m_posY = m_rank * 0.25f;
 }
 
 void CSceneResult::Uninit()
 {
 	FILE* fp = fopen("Assets/CSV/Rank.dat", "wb");
 	fwrite(m_rankData, sizeof(TRankData), RANKING_NUM, fp);
-
 	fclose(fp);
 }
 
@@ -70,10 +71,8 @@ void CSceneResult::Update(float tick)
 
 void CSceneResult::Draw()
 {
-	//Sprite::SetTexture(m_back);
-	//Sprite::SetSize(2, 2);
-	//Sprite::Draw();
 
+	// ‰º‚ÌˆÄ“àƒoƒi[
 	Sprite::SetTexture(m_drawTex);
 	Sprite::SetSize(2.0f, 0.3f);
 	Sprite::SetOffset(0, -0.85f);
@@ -97,7 +96,6 @@ void CSceneResult::Draw()
 		}
 		else
 		{
-
 			addX = 0.0f;
 		}
 		const std::string rankBackStr[] = { "st", "nd", "rd", "th" };
@@ -106,9 +104,12 @@ void CSceneResult::Draw()
 		DebugText::DrawString(ScoreX + addX, AnchorY + AddY * rank + m_posY, std::to_string(m_rankData[i].score));
 		rank++;
 	}
-	
-
 	DebugText::EndDrawString();
+
+	//Sprite::SetTexture(m_back);
+	//Sprite::SetSize(2, 2);
+	//Sprite::SetOffset(0, 0);
+	//Sprite::Draw();
 
 }
 

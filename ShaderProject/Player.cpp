@@ -9,6 +9,7 @@
 #include "SoundUtil.h"
 #include "ShotKiller.h"
 #include "SceneResult.h"
+#include "Score.h"
 #define PLAYER_SHOT_COLLIDER_SCALE (1.0f)
 
 CPlayer* CPlayer::Player;
@@ -22,6 +23,7 @@ CPlayer::CPlayer()
 	m_tag = "Player";
 	Player = this;
 
+	// ブラックボードに値をセット。
 	DataPool::AddData("Int_PlayerCollision", &m_testCollisionNum);
 }
 
@@ -42,7 +44,7 @@ void CPlayer::Update()
 /// </summary>
 void CPlayer::Move()
 {
-	m_prePos = m_pos;
+	m_prePos = m_pos;	// 移動する前の情報を保存。
 	// 移動ステータス
 	int m_state = 0;
 	// 移動ベクトル
@@ -77,25 +79,30 @@ void CPlayer::Move()
 		m_rot.y = atan2f(-addPos.x, -addPos.z);
 	}
 	
+	// デバッグ。ボス前までワープ
 	if (IsKeyPress('U'))
 	{
 		m_pos.x = 0;
 		m_pos.z = 200;
 	}
 
-
+	// デバッグ表示用。座標をそれぞれのスロットに設定。
 	DebugText::SetData(DebugText::SLOT_PLAYER_POS_X, m_pos.x);
 	DebugText::SetData(DebugText::SLOT_PLAYER_POS_Y, m_pos.z);
 }
 
 void CPlayer::Shot()
 {
+	// ショットキーが押されていなかったら「ショットしてない状態」にして終了
 	m_isShot = false;
 	if (IsKeyPress('Z') == false) return;
+
+	// 規定フレームごとに自弾を生成
 	if (m_frame % 10 == 0)
 	{
 		for (int i = 0; i < 2; i++)
 		{
+			// 弾を生成し、プレイヤーからのものだと指定。その後サイズを設定。
 			auto shot = CShot::Create(this, DirectX::XMFLOAT2(m_pos.x, m_pos.z), 18, 270 - DirectX::XMConvertToDegrees(m_rot.y) + (rand() % 11) - 5, YELLOW, SIZE07);
 			shot->FromPlayer();
 			shot->SetColliderScale(PLAYER_SHOT_COLLIDER_SCALE);
@@ -106,17 +113,20 @@ void CPlayer::Shot()
 	{
 		for (int i = -5; i <= 5; i++)
 		{
+			// 弾を生成し、プレイヤーからのものだと指定。その後サイズを設定。
 			auto shot = CShot::Create(this, DirectX::XMFLOAT2(m_pos.x, m_pos.z), 16, 270 - DirectX::XMConvertToDegrees(m_rot.y) + 3 * i, WHITE, SIZE07);
 			shot->FromPlayer();
 			shot->SetColliderScale(PLAYER_SHOT_COLLIDER_SCALE);
 		}
-		Sound::Play("Shot.wav");
+		Sound::Play("Shot.wav");	// ついでに音も鳴らす
 	}
+	// 「ショットしている状態」にして抜ける。
 	m_isShot = true;
 }
 
 void CPlayer::OnCollision(CObject* _obj)
 {
+	// 壁との当たり判定。かべずりずり～。
 	if (_obj->GetTagName() == "Wall")
 	{
 		// 各種変数用意
@@ -187,11 +197,17 @@ void CPlayer::OnCollision(CObject* _obj)
 		CameraBase::GetPrimary()->Update();
 	}
 
+	// 敵弾との当たり判定。
 	if (_obj->GetTagName() == "ShotFromEnemy")
 	{
+		// 当たり判定変数を増やし、デバッグデータを該当スロットにセット。
 		m_testCollisionNum++;
 		DebugText::SetData(DebugText::SLOT_PLAYER_COLLIDED, m_testCollisionNum);
+
+		// リザルトシーンのpublic static変数に直接書き込み・・・　当たった回数を表示させるため。
 		CSceneResult::m_collisionCount = m_testCollisionNum;
+		// コンボをリセット
+		CScore::Ins()->ResetCombo();
 	}
 
 

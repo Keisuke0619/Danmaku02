@@ -25,6 +25,7 @@ public:
 private:
 	Texture* m_banner[2];
 	Texture* m_drawTex;
+	Texture* m_back;
 	TRankData m_rankData[RANKING_NUM];
 	int m_cursor = 0;
 	int m_rank = -1;
