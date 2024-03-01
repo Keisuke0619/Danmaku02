@@ -208,15 +208,16 @@
     <ClCompile Include="Geometory.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="MoveLight.cpp" />
+    <ClCompile Include="MoveLight.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="SceneK07.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShotObj.cpp" />
-    <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Startup.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -264,16 +265,17 @@
     <ClInclude Include="Geometory.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="MoveLight.h" />
+    <ClInclude Include="MoveLight.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PointLight.h" />
     <ClInclude Include="SceneBase.hpp" />
     <ClInclude Include="SceneK07.h" />
     <ClInclude Include="SceneRoot.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShotObj.h" />
-    <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Wall.h" />

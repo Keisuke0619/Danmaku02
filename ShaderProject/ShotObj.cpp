@@ -2,6 +2,7 @@
 #include "CameraBase.h"
 
 #define ADDSHOT_NULL_MIN (1129893.0f)
+// 色名配列
 const std::string CShot::ColorName[COLOR_MAX] =
 {
     "AQUA",
@@ -13,6 +14,7 @@ const std::string CShot::ColorName[COLOR_MAX] =
     "WHITE",
     "YELLOW",
 };
+// サイズ名配列
 const std::string CShot::SizeName[SHOT_SIZE_MAX] =
 {
     "01.png",
@@ -24,6 +26,7 @@ const std::string CShot::SizeName[SHOT_SIZE_MAX] =
     "07.png",
     "08.png",
 };
+// 当たり判定サイズ配列
 const float CShot::ShotSize[SHOT_SIZE_MAX] =
 {
     1.0f,
@@ -35,7 +38,7 @@ const float CShot::ShotSize[SHOT_SIZE_MAX] =
     1.0f,
     1.0f,
 };
-
+// 削除距離
 float CShot::ShotDeleteDepth = 35;
 
 CShot::CShot()
@@ -81,6 +84,7 @@ void CShot::Update()
 
 void CShot::AddShotData(int frame, float speed, float degAngle, float addSpeed, float addAngle)
 {
+    // 弾データを生成し、追加。
     TShotDataReserve* tmp = new TShotDataReserve;
     tmp->frame = frame;
     tmp->data.angle = DirectX::XMConvertToRadians(degAngle);
@@ -88,6 +92,7 @@ void CShot::AddShotData(int frame, float speed, float degAngle, float addSpeed, 
     tmp->data.addSpeed = addSpeed * SHOT_SPEED_COEF;
     tmp->data.addAngle = DirectX::XMConvertToRadians(addAngle);
     m_shotDataReserve.push_back(tmp);
+    // フレーム数を基準にソート
     m_shotDataReserve.sort(
         [](TShotDataReserve* l, TShotDataReserve* r)->bool
         {
@@ -101,6 +106,7 @@ void CShot::AddShotData(int frame, float speed, float degAngle, float addSpeed, 
 
 void CShot::OnCollision(CObject* _obj)
 {
+    // 単純削除の場合はアイテムドロップ状態を解除して削除。
     if (_obj->GetTagName() == "Player" && m_tag == "ShotFromEnemy" ||
         _obj->GetTagName() == "Enemy" && m_tag == "ShotFromPlayer" ||
         _obj->GetTagName() == "Wall")
@@ -108,6 +114,7 @@ void CShot::OnCollision(CObject* _obj)
         m_isDropItem = false;
         Destroy();
     }
+    // 弾消しにぶつかったらアイテムドロップ状態で削除。
     if (_obj->GetTagName() == "EnemyShotDestroy" && m_tag == "ShotFromEnemy")
     {
         Destroy();
@@ -116,6 +123,7 @@ void CShot::OnCollision(CObject* _obj)
 
 void CShot::FromPlayer(bool fromPlayer)
 {
+    // 敵味方、どちら再度の弾かを指定。
     if (fromPlayer)
     {
         m_tag = "ShotFromPlayer";
@@ -130,6 +138,7 @@ void CShot::FromPlayer(bool fromPlayer)
 
 CShot* CShot::Create(CObject* parent, DirectX::XMFLOAT2 pos, float speed, float degAngle, std::string color, float addSpeed, float addAngle)
 {
+    // 弾を生成し、渡されたデータをもとにデータをセット。
     auto shot = new CShot();
     SetInit(shot, parent, pos, speed, degAngle, color, addSpeed, addAngle);
     return shot;
@@ -137,6 +146,7 @@ CShot* CShot::Create(CObject* parent, DirectX::XMFLOAT2 pos, float speed, float 
 
 void CShot::SetInit(CShot* shot, CObject* parent, DirectX::XMFLOAT2 pos, float speed, float degAngle, std::string color, float addSpeed, float addAngle)
 {
+    // 渡されたデータをもとにデータをセット
     shot->m_pos.x = pos.x;
     shot->m_pos.y = 1;
     shot->m_pos.z = pos.y;
@@ -157,5 +167,6 @@ void CShot::SetInit(CShot* shot, CObject* parent, DirectX::XMFLOAT2 pos, float s
 
 void CShot::SetDeleteDepth(float newDepth)
 {
+    // 削除距離を指定
     ShotDeleteDepth = newDepth;
 }

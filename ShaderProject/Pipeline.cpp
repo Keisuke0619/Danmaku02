@@ -104,9 +104,9 @@ void PipelineDraw(RenderTarget* rtv, DepthStencil* dsv)
 
 
 	// ‘SRTV‚Ì‰Šú‰»
-	for (auto rtv : g_pipeRTV)
+	for (auto gbuffer : g_pipeRTV)
 	{
-		rtv->Clear();
+		gbuffer->Clear();
 	}
 	// GBuffer‚É‚¢‚ë‚¢‚ë‘‚«‚±‚Ş
 	SetRenderTargets(3, g_pipeRTV, dsv);

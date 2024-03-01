@@ -64,6 +64,7 @@ void CBossStage01::OnCollision(CObject* _obj)
 
 void CBossStage01::Move()
 {
+	// 実際に移動させる。補間で滑らかに動かす。
 	if (m_moveData.countFrame < m_moveData.targetFrame)
 	{
 		m_moveData.countFrame++;
@@ -75,6 +76,7 @@ void CBossStage01::Move()
 
 void CBossStage01::SetMove(DirectX::XMFLOAT2 nextPos, int frames)
 {
+	// 指定フレームかけて指定場所へ移動させるデータを作成。
 	m_moveData.begin = DirectX::XMFLOAT2(m_pos.x, m_pos.z);
 	m_moveData.end = nextPos;
 	m_moveData.countFrame = 0;
@@ -83,6 +85,8 @@ void CBossStage01::SetMove(DirectX::XMFLOAT2 nextPos, int frames)
 
 void CBossStage01::RandomMove(int frames)
 {
+	// 指定フレームをかけてランダム座標に移動。
+	// ランダム角度ｘランダム距離の場所に移動。
 	const DirectX::XMFLOAT2 center = DirectX::XMFLOAT2(0, 265);
 	const int radius = 4 * WALL_SCALE;
 	float dis = Util::Rand(0, radius);
@@ -94,6 +98,7 @@ void CBossStage01::RandomMove(int frames)
 
 void CBossStage01::ChangePhase()
 {
+	// 体力の割合でフェーズを変更。
 	const int phaseRange = m_MaxLife / m_MaxPhase;
 	auto prePhase = m_phaseNum;
 	m_phaseNum = (m_MaxLife - m_life) / phaseRange;

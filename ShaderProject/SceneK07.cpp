@@ -50,9 +50,7 @@ void SceneK07::Init()
 	auto field = new Model();
 	field->Load("Assets/Model/Wall/Ground.fbx", 1000, false, {0, -5.5f, 0});
 	field->SetAutoHidden(false);
-	//CreateStage("Assets/CSV/MapTest.csv", 14, 4);
 	CreateStage("Assets/CSV/Map01.csv", 10, 2);
-	//CreateStage("Assets/CSV/Map02.csv", 4, 3);
 	
 	m_spawner = new CEnemySpawner("Assets/CSV/EnemyTest.csv");
 	PipelineInit();
@@ -74,42 +72,44 @@ void SceneK07::Uninit()
 
 void SceneK07::Update(float tick)
 {
+	// ポーズ中ならアップデートしない。
 	if (m_pause)
 	{
 		return;
 	}
-
+	// ポーズ開いたり閉じたりする処理
 	InputPause();
 
 	// DCCカメラと現在のメインカメラを取得
 	CameraBase* cameraDCC = GetObj<CameraBase>("Camera");
 	auto primary = CameraBase::GetPrimary();
-	
+	// DCCカメラとメインカメラのスワップとか。
 	UpdateCamera();
+	// カメライベントとか
 	UpdateEvent();
+	// 敵生成オブジェクトのアップデート。プレイヤーの座標を利用するため、プレイヤーが存在するかをチェックする。
 	if (m_player)
 		m_spawner->Update(DirectX::XMFLOAT2(m_player->GetPos().x, m_player->GetPos().z));
 
+	// 全オブジェクトのアップデートと削除処理。
 	CObjectManager::GetIns()->Update();
 	CObjectManager::GetIns()->RemoveUpdate();
-
+	// 当たり判定の更新処理。
 	UpdateCollision();
 }
 
 
 void SceneK07::Draw()
 {
+	// 最終的に書き出すバッファを取得
 	auto rtvDefault = GetObj<RenderTarget>("RTV");
 	auto dsvDefault = GetObj<DepthStencil>("DSV");
-
-	SetRenderTargets(1, &rtvDefault, dsvDefault);
-	auto vs = GetObj<Shader>("VS_Object");
-	auto ps = GetObj<Shader>("PS_TexColor");
-
+	// 最終的に書き出すバッファを設定し、パイプラインを回す
 	PipelineDraw(rtvDefault, dsvDefault);
-	
+	// エフェクトの描画をする。
 	Efk::Draw();
 
+	// スコア用の描画。要改善。
 	DebugText::StartDrawString(2);
 	DebugText::DrawString(0.2f, 0.9f, "Score:" + std::to_string(CScore::Ins()->GetScore()));
 	DebugText::DrawString(0.2f, 0.8f, "Combo:" + std::to_string(CScore::Ins()->GetCombo()));
@@ -118,15 +118,17 @@ void SceneK07::Draw()
 
 void SceneK07::InputPause()
 {
+	// ポーズが閉じられたら、ポーズシーンを削除。
 	if (m_pSubScene)
 	{
 		RemoveSubScene();
 		return;
 	}
+	// エスケープが押されたらポーズシーンをオーバーレイ生成。
 	if (IsKeyTrigger(VK_ESCAPE))
 	{
 		auto scene = AddSubScene<CScenePause>();
-		scene->SetCallBack(this);
+		scene->SetCallBack(this);	// 自分をコールバックに設定。
 		m_pause = true;
 		return;
 	}
@@ -148,6 +150,7 @@ void SceneK07::UpdateCamera()
 
 void SceneK07::UpdateEvent()
 {
+	// トリガーは chu直書きでごめん。指定座標に来たらイベント発生。
 	if(m_eventFlag == false && m_player && m_player->GetPos().z > 44 * WALL_SCALE)
 	{
 		auto evCam = new CEventCamera("Assets/CSV/EventCamera.csv");
@@ -163,6 +166,7 @@ void SceneK07::UpdateEvent()
 
 void SceneK07::InitSky()
 {
+	// スカイボックスを生成する処理。未使用。
 	Texture* texes[] =
 	{
 		CreateObj<Texture>("Sky01"),
@@ -187,6 +191,7 @@ void SceneK07::InitSky()
 
 void SceneK07::DrawSky()
 {
+	// スカイボックスを描画する処理。未使用。
 	DirectX::XMFLOAT4X4 mat[3] = {};
 	mat[1] = CameraBase::GetPrimary()->GetView();
 	mat[2] = CameraBase::GetPrimary()->GetProj();
@@ -235,6 +240,7 @@ void SceneK07::DrawSky()
 
 void SceneK07::CallBack(int eventID)
 {
+	// イベントごとに処理を変える。
 	if (eventID == EVENT_FINISH_EVENT_CAMERA)
 	{
 		auto defaultCamera = GetObj<CameraBase>("MainCamera");

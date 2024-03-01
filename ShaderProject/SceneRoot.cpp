@@ -30,13 +30,16 @@ struct ViewSetting
 
 void SceneRoot::SetNextScene(ESceneID id, float delay)
 {
+	// 次のシーンを設定。指定時間になったらシーン遷移する。
 	m_nextSceneID = id;
 	m_sceneDelay = m_time + delay;
 }
 
 void SceneRoot::SceneChange()
 {
+	// 指定時間が負数もしくは指定時間になっていないなら終了。
 	if (m_sceneDelay < 0 || m_sceneDelay > m_time) return;
+	// 指定時間を負数にしてシーン遷移する。負数にすることでもう一度時間が指定されるまでここには来ない。
 	m_sceneDelay = -1;
 	RemoveSubScene();
 	switch (m_nextSceneID)
@@ -47,6 +50,7 @@ void SceneRoot::SceneChange()
 	}
 
 	m_nextSceneID = SCENE_NONE;
+	// シーンチェンジでデータプールがリセットされるので再度自分を登録
 	DataPool::AddData("SceneRoot", this);
 }
 
@@ -128,6 +132,7 @@ void SceneRoot::Update(float tick)
 	}
 	m_time += tick;
 }
+
 void SceneRoot::Draw()
 {
 	LightBase* pLight = GetObj<LightBase>("Light");

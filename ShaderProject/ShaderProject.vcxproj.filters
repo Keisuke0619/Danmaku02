@@ -69,9 +69,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Startup.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>ソース ファイル\App</Filter>
     </ClCompile>
@@ -111,19 +108,10 @@
     <ClCompile Include="SceneK07.cpp">
       <Filter>ソース ファイル\App\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>ソース ファイル\App\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="MoveLight.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
-    <ClCompile Include="PointLight.cpp">
-      <Filter>ソース ファイル\System</Filter>
-    </ClCompile>
     <ClCompile Include="SceneRoot.cpp">
-      <Filter>ソース ファイル\System</Filter>
-    </ClCompile>
-    <ClCompile Include="SpotLight.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
@@ -192,17 +180,11 @@
     <ClCompile Include="ScenePause.cpp">
       <Filter>ソース ファイル\App\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="SceneTitle.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Pipeline.cpp">
       <Filter>ソース ファイル\App\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Torch.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Effect.cpp">
       <Filter>ソース ファイル\App\Effekseer</Filter>
@@ -219,11 +201,23 @@
     <ClCompile Include="SceneResult.h">
       <Filter>ヘッダー ファイル\App\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>ソース ファイル\App\Base</Filter>
+    </ClCompile>
     <ClCompile Include="SceneResult.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\App\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneTitle.cpp">
+      <Filter>ソース ファイル\App\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Startup.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Torch.cpp">
+      <Filter>ソース ファイル\App\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Score.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -275,13 +269,7 @@
     <ClInclude Include="MoveLight.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
-    <ClInclude Include="PointLight.h">
-      <Filter>ヘッダー ファイル\System</Filter>
-    </ClInclude>
     <ClInclude Include="SceneRoot.h">
-      <Filter>ヘッダー ファイル\System</Filter>
-    </ClInclude>
-    <ClInclude Include="SpotLight.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
@@ -344,9 +332,6 @@
     <ClInclude Include="InclutionShot.h">
       <Filter>ヘッダー ファイル\App\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="ScenePause.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="SceneTitle.h">
       <Filter>ヘッダー ファイル\App\Scene</Filter>
     </ClInclude>
@@ -385,6 +370,9 @@
     </ClInclude>
     <ClInclude Include="Score.h">
       <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenePause.h">
+      <Filter>ヘッダー ファイル\App\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
