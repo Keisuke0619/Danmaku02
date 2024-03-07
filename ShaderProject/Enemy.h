@@ -30,8 +30,9 @@ public:
 	void OnCollision(CObject* _obj) override;
 protected:
 	float GetAngleToPlayer();
+	int GetAddScore(int max);
 	int m_life;
-
+	int m_maxLife;
 private:
 	float m_speed = 0;
 	DirectX::XMFLOAT2 m_spawnPos;

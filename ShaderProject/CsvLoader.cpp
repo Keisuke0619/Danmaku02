@@ -15,19 +15,24 @@ vector<string> split(string& input, char delimiter)
 
 vector<vector<string>> CSVLoad(std::string path, bool isDeleteHeader)
 {
+    // 戻り値の器
     vector<vector<string>> ret;
     ifstream ifs(path);
     string line;
+    // 一行ずつ読み込み
     while (getline(ifs, line))
     {
+        // ヘッダーを無視する処理。一行飛ばす。
         if (isDeleteHeader)
         {
             isDeleteHeader = false;
             continue;
         }
+        // 読み込んだ一行をコンマ区切りにして、その配列を戻り値の器に追加。
         vector<string> len = split(line, ',');
         ret.push_back(len);
     }
+    // 終了し、戻り値を返す。
     ifs.close();
     return ret;
 }

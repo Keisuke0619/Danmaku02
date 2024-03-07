@@ -1,5 +1,7 @@
 #include "ShotKiller.h"
 
+// ñ¢égópÅB
+
 CShotKiller::CShotKiller(DirectX::XMFLOAT3 pos)
 	: CObject()
 {

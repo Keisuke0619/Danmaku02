@@ -6,8 +6,11 @@
 #include "Shader.h"
 #include "Defines.h"
 #include "DirectX.h"
-#include "PointLight.h"
+//#include "PointLight.h"
 #include "Geometory.h"
+/// <summary>
+/// 光のデータ。CBufferに渡す用。
+/// </summary>
 struct TLightData
 {
 	DirectX::XMFLOAT4 color;
@@ -15,6 +18,9 @@ struct TLightData
 	float range;
 };
 
+/// <summary>
+/// レンダーターゲットの名前を列挙
+/// </summary>
 enum EPipeRtvName
 {
 	RTV_ALBEDO,
@@ -25,6 +31,9 @@ enum EPipeRtvName
 	RTV_MAX
 };
 
+/// <summary>
+/// 頂点シェーダの名前を列挙
+/// </summary>
 enum EPipeVsName
 {
 	VS_DEFFERED,
@@ -32,6 +41,9 @@ enum EPipeVsName
 	VS_MAX
 };
 
+/// <summary>
+/// ピクセルシェーダの名前を列挙
+/// </summary>
 enum EPipePsName
 {
 	PS_GBUFFER,
@@ -39,25 +51,28 @@ enum EPipePsName
 
 	PS_MAX
 };
+
 VertexShader g_pipeVS[VS_MAX];
 PixelShader g_pipePS[PS_MAX];
 RenderTarget* g_pipeRTV[RTV_MAX];
 TLightData g_pipePointLight[128];
 void PipelineInit()
 {
+	// 各種シェーダをロード
 	g_pipeVS[VS_DEFFERED].Load("Assets/Shader/VS_Deffered.cso");
 	g_pipePS[PS_GBUFFER].Load("Assets/Shader/PS_GBuffer.cso");
 	g_pipePS[PS_MAIN].Load("Assets/Shader/PS_Main.cso");
 
+	// レンダーターゲットを作成
 	for (int i = 0; i < RTV_MAX; i++)
 	{
 		g_pipeRTV[i] = new RenderTarget();
 	}
-
 	g_pipeRTV[0]->Create(DXGI_FORMAT_R11G11B10_FLOAT, SCREEN_WIDTH, SCREEN_HEIGHT);
 	g_pipeRTV[1]->Create(DXGI_FORMAT_R8G8B8A8_SNORM, SCREEN_WIDTH, SCREEN_HEIGHT);
 	g_pipeRTV[2]->Create(DXGI_FORMAT_R32G32B32A32_FLOAT, SCREEN_WIDTH, SCREEN_HEIGHT);
 	g_pipeRTV[3]->Create(DXGI_FORMAT_R32_FLOAT, SCREEN_WIDTH, SCREEN_HEIGHT);
+	// カリング指定
 	SetCullingMode(D3D11_CULL_FRONT);
 }
 
@@ -89,9 +104,9 @@ void PipelineDraw(RenderTarget* rtv, DepthStencil* dsv)
 
 
 	// 全RTVの初期化
-	for (auto rtv : g_pipeRTV)
+	for (auto gbuffer : g_pipeRTV)
 	{
-		rtv->Clear();
+		gbuffer->Clear();
 	}
 	// GBufferにいろいろ書きこむ
 	SetRenderTargets(3, g_pipeRTV, dsv);
@@ -144,6 +159,7 @@ void PipelineDraw(RenderTarget* rtv, DepthStencil* dsv)
 
 void PipelinePushPointLight(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 color, float range)
 {
+	// 引数をもとにライトデータを格納。
 	for (int i = 0; i < 128; i++)
 	{
 		if (g_pipePointLight[i].range != 0)
@@ -160,6 +176,7 @@ void PipelinePushPointLight(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 color, floa
 
 void PipelineClearPointLight()
 {
+	// すべてのライトデータを初期化。
 	for (int i = 0; i < 128; i++)
 	{
 		g_pipePointLight[i].pos = { 0,0,0 };

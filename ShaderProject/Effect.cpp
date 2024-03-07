@@ -26,7 +26,8 @@ namespace Efk
 }
 void Efk::Init()
 {
-	g_efkManager = Manager::Create(1024);
+	// いろいろ初期設定
+	g_efkManager = Manager::Create(1024);	// エフェクト最大数
 	auto grpDevice = EffekseerRendererDX11::CreateGraphicsDevice(GetDevice(), GetContext());
 	g_efkRender = EffekseerRendererDX11::Renderer::Create(grpDevice, 1024);
 	g_efkManager->SetSpriteRenderer(g_efkRender->CreateSpriteRenderer());
@@ -35,8 +36,6 @@ void Efk::Init()
 	g_efkManager->SetTrackRenderer(g_efkRender->CreateTrackRenderer());
 	g_efkManager->SetModelRenderer(g_efkRender->CreateModelRenderer());
 
-	// Specify a texture, model, curve and material loader
-	// It can be extended by yourself. It is loaded from a file on now.
 	// テクスチャ、モデル、カーブ、マテリアルローダーの設定する。
 	// ユーザーが独自で拡張できる。現在はファイルから読み込んでいる。
 	g_efkManager->SetTextureLoader(g_efkRender->CreateTextureLoader());
@@ -52,6 +51,7 @@ void Efk::Uninit()
 
 void Efk::Update(float tick)
 {
+	// 時間を渡してアップデート
 	g_efkRender->SetTime(g_efkTime+=tick);
 	Manager::UpdateParameter updateParameter;
 	g_efkManager->Update(updateParameter);
@@ -95,7 +95,7 @@ Effekseer::Handle Efk::Stop(Effekseer::Handle h)
 
 
 
-// util
+// util Matrix44とXMFloat4X4の相互変換用
 Matrix44 Efk::GetMat(DirectX::XMFLOAT4X4 in)
 {
 	Matrix44 out;

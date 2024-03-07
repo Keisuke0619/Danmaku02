@@ -17,7 +17,7 @@ void CSceneTitle::Uninit()
 
 void CSceneTitle::Update(float tick)
 {
-	if (IsKeyTrigger(VK_RETURN))
+	if (IsTrigger(INPUT_SELECT))
 	{
 		((SceneRoot*)m_pParent)->SetNextScene(SceneRoot::SCENE_GAME);
 		Sound::FadeOut("Babyleaf.wav", 1.0f);
