@@ -10,6 +10,7 @@
 #include "ShotKiller.h"
 #include "SceneResult.h"
 #include "Score.h"
+#include "Effect.h"
 #define PLAYER_SHOT_COLLIDER_SCALE (1.0f)
 
 CPlayer* CPlayer::Player;
@@ -54,6 +55,11 @@ void CPlayer::Move()
 	if (IsKeyPress(VK_DOWN)) { addPos.z -= 1; m_state = 1; }
 	if (IsKeyPress(VK_LEFT)) { addPos.x -= 1; m_state = 1; }
 	if (IsKeyPress(VK_RIGHT)) { addPos.x += 1; m_state = 1; }
+	// パッドのスティック情報を取得、加算
+	auto padStick = GetLeftStick();
+	addPos.x += padStick.x;
+	addPos.z += padStick.y;
+	if (m_state == 0 && fabsf(addPos.x) > 0.01f || fabsf(addPos.z) > 0.01f) { m_state = 1; }
 	// √2走法ができないように正規化
 	auto addVec = DirectX::XMLoadFloat3(&addPos);
 	addVec = DirectX::XMVector3Normalize(addVec);
@@ -61,13 +67,12 @@ void CPlayer::Move()
 	addVec = DirectX::XMVectorScale(addVec, 0.2f);
 	DirectX::XMStoreFloat3(&addPos, addVec);
 	// もし移動している＆シフトが押されているなら低速移動に。正規化したベクトルに定数をかける。
-	if (m_state == 1 && IsKeyPress(VK_SHIFT))
+	if (m_state == 1 && IsPress(INPUT_SLOW))
 	{
 		const float dashCoef = 0.6f;
 		addPos.x *= dashCoef;
 		addPos.y *= dashCoef;
 		addPos.z *= dashCoef;
-		m_state = 2;
 	}
 	// 実際に移動させる
 	m_pos.x += addPos.x;
@@ -89,13 +94,14 @@ void CPlayer::Move()
 	// デバッグ表示用。座標をそれぞれのスロットに設定。
 	DebugText::SetData(DebugText::SLOT_PLAYER_POS_X, m_pos.x);
 	DebugText::SetData(DebugText::SLOT_PLAYER_POS_Y, m_pos.z);
+
 }
 
 void CPlayer::Shot()
 {
 	// ショットキーが押されていなかったら「ショットしてない状態」にして終了
 	m_isShot = false;
-	if (IsKeyPress('Z') == false) return;
+	if (IsPress(INPUT_SHOT) == false) return;
 
 	// 規定フレームごとに自弾を生成
 	if (m_frame % 10 == 0)
@@ -208,6 +214,9 @@ void CPlayer::OnCollision(CObject* _obj)
 		CSceneResult::m_collisionCount = m_testCollisionNum;
 		// コンボをリセット
 		CScore::Ins()->ResetCombo();
+
+		// 被弾エフェクト
+		Efk::Play(u"Assets/Effect/Damage.efkefc", m_pos.x, m_pos.y, m_pos.z);
 	}
 
 

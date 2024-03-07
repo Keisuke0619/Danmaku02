@@ -23,7 +23,7 @@ void CScenePause::Update(float tick)
 	{
 		return;
 	}
-	if (IsKeyTrigger(VK_ESCAPE))
+	if (IsTrigger(INPUT_CANCEL))
 	{
 		// コールバック関数を呼んで終了
 		m_callBack->CallBack(1);

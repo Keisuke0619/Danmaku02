@@ -6,7 +6,7 @@
 #include "Shader.h"
 #include "Defines.h"
 #include "DirectX.h"
-#include "PointLight.h"
+//#include "PointLight.h"
 #include "Geometory.h"
 /// <summary>
 /// 光のデータ。CBufferに渡す用。

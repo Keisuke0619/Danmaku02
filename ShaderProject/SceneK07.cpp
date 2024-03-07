@@ -125,7 +125,7 @@ void SceneK07::InputPause()
 		return;
 	}
 	// エスケープが押されたらポーズシーンをオーバーレイ生成。
-	if (IsKeyTrigger(VK_ESCAPE))
+	if (IsTrigger(INPUT_PAUSE))
 	{
 		auto scene = AddSubScene<CScenePause>();
 		scene->SetCallBack(this);	// 自分をコールバックに設定。

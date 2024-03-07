@@ -125,7 +125,7 @@ void CSceneResult::Draw()
 void CSceneResult::UpdatePhaseInput()
 {
 	// 名前入力完了。呼び出し関数を終了待ち関数に変更。下の案内バナーを変更し終了。
-	if (IsKeyTrigger(VK_RETURN))
+	if (IsTrigger(INPUT_SELECT))
 	{
 		m_updateFunc = &CSceneResult::UpdatePhaseWaitExit;
 		m_drawTex = m_banner[1];
@@ -192,19 +192,19 @@ void CSceneResult::UpdatePhaseInput()
 void CSceneResult::UpdatePhaseWaitExit()
 {
 	// リターンでタイトルに戻る。
-	if (IsKeyTrigger(VK_RETURN))
+	if (IsTrigger(INPUT_SELECT))
 	{
 		((SceneRoot*)m_pParent)->SetNextScene(SceneRoot::SCENE_TITLE);
 		Sound::FadeOut("Graduation.wav", 1.0f);
 	}
 	const float SpeedY = 0.1f;
 	// ランキングスクロール処理。上下それぞれ移動が可能で、上端下端でストップするようになっている。
-	if (IsKeyPress(VK_DOWN))
+	if (IsKeyPress(VK_DOWN) || GetLeftStick().y < -0.25f)
 	{
 		m_posY += SpeedY;
 		if (m_posY > 0.25f * RANKING_NUM) m_posY = 0.25f * RANKING_NUM;
 	}
-	if (IsKeyPress(VK_UP))
+	if (IsKeyPress(VK_UP) || GetLeftStick().y > 0.25f)
 	{
 		m_posY -= SpeedY;
 		if (m_posY < 0) m_posY = 0;
