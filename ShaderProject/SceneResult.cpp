@@ -20,6 +20,7 @@ void CSceneResult::Init()
 
 	// スコア取得
 	m_score = CScore::Ins()->GetScore();
+	CScore::Ins()->Reset();
 	// ランキングデータを開く
 	FILE* fp = fopen("Assets/CSV/Rank.dat", "rb");
 	// ランキングデータが存在するなら読み込んでクローズ。ないなら初期データ生成

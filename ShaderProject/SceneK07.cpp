@@ -23,6 +23,9 @@
 #include "Score.h"
 
 #include "Effect.h"
+
+
+
 void SceneK07::Init()
 {
 	Shader* shader[] = {
@@ -57,6 +60,29 @@ void SceneK07::Init()
 	CTorch::SetTorch("Assets/CSV/PointLight01.csv");
 	Sound::Play("RASHOMON.wav", true);
 	Sound::SetVolume("RASHOMON.wav", 0.4f);
+
+	// アイコン読み込み
+	const char* IconPath[ICON_MAX] =
+	{
+		"Assets/Texture/Button/keyboard_arrows.png",
+		"Assets/Texture/Button/keyboard_escape.png",
+		"Assets/Texture/Button/keyboard_shift.png",
+		"Assets/Texture/Button/keyboard_z.png",
+		"Assets/Texture/Button/xbox_button_color_a.png",
+		"Assets/Texture/Button/xbox_button_color_b.png",
+		"Assets/Texture/Button/xbox_button_color_x.png",
+		"Assets/Texture/Button/xbox_button_color_y.png",
+		"Assets/Texture/Button/xbox_button_start_icon.png",
+		"Assets/Texture/Button/xbox_lb.png",
+		"Assets/Texture/Button/xbox_stick_l.png",
+	};
+	for (int i = 0; i < ICON_MAX; i++)
+	{
+		m_icons[i] = new Texture;
+		m_icons[i]->Create(IconPath[i]);
+	}
+	m_infoBack = new Texture;
+	m_infoBack->Create("Assets/Texture/UI/Info_Back.png");
 }
 
 void SceneK07::Uninit()
@@ -68,6 +94,10 @@ void SceneK07::Uninit()
 	CWorldSprite::ReleaseTexture();
 	DataPool::ClearAll();
 	Sound::FadeOut("Coolness.wav", 1.0f);
+	for (int i = 0; i < ICON_MAX; i++)
+	{
+		delete m_icons[i];
+	}
 }
 
 void SceneK07::Update(float tick)
@@ -109,11 +139,9 @@ void SceneK07::Draw()
 	// エフェクトの描画をする。
 	Efk::Draw();
 
-	// スコア用の描画。要改善。
-	DebugText::StartDrawString(2);
-	DebugText::DrawString(0.2f, 0.9f, "Score:" + std::to_string(CScore::Ins()->GetScore()));
-	DebugText::DrawString(0.2f, 0.8f, "Combo:" + std::to_string(CScore::Ins()->GetCombo()));
-	DebugText::EndDrawString();
+	
+
+	DrawInfo();
 }
 
 void SceneK07::InputPause()
@@ -159,7 +187,7 @@ void SceneK07::UpdateEvent()
 		new CBossStage01();
 		Sound::FadeOut("RASHOMON.wav", 1.0f);
 		Sound::FadeIn("Coolness.wav", 1.0f, 0.4f, true);
-
+		m_isEvent = true;
 	}
 }
 
@@ -238,6 +266,57 @@ void SceneK07::DrawSky()
 	}
 }
 
+void SceneK07::DrawInfo()
+{
+	if (m_isEvent) { return; }
+	auto rtvDefault = GetObj<RenderTarget>("RTV");
+	auto dsvDefault = GetObj<DepthStencil>("DSV");
+	SetRenderTargets(1, &rtvDefault, nullptr);
+	const float iconPosX[4] =
+	{
+		-0.66f,
+		-0.2f,
+		0.4f,
+		0.9f
+	};
+	const int padID[4] =
+	{
+		ICON_PAD_STICK_L,
+		ICON_PAD_A,
+		ICON_PAD_LB,
+		ICON_PAD_START
+	};
+	const int keyID[4] =
+	{
+		ICON_KEY_ARROW,
+		ICON_KEY_Z,
+		ICON_KEY_SHIFT,
+		ICON_KEY_ESC
+	};
+	// スコア用の描画。要改善。
+	DebugText::StartDrawString(2);
+	DebugText::DrawString(0.2f, 0.9f, "Score:" + std::to_string(CScore::Ins()->GetScore()));
+	DebugText::DrawString(0.2f, 0.8f, "Combo:" + std::to_string(CScore::Ins()->GetCombo()));
+	DebugText::EndDrawString();
+
+	// 操作説明。べた書きなので要改善。
+	Sprite::SetTexture(m_infoBack);
+	Sprite::SetSize(2.0f, 0.28f);
+	Sprite::SetOffset(0, -0.94f);
+	Sprite::Draw();
+	Sprite::SetSize(0.14f, 0.14f);
+	for (int i = 0; i < 4; i++)
+	{
+		Sprite::SetTexture(m_frame % 240 < 120 ? m_icons[padID[i]] : m_icons[keyID[i]]);
+		Sprite::SetOffset(iconPosX[i], -0.92f);
+		Sprite::Draw();
+	}
+	Sprite::Reset();
+
+	SetRenderTargets(1, &rtvDefault, dsvDefault);
+
+}
+
 void SceneK07::CallBack(int eventID)
 {
 	// イベントごとに処理を変える。
@@ -246,6 +325,7 @@ void SceneK07::CallBack(int eventID)
 		auto defaultCamera = GetObj<CameraBase>("MainCamera");
 		CameraBase::SetPrimary(defaultCamera);
 		defaultCamera->SetFovY(90);
+		m_isEvent = false;
 	}
 	if (eventID == EVENT_CLOSE_PAUSE_WINDOW)
 	{
