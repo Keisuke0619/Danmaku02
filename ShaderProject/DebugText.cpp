@@ -93,7 +93,7 @@ void DebugText::StartDrawString(float fontScale)
 	Sprite::Reset();
 	Sprite::SetTexture(g_texture);
 	Sprite::SetUVScale(uvSize, uvSize);
-	Sprite::SetSize(g_fontScale, g_fontScale);
+	Sprite::SetSize(g_fontScale * 0.75f, g_fontScale);
 }
 
 void DebugText::DrawString(float posX, float posY, std::string str)

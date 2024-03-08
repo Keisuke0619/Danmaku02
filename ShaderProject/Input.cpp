@@ -49,7 +49,10 @@ void UpdateInput()
 	// 現在の入力を取得
 	GetKeyboardState(g_keyTable);
 	// コントローラー入力
-	joyGetPosEx(0, &g_joyPad);
+	if (JOYERR_NOERROR != joyGetPosEx(0, &g_joyPad))
+	{
+		g_joyPad.dwXpos = g_joyPad.dwYpos = g_joyPad.dwZpos = g_joyPad.dwUpos = g_joyPad.dwRpos = g_joyPad.dwVpos = 0x7fff;
+	}
 
 }
 
