@@ -11,6 +11,9 @@
 #include "SceneResult.h"
 #include "Score.h"
 #include "Effect.h"
+#include "FollowCamera.h"
+#include "DataPool.h"
+
 #define PLAYER_SHOT_COLLIDER_SCALE (1.0f)
 
 CPlayer* CPlayer::Player;
@@ -217,6 +220,9 @@ void CPlayer::OnCollision(CObject* _obj)
 
 		// 被弾エフェクト
 		Efk::Play(u"Assets/Effect/Damage.efkefc", m_pos.x, m_pos.y, m_pos.z);
+
+		// がぶれ
+		((CFollowCamera*)DataPool::GetData("FollowCamera"))->Shake();
 	}
 
 
