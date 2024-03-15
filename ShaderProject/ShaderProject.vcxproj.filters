@@ -219,6 +219,9 @@
     <ClCompile Include="Score.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
+    <ClCompile Include="Fade.cpp">
+      <Filter>ソース ファイル\App\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h">
@@ -373,6 +376,9 @@
     </ClInclude>
     <ClInclude Include="ScenePause.h">
       <Filter>ヘッダー ファイル\App\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Fade.h">
+      <Filter>ヘッダー ファイル\App\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

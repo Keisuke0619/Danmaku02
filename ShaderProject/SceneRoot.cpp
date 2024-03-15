@@ -12,6 +12,8 @@
 #include "SceneTitle.h"
 #include "SceneResult.h"
 
+#include "Fade.h"
+
 #include "DataPool.h"
 //--- 構造体
 // @brief シーン情報保存
@@ -41,17 +43,28 @@ void SceneRoot::SceneChange()
 	if (m_sceneDelay < 0 || m_sceneDelay > m_time) return;
 	// 指定時間を負数にしてシーン遷移する。負数にすることでもう一度時間が指定されるまでここには来ない。
 	m_sceneDelay = -1;
-	RemoveSubScene();
-	switch (m_nextSceneID)
-	{
-	case SCENE_GAME: AddSubScene<SceneK07>(); break;
-	case SCENE_TITLE: AddSubScene<CSceneTitle>(); break;
-	case SCENE_RESULT: AddSubScene<CSceneResult>(); break;
-	}
+	// フェードしてシーン遷移させる
+	Fade::Start(this, 15);
 
-	m_nextSceneID = SCENE_NONE;
-	// シーンチェンジでデータプールがリセットされるので再度自分を登録
-	DataPool::AddData("SceneRoot", this);
+	return;
+}
+
+void SceneRoot::CallBack(int eventID)
+{
+	if (EVENT_FADE_DONE)
+	{
+		RemoveSubScene();
+		switch (m_nextSceneID)
+		{
+		case SCENE_GAME: AddSubScene<SceneK07>(); break;
+		case SCENE_TITLE: AddSubScene<CSceneTitle>(); break;
+		case SCENE_RESULT: AddSubScene<CSceneResult>(); break;
+		}
+
+		m_nextSceneID = SCENE_NONE;
+		// シーンチェンジでデータプールがリセットされるので再度自分を登録
+		DataPool::AddData("SceneRoot", this);
+	}
 }
 
 const char* SettingFileName = "Assets/setting.dat";
@@ -95,6 +108,7 @@ void SceneRoot::Init()
 	DataPool::AddData("SceneRoot", this);
 	m_time = 0;
 	m_sceneDelay = 0;
+
 }
 
 void SceneRoot::Uninit()

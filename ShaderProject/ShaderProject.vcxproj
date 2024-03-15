@@ -185,6 +185,7 @@
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="DirectXMathUtil.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Fade.cpp" />
     <ClCompile Include="InclutionShot.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Pipeline.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="EffekseerHeader\Effekseer.Modules.h" />
     <ClInclude Include="EffekseerHeader\Effekseer.SIMD.h" />
     <ClInclude Include="EffekseerHeader\EffekseerRendererDX11.h" />
+    <ClInclude Include="Fade.h" />
     <ClInclude Include="InclutionShot.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Pipeline.h" />
