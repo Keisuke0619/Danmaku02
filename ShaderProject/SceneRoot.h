@@ -4,7 +4,7 @@
 #include "SceneBase.hpp"
 #include "EventCallback.h"
 
-class SceneRoot : public SceneBase
+class SceneRoot : public SceneBase, IEventCallBack
 {
 public:
 	enum ESceneID
@@ -26,7 +26,10 @@ private:
 	float m_sceneDelay;
 	float m_time;
 	void SceneChange();
-	void DelayChange();
+	//void DelayChange();
+
+	// IEventCallBack ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
+	void CallBack(int eventID) override;
 };
 
 #endif // __SCENE_ROOT_H__

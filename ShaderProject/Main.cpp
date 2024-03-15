@@ -9,9 +9,9 @@
 #include "DebugText.h"
 #include "Effect.h"
 #include "SoundUtil.h"
+#include "Fade.h"
 //--- ƒOƒ[ƒoƒ‹•Ï”
 std::shared_ptr<SceneRoot> g_pScene;
-
 HRESULT Init(HWND hWnd, UINT width, UINT height)
 {
 	HRESULT hr;
@@ -35,11 +35,13 @@ HRESULT Init(HWND hWnd, UINT width, UINT height)
 	// debug text
 	DebugText::Init();
 	Efk::Init();
+
 	return hr;
 }
 
 void Uninit()
 {
+	Fade::Release();
 	Sound::ReleaseAll();
 	Efk::Uninit();
 	g_pScene->Uninit();
@@ -57,6 +59,7 @@ void Update(float tick)
 	DebugText::Update();
 	Efk::Update(tick);
 	Sound::Update(tick);
+	Fade::Update();
 }
 
 void Draw()
@@ -69,6 +72,8 @@ void Draw()
 
 	g_pScene->_draw();
 	DebugText::Draw();
+	SetRenderTargets(1, &rtv, nullptr);
+	Fade::Draw();
 	SwapDirectX();
 }
 
