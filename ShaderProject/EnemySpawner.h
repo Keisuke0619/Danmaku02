@@ -10,6 +10,7 @@ struct TSpawnData
 	int destroyFrame;
 	float distance;
 	int hp;
+	float offsetY;
 	std::list<TEnemyMoveData> moves;
 	std::list<TEnemyShotData> shots;
 	int activeFrame = 0;

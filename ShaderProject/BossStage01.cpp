@@ -12,7 +12,7 @@
 
 CBossStage01::CBossStage01()
 {
-	Load("Assets/Model/Spot/Spot.fbx");
+	Load("Assets/Model/blackSpot/spot.fbx");
 	m_life = m_MaxLife;
 	m_pos = DirectX::XMFLOAT3(0, 3, 265);
 	m_scale = DirectX::XMFLOAT3(5, 5, 5);

@@ -42,6 +42,7 @@ CEnemySpawner::CEnemySpawner(std::string filePath)
 			spawnData.destroyFrame	= std::stoi(line[6]);
 			spawnData.distance		= std::stof(line[7]) * WALL_SCALE;
 			spawnData.hp			= std::stoi(line[8]);
+			spawnData.offsetY			= std::stof(line[9]);
 			break;
 		case 1:	// 弾データなら
 		{
@@ -127,7 +128,7 @@ void CEnemySpawner::Update(DirectX::XMFLOAT2 pos)
 			{
 				enemy->PushData(move);
 			}
-			enemy->SetOriginPos(itr->pos);
+			enemy->SetOriginPos(itr->pos, itr->offsetY);
 			enemy->SetSpawnData(itr->modelPath.c_str(), itr->destroyFrame, itr->hp);
 		}
 		// 該当「生成を続ける」データのフレームを加算。
